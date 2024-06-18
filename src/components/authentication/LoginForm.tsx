@@ -10,35 +10,14 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { login } from "@/api/AuthenticationService";
-import { useAppContext } from "@/context";
 
 const LoginForm = () => {
-  const { state, setState } = useAppContext();
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const loginUser = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    try {
-      const response = await login(email, password);
-      if (response) {
-        console.log("logged in");
-        setState({ userId: response });
-        await router.push("/");
-      }
-    } catch (error) {
-      console.error("Login failed:", error);
-    }
   };
-
-  useEffect(() => {
-    if (state.userId) {
-      console.log("User ID updated:", state.userId);
-      window.location.href = "/";
-    }
-  }, [state.userId]);
 
   return (
     <Card className="mx-auto max-w-sm">
@@ -49,7 +28,7 @@ const LoginForm = () => {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={loginUser}>
           <div className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
@@ -81,3 +60,5 @@ const LoginForm = () => {
     </Card>
   );
 };
+
+export default LoginForm;
