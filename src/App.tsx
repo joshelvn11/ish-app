@@ -5,27 +5,30 @@ import "@/api/axiosDefaults";
 import LoginPage from "@/pages/LoginPage";
 import HomePage from "./pages/HomePage";
 import PrivateRoute from "./utils/PrivateRoute";
+import { AuthProvider } from "@/context/AuthContext";
 
 function App() {
   return (
     <div className="h-full">
       <BrowserRouter>
-        <NavBar />
-        <div className="w-full h-full flex justify-center">
-          <div className="w-full max-w-7xl h-full p-3">
-            <Routes>
-              <Route
-                path="/"
-                element={
-                  <PrivateRoute>
-                    <HomePage />
-                  </PrivateRoute>
-                }
-              />
-              <Route path="/login" element={<LoginPage />} />
-            </Routes>
+        <AuthProvider>
+          <NavBar />
+          <div className="w-full h-full flex justify-center">
+            <div className="w-full max-w-7xl h-full p-3">
+              <Routes>
+                <Route
+                  path="/"
+                  element={
+                    <PrivateRoute>
+                      <HomePage />
+                    </PrivateRoute>
+                  }
+                />
+                <Route path="/login" element={<LoginPage />} />
+              </Routes>
+            </div>
           </div>
-        </div>
+        </AuthProvider>
       </BrowserRouter>
     </div>
   );
