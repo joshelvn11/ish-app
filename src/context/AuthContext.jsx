@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }) => {
 
   let loginUser = async (e) => {
     e.preventDefault();
-    const response = await fetch("http://127.0.0.1:8000/api/token/", {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/token/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
