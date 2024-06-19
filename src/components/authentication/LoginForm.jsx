@@ -13,13 +13,13 @@ import {
 import { Input } from "@/components/ui/input";
 
 const LoginForm = () => {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   let { loginUser } = useContext(AuthContext);
 
   return (
-    <Card className="mx-auto max-w-sm">
+    <Card className="max-w-sm mx-auto">
       <CardHeader className="space-y-1">
         <CardTitle className="text-2xl font-bold">Login</CardTitle>
         <CardDescription>
@@ -27,16 +27,16 @@ const LoginForm = () => {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form onSubmit={loginUser}>
+        <form onSubmit={loginUser(username, password)}>
           <div className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="username">Username</Label>
               <Input
-                id="email"
-                type="email"
+                id="username"
+                type="username"
                 placeholder=""
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 required
               />
             </div>
