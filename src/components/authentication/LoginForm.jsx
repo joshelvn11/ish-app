@@ -27,7 +27,7 @@ const LoginForm = () => {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form onSubmit={loginUser(username, password)}>
+        <form onSubmit={loginUser}>
           <div className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="username">Username</Label>
