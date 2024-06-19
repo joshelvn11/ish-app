@@ -18,6 +18,8 @@ export const AuthProvider = ({ children }) => {
       : null
   );
 
+  let [profile, setProfile] = useState([]);
+
   const navigate = useNavigate();
 
   let loginUser = async (e) => {
@@ -77,14 +79,35 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const getProfile = async () => {
+    const apiUrl = import.meta.env.VITE_API_URL;
+    let response = await fetch(`${apiUrl}/profile`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + String(authTokens.access),
+      },
+    });
+    let data = await response.json();
+    console.log(data);
+    if (response.status === 200) {
+      setProfile(data);
+    } else if (response.statusText === "Unauthorized") {
+      logoutUser();
+    }
+  };
+
   let contextData = {
     user: user,
+    profile: profile,
     authTokens: authTokens,
     loginUser: loginUser,
     logoutUser: logoutUser,
   };
 
   useEffect(() => {
+    getProfile();
+
     const REFRESH_INTERVAL = 1000 * 60 * 4; // 4 minutes
     let interval = setInterval(() => {
       if (authTokens) {
