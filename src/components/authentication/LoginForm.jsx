@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import AuthContext from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import {
@@ -15,9 +16,7 @@ const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const loginUser = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-  };
+  let { loginUser } = useContext(AuthContext);
 
   return (
     <Card className="mx-auto max-w-sm">

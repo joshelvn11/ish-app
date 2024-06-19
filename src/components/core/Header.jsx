@@ -1,11 +1,9 @@
-import { useState } from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import AuthContext from "@/context/AuthContext";
 
 function Header() {
-  let [user, setUser] = useState(null);
-  let logoutUser = (e) => {
-    e.preventDefault();
-  };
+  let { user, logoutUser } = useContext(AuthContext);
 
   return (
     <div className="w-full flex justify-center border-b">
