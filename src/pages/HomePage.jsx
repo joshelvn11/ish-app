@@ -10,7 +10,8 @@ const HomePage = () => {
   }, []);
 
   const getProfile = async () => {
-    let response = await fetch(`${process.env.REACT_APP_API_URL}/profile`, {
+    const apiUrl = import.meta.env.VITE_API_URL;
+    let response = await fetch(`${apiUrl}/profile`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
