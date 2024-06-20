@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import AuthContext from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
 import {
@@ -15,9 +15,29 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Switch } from "@/components/ui/switch";
 
 export default function ProfileWidget() {
   const { profile, logoutUser } = useContext(AuthContext);
+  const [darkmode, setDarkmode] = useState(
+    localStorage.theme == "dark" ? true : false
+  ); // Convert theme in local storage to boolean
+
+  // Update theme based on darkmode state
+  useEffect(() => {
+    if (darkmode) {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    }
+  }, [darkmode]);
+
+  const preventMenuClose = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
 
   return (
     <DropdownMenu>
@@ -73,7 +93,13 @@ export default function ProfileWidget() {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem>GitHub</DropdownMenuItem>
-        <DropdownMenuItem>Support</DropdownMenuItem>
+        <DropdownMenuItem
+          className="flex justify-between"
+          onClick={preventMenuClose}
+        >
+          <div>Darkmode</div>
+          <Switch checked={darkmode} onCheckedChange={setDarkmode}></Switch>
+        </DropdownMenuItem>
         <DropdownMenuItem disabled>API</DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={logoutUser}>
