@@ -19,6 +19,7 @@ export const AuthProvider = ({ children }) => {
   );
 
   let [profile, setProfile] = useState([]);
+  let [loginError, setLoginError] = useState(null);
 
   const navigate = useNavigate();
 
@@ -38,13 +39,14 @@ export const AuthProvider = ({ children }) => {
 
     let data = await response.json();
 
-    if (data) {
+    if (response.status == 200) {
       localStorage.setItem("authTokens", JSON.stringify(data));
       setAuthTokens(data);
       setUser(jwtDecode(data.access));
       navigate("/");
-    } else {
-      alert("Something went wrong while loggin in the user!");
+      setLoginError(null);
+    } else if (response.status == 401) {
+      setLoginError(data.detail);
     }
   };
 
@@ -103,6 +105,7 @@ export const AuthProvider = ({ children }) => {
     authTokens: authTokens,
     loginUser: loginUser,
     logoutUser: logoutUser,
+    loginError: loginError,
   };
 
   useEffect(() => {

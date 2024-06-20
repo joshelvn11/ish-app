@@ -11,12 +11,14 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  let { loginUser } = useContext(AuthContext);
+  let { loginUser, loginError } = useContext(AuthContext);
 
   return (
     <Card className="max-w-sm mx-auto">
@@ -27,6 +29,13 @@ const LoginForm = () => {
         </CardDescription>
       </CardHeader>
       <CardContent>
+        {loginError && (
+          <Alert variant="destructive" className="mb-6">
+            <ExclamationTriangleIcon className="w-4 h-4" />
+            <AlertTitle>Error</AlertTitle>
+            <AlertDescription>Incorrect login credentials</AlertDescription>
+          </Alert>
+        )}
         <form onSubmit={loginUser}>
           <div className="space-y-4">
             <div className="space-y-2">
