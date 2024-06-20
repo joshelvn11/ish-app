@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import AuthContext from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -16,13 +17,22 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 export default function ProfileWidget() {
+  const { profile, logoutUser } = useContext(AuthContext);
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <div className="rounded-full size-9 bg-sky-500/100"></div>
+        <div className="bg-gray-500 rounded-full size-9"></div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
-        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+        <DropdownMenuLabel>
+          <div>
+            <div>
+              {profile.first_name} {profile.last_name}
+            </div>
+            <div className="font-light text-gray-600">{profile.email}</div>
+          </div>
+        </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem>
@@ -66,7 +76,7 @@ export default function ProfileWidget() {
         <DropdownMenuItem>Support</DropdownMenuItem>
         <DropdownMenuItem disabled>API</DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={logoutUser}>
           Log out
           <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
         </DropdownMenuItem>
