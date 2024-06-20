@@ -9,8 +9,7 @@ export const UiContextProvider = ({ children }) => {
 
   let contextData = {
     navbarOpen: navbarOpen,
-    setNavbarOpen,
-    setNavbarOpen,
+    setNavbarOpen: setNavbarOpen,
   };
 
   useEffect(() => {
