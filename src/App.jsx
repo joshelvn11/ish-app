@@ -6,31 +6,34 @@ import LoginPage from "@/pages/LoginPage";
 import HomePage from "./pages/HomePage";
 import PrivateRoute from "./utils/PrivateRoute";
 import { AuthProvider } from "@/context/AuthContext";
+import { UiContextProvider } from "./context/UiContext";
 import Navbar from "./components/core/Navbar";
 
 function App() {
   return (
     <div className="h-screen max-h-screen">
       <BrowserRouter>
-        <AuthProvider>
-          <Header />
-          <div className="flex flex-row w-full h-full">
-            <Navbar></Navbar>
-            <div className="p-3">
-              <Routes>
-                <Route
-                  path="/"
-                  element={
-                    <PrivateRoute>
-                      <HomePage />
-                    </PrivateRoute>
-                  }
-                />
-                <Route path="/login" element={<LoginPage />} />
-              </Routes>
+        <UiContextProvider>
+          <AuthProvider>
+            <Header />
+            <div className="flex flex-row w-full h-full">
+              <Navbar></Navbar>
+              <div className="p-3">
+                <Routes>
+                  <Route
+                    path="/"
+                    element={
+                      <PrivateRoute>
+                        <HomePage />
+                      </PrivateRoute>
+                    }
+                  />
+                  <Route path="/login" element={<LoginPage />} />
+                </Routes>
+              </div>
             </div>
-          </div>
-        </AuthProvider>
+          </AuthProvider>
+        </UiContextProvider>
       </BrowserRouter>
     </div>
   );

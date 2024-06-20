@@ -1,19 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ClipboardList, Home, Dumbbell } from "lucide-react";
 import { useLocation } from "react-router-dom";
+import UiContext from "@/context/UiContext";
 
 function Navbar() {
   const location = useLocation();
   const [path, setPath] = useState(location.pathname);
+  const { navbarOpen, setNavbarOpen } = useContext(UiContext);
 
   useEffect(() => {
     setPath(location.pathname); // Update the path state whenever the location changes
+    window.innerWidth < 768 && setNavbarOpen(false); // Close the nav bar on mobile devices
   }, [location]);
 
   return (
-    <div className="w-48 h-full px-1 py-3 border-r">
+    <div
+      className={`${
+        navbarOpen ? "" : "hidden"
+      } h-full px-1 py-3 border-r w-full md:w-48 fixed md:relative bg-background `}
+    >
       <div className="flex-1">
         <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
           <Link
