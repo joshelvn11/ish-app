@@ -1,22 +1,21 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import AuthContext from "@/context/AuthContext";
+import ProfileWidget from "./ProfileWidget";
 
 function Header() {
   const { profile, logoutUser } = useContext(AuthContext);
 
   return (
     <div className="flex justify-center w-full border-b">
-      <div className="flex justify-between w-full p-3 max-w-7xl">
-        <h1>ish.</h1>
-        <nav className="flex gap-5">
-          <Link to="/">Home</Link>
+      <div className="flex items-center justify-between w-full p-3 px-9">
+        <h1 className="font-playwrite">ish.</h1>
+        <nav className="flex items-center gap-5">
           {profile ? (
-            <p onClick={logoutUser}>Logout</p>
+            <ProfileWidget className="mr-3" />
           ) : (
             <Link to="/login">Login</Link>
           )}
-          {profile && <p>Hello {profile.first_name}!</p>}
         </nav>
       </div>
     </div>
