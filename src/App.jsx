@@ -1,20 +1,22 @@
 import { useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import NavBar from "./components/core/Header";
+import Header from "./components/core/Header";
 import "@/api/axiosDefaults";
 import LoginPage from "@/pages/LoginPage";
 import HomePage from "./pages/HomePage";
 import PrivateRoute from "./utils/PrivateRoute";
 import { AuthProvider } from "@/context/AuthContext";
+import Navbar from "./components/core/Navbar";
 
 function App() {
   return (
-    <div className="h-full">
+    <div className="h-screen max-h-screen">
       <BrowserRouter>
         <AuthProvider>
-          <NavBar />
-          <div className="w-full h-full flex justify-center">
-            <div className="w-full max-w-7xl h-full p-3">
+          <Header />
+          <div className="flex flex-row w-full h-full">
+            <Navbar></Navbar>
+            <div className="p-3">
               <Routes>
                 <Route
                   path="/"
