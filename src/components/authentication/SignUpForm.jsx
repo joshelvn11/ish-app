@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import { Link } from "react-router-dom";
 import AuthContext from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -105,6 +106,9 @@ const SignUpForm = () => {
             </Button>
           </div>
         </form>
+        <CardFooter className="flex justify-center pt-4 pb-0 text-sm font-light text-gray-700">
+          <Link to="/login">Log into your account</Link>
+        </CardFooter>
       </CardContent>
     </Card>
   );
