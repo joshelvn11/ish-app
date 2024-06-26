@@ -3,7 +3,10 @@ import LoginForm from "@/components/authentication/LoginForm";
 
 function LoginPage() {
   return (
-    <div className="w-full h-full flex items-center justify-center">
+    <div
+      id="login-page"
+      className="flex items-center justify-center w-full h-full"
+    >
       <LoginForm />
     </div>
   );

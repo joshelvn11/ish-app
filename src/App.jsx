@@ -19,7 +19,7 @@ function App() {
             <Header />
             <div className="flex flex-row w-full h-full">
               <Navbar></Navbar>
-              <div className="p-3">
+              <div id="page-content-wrapper" className="w-full h-full p-3">
                 <Routes>
                   <Route
                     path="/"
