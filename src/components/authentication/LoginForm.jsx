@@ -11,7 +11,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
+import { ExclamationTriangleIcon, RocketIcon } from "@radix-ui/react-icons";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 const LoginForm = () => {
@@ -37,7 +37,7 @@ const LoginForm = () => {
           </Alert>
         )}
         {loginMessage && (
-          <Alert>
+          <Alert className="mb-5">
             <RocketIcon className="w-4 h-4" />
             <AlertTitle>{loginMessage && loginMessage.title}</AlertTitle>
             <AlertDescription>

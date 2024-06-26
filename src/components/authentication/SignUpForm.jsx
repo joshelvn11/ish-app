@@ -17,6 +17,8 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 const SignUpForm = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
 
   let { signUpUser, signUpErrors } = useContext(AuthContext);
@@ -45,11 +47,33 @@ const SignUpForm = () => {
         <form onSubmit={signUpUser}>
           <div className="space-y-4">
             <div className="space-y-2">
+              <Label htmlFor="firstName">First Name</Label>
+              <Input
+                id="firstName"
+                type="text"
+                placeholder="Terry"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="lastName">Last Name</Label>
+              <Input
+                id="lastName"
+                type="text"
+                placeholder="Davis"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+                required
+              />
+            </div>
+            <div className="space-y-2">
               <Label htmlFor="username">Username</Label>
               <Input
                 id="username"
-                type="username"
-                placeholder=""
+                type="text"
+                placeholder="terryadavis"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 required
@@ -60,7 +84,7 @@ const SignUpForm = () => {
               <Input
                 id="email"
                 type="email"
-                placeholder=""
+                placeholder="terrydavis@temple.os"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
