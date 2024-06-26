@@ -20,6 +20,8 @@ export const AuthProvider = ({ children }) => {
 
   let [profile, setProfile] = useState([]);
   let [loginError, setLoginError] = useState(null);
+  let [loginMessage, setLoginMessage] = useState(null);
+  let [signUpErrors, setSignUpErrors] = useState(null);
 
   const navigate = useNavigate();
 
@@ -45,8 +47,38 @@ export const AuthProvider = ({ children }) => {
       setUser(jwtDecode(data.access));
       navigate("/");
       setLoginError(null);
+      setLoginMessage(null);
     } else if (response.status == 401) {
       setLoginError(data.detail);
+    }
+  };
+
+  let signUpUser = async (e) => {
+    e.preventDefault();
+    const apiUrl = import.meta.env.VITE_API_URL;
+    const response = await fetch(`${apiUrl}/register/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: e.target.username.value,
+        password: e.target.password.value,
+        email: e.target.email.value,
+      }),
+    });
+
+    let data = await response.json();
+
+    if (response.status == 201) {
+      setLoginMessage({
+        title: "Thanks for signing up!",
+        message: "Log into your account using your new credentials",
+      });
+      navigate("/login");
+      setSignUpErrors(null);
+    } else if (response.status == 400) {
+      setSignUpErrors(data);
     }
   };
 
@@ -106,6 +138,10 @@ export const AuthProvider = ({ children }) => {
     loginUser: loginUser,
     logoutUser: logoutUser,
     loginError: loginError,
+    loginMessage: loginMessage,
+    setLoginMessage: setLoginMessage,
+    signUpUser: signUpUser,
+    signUpErrors: signUpErrors,
   };
 
   useEffect(() => {
