@@ -18,7 +18,7 @@ const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  let { loginUser, loginError } = useContext(AuthContext);
+  let { loginUser, loginError, loginMessage } = useContext(AuthContext);
 
   return (
     <Card className="max-w-sm mx-auto">
@@ -34,6 +34,15 @@ const LoginForm = () => {
             <ExclamationTriangleIcon className="w-4 h-4" />
             <AlertTitle>Error</AlertTitle>
             <AlertDescription>Incorrect login credentials</AlertDescription>
+          </Alert>
+        )}
+        {loginMessage && (
+          <Alert>
+            <RocketIcon className="w-4 h-4" />
+            <AlertTitle>{loginMessage && loginMessage.title}</AlertTitle>
+            <AlertDescription>
+              {loginMessage && loginMessage.message}
+            </AlertDescription>
           </Alert>
         )}
         <form onSubmit={loginUser}>
