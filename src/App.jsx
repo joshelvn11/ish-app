@@ -8,6 +8,7 @@ import PrivateRoute from "./utils/PrivateRoute";
 import { AuthProvider } from "@/context/AuthContext";
 import { UiContextProvider } from "./context/UiContext";
 import Navbar from "./components/core/Navbar";
+import SignUpPage from "./pages/SignUpPage";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
                     }
                   />
                   <Route path="/login" element={<LoginPage />} />
+                  <Route path="/signup" element={<SignUpPage />} />
                 </Routes>
               </div>
             </div>
