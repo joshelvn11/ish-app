@@ -14,6 +14,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
+import TaskTable from "./TaskTable";
 
 function EpicCard(props) {
   const [isOpen, setIsOpen] = useState(true);
@@ -33,14 +34,9 @@ function EpicCard(props) {
             </Button>
           </CollapsibleTrigger>
         </div>
-        <p className="text-sm">{props.description}</p>
+        <p className="pb-3 text-sm">{props.description}</p>
         <CollapsibleContent className="space-y-2">
-          <div className="px-4 py-2 font-mono text-sm border rounded-md shadow-sm">
-            @radix-ui/colors
-          </div>
-          <div className="px-4 py-2 font-mono text-sm border rounded-md shadow-sm">
-            @stitches/react
-          </div>
+          <TaskTable userStories={props.userStories}></TaskTable>
         </CollapsibleContent>
       </Collapsible>
     </Card>
