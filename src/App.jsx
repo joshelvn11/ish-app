@@ -9,6 +9,7 @@ import { AuthProvider } from "@/context/AuthContext";
 import { UiContextProvider } from "./context/UiContext";
 import Navbar from "./components/core/Navbar";
 import SignUpPage from "./pages/SignUpPage";
+import { ProjectContextProvider } from "./context/ProjectContext";
 
 function App() {
   return (
@@ -16,24 +17,26 @@ function App() {
       <BrowserRouter>
         <UiContextProvider>
           <AuthProvider>
-            <Header />
-            <div className="flex flex-row w-full h-full">
-              <Navbar></Navbar>
-              <div id="page-content-wrapper" className="w-full h-full p-3">
-                <Routes>
-                  <Route
-                    path="/"
-                    element={
-                      <PrivateRoute>
-                        <HomePage />
-                      </PrivateRoute>
-                    }
-                  />
-                  <Route path="/login" element={<LoginPage />} />
-                  <Route path="/signup" element={<SignUpPage />} />
-                </Routes>
+            <ProjectContextProvider>
+              <Header />
+              <div className="flex flex-row w-full h-full">
+                <Navbar></Navbar>
+                <div id="page-content-wrapper" className="w-full h-full p-3">
+                  <Routes>
+                    <Route
+                      path="/"
+                      element={
+                        <PrivateRoute>
+                          <HomePage />
+                        </PrivateRoute>
+                      }
+                    />
+                    <Route path="/login" element={<LoginPage />} />
+                    <Route path="/signup" element={<SignUpPage />} />
+                  </Routes>
+                </div>
               </div>
-            </div>
+            </ProjectContextProvider>
           </AuthProvider>
         </UiContextProvider>
       </BrowserRouter>

@@ -5,6 +5,7 @@ import ProfileWidget from "./ProfileWidget";
 import { Button } from "@/components/ui/button";
 import { CloudDownload, MenuIcon } from "lucide-react";
 import UiContext from "@/context/UiContext";
+import ProjectSwitcher from "./ProjectSwitcher";
 
 function Header() {
   const { profile, user } = useContext(AuthContext);
@@ -27,7 +28,10 @@ function Header() {
           </div>
           <nav className="flex items-center gap-5">
             {profile ? (
-              <ProfileWidget className="mr-3" />
+              <>
+                <ProjectSwitcher />
+                <ProfileWidget className="mr-3" />
+              </>
             ) : (
               <Link to="/login">Login</Link>
             )}

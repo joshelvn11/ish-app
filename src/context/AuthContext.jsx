@@ -130,6 +130,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   let contextData = {
+    authTokens: authTokens,
     user: user,
     profile: profile,
     authTokens: authTokens,
