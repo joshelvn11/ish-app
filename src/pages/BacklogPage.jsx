@@ -32,8 +32,33 @@ function BacklogPage() {
     }
   };
 
+  const getUserStoryData = async () => {
+    if (currentProject) {
+      // Attempt to get epic data if current project is not falsey
+      const apiUrl = import.meta.env.VITE_API_URL;
+      let response = await fetch(
+        `${apiUrl}/projects/${currentProject.id}/user-stories/`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + String(authTokens.access),
+          },
+        }
+      );
+      let data = await response.json();
+      if (response.status === 200) {
+        console.log(data);
+        setUserStoryData(data);
+      }
+    }
+  };
+
   useEffect(() => {
+    setEpicData(null);
+    setUserStoryData(null);
     getEpicData();
+    getUserStoryData();
   }, [currentProject]);
 
   return (
@@ -42,12 +67,13 @@ function BacklogPage() {
       className="flex items-start justify-center w-full h-full"
     >
       <div className="flex flex-col w-full h-full gap-3">
-        {epicData ? (
-          epicData.map((obj, index) => (
+        {epicData && userStoryData ? (
+          epicData.map((obj) => (
             <EpicCard
-              key={index}
+              key={obj.id}
               title={obj.name}
               description={obj.description}
+              userStories={userStoryData.filter((us) => us.epic === obj.id)}
             ></EpicCard>
           ))
         ) : (
