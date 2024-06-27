@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ProjectContext from "@/context/ProjectContext";
 import {
   Select,
@@ -9,9 +9,23 @@ import {
 } from "@/components/ui/select";
 
 function ProjectSwitcher() {
-  const { projects } = useContext(ProjectContext);
+  const { projects, loadProject, currentProject } = useContext(ProjectContext);
+  const [selectedProject, setSelectedProject] = useState(null);
+
+  const updateProjectContext = (value) => {
+    loadProject(value);
+  };
+
+  useEffect(() => {
+    // Set the selected project every time the current project in the project context changes
+    setSelectedProject(currentProject);
+  }, [currentProject]);
+
   return (
-    <Select>
+    <Select
+      value={selectedProject ? selectedProject.id : ""}
+      onValueChange={updateProjectContext}
+    >
       <SelectTrigger className="w-[120px] sm:w-[180px]">
         <SelectValue placeholder="Project" />
       </SelectTrigger>
