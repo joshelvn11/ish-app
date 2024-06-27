@@ -10,6 +10,7 @@ import { UiContextProvider } from "./context/UiContext";
 import Navbar from "./components/core/Navbar";
 import SignUpPage from "./pages/SignUpPage";
 import { ProjectContextProvider } from "./context/ProjectContext";
+import BacklogPage from "./pages/BacklogPage";
 
 function App() {
   return (
@@ -28,6 +29,14 @@ function App() {
                       element={
                         <PrivateRoute>
                           <HomePage />
+                        </PrivateRoute>
+                      }
+                    />
+                    <Route
+                      path="/backlog"
+                      element={
+                        <PrivateRoute>
+                          <BacklogPage />
                         </PrivateRoute>
                       }
                     />
