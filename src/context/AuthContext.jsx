@@ -85,7 +85,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   let logoutUser = (e) => {
-    e.preventDefault();
+    e && e.preventDefault();
     localStorage.removeItem("authTokens");
     setAuthTokens(null);
     setUser(null);
@@ -93,7 +93,8 @@ export const AuthProvider = ({ children }) => {
   };
 
   const updateToken = async () => {
-    const response = await fetch(`${apiUrl}/api/token/refresh/`, {
+    const apiUrl = import.meta.env.VITE_API_URL;
+    const response = await fetch(`${apiUrl}/token/refresh/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -109,10 +110,6 @@ export const AuthProvider = ({ children }) => {
     } else {
       logoutUser();
     }
-
-    if (loading) {
-      setLoading(false);
-    }
   };
 
   const getProfile = async () => {
@@ -125,11 +122,10 @@ export const AuthProvider = ({ children }) => {
       },
     });
     let data = await response.json();
-    console.log(data);
     if (response.status === 200) {
       setProfile(data);
-    } else if (response.statusText === "Unauthorized") {
-      logoutUser();
+    } else if (data.code === "token_not_valid") {
+      updateToken();
     }
   };
 

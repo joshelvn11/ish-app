@@ -17,9 +17,7 @@ export const UiContextProvider = ({ children }) => {
     setNavbarOpen(window.innerWidth > 768);
   }, []);
 
-  useEffect(() => {
-    console.log(`Navbar open = ${navbarOpen}`);
-  }, [navbarOpen]);
+  useEffect(() => {}, [navbarOpen]);
 
   return (
     <UiContext.Provider value={contextData}>{children}</UiContext.Provider>
