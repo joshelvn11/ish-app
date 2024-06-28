@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import ProjectContext from "@/context/ProjectContext";
 import {
   Table,
   TableBody,
@@ -8,11 +9,21 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { EnterFullScreenIcon, TrashIcon } from "@radix-ui/react-icons";
 import { Badge } from "@/components/ui/badge";
 
 function TaskTableRow(props) {
+  // Get context data
+  const { sprintData } = useContext(ProjectContext);
+
   // Get initial state values from props
   let [type, setType] = useState(props.type);
   let [name, setName] = useState(props.name);
@@ -33,7 +44,21 @@ function TaskTableRow(props) {
       <TableCell>
         <Badge>{priority}</Badge>
       </TableCell>
-      <TableCell>{sprint}</TableCell>
+      <TableCell>
+        <Select value={sprint ? sprint : ""}>
+          <SelectTrigger className="w-[120px] sm:w-[180px]">
+            <SelectValue placeholder="Select Sprint" />
+          </SelectTrigger>
+          <SelectContent>
+            {sprintData &&
+              sprintData.map((sprint) => (
+                <SelectItem key={sprint.id} value={sprint.id}>
+                  {sprint.name}
+                </SelectItem>
+              ))}
+          </SelectContent>
+        </Select>
+      </TableCell>
       <TableCell>{dueDate}</TableCell>
       <TableCell className="text-right">
         <Button variant="ghost">

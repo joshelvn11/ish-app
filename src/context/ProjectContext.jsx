@@ -89,6 +89,7 @@ export const ProjectContextProvider = ({ children }) => {
       );
       let data = await response.json();
       if (response.status === 200) {
+        console.log("Sprints:", data);
         setSprintData(data);
       }
     }
@@ -110,7 +111,6 @@ export const ProjectContextProvider = ({ children }) => {
       );
       let data = await response.json();
       if (response.status === 200) {
-        console.log("User Stories:", data);
         setUserStoryData(data);
       }
     }
