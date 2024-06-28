@@ -21,8 +21,8 @@ function Navbar() {
     return (
       <div
         className={`${
-          navbarOpen ? "" : "hidden"
-        } h-full px-1 py-3 border-r w-full md:w-48 fixed md:relative bg-background `}
+          navbarOpen ? "" : "hidden "
+        }h-full px-1 py-3 border-r w-full md:w-48 fixed md:relative bg-background`}
       >
         <div className="flex-1">
           <nav className="grid items-start px-2 text-sm font-medium lg:px-4">

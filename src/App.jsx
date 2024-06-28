@@ -20,9 +20,15 @@ function App() {
           <AuthProvider>
             <ProjectContextProvider>
               <Header />
-              <div className="flex flex-row w-full h-full">
+              <div
+                id="page-container"
+                className="relative flex flex-row w-full max-h-[calc(100vh-61px)] h-full overflow-hidden"
+              >
                 <Navbar></Navbar>
-                <div id="page-content-wrapper" className="w-full h-full p-3">
+                <div
+                  id="page-content-wrapper"
+                  className="w-full max-h-full p-3 overflow-y-auto"
+                >
                   <Routes>
                     <Route
                       path="/"
