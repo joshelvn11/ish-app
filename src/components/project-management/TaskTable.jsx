@@ -9,9 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
-import { EnterFullScreenIcon, TrashIcon } from "@radix-ui/react-icons";
-import { Badge } from "@/components/ui/badge";
+import TaskTableRow from "@/components/project-management/TaskTableRow";
 
 function TaskTable(props) {
   // Get context properties
@@ -24,7 +22,7 @@ function TaskTable(props) {
   // Use effect hook to collate and filter task and user story data
   useEffect(() => {
     // Only run filterting when all required data is loaded
-    if (currentProject && epicData && userStoryData) {
+    if (currentProject && epicData && userStoryData && taskData) {
       let userStories;
       let tasks;
 
@@ -35,7 +33,13 @@ function TaskTable(props) {
 
         // Add the type property to user stories
         userStories = userStories.map((us) => {
-          return { ...us, type: "User Story" };
+          return {
+            ...us,
+            type: {
+              type: "user-story",
+              typeDisplay: "User Story",
+            },
+          };
         });
 
         // Retrieve all the tasks matching the epic id
@@ -43,7 +47,13 @@ function TaskTable(props) {
 
         // Add the type property to tasks
         tasks = tasks.map((task) => {
-          return { ...task, type: "Task" };
+          return {
+            ...task,
+            type: {
+              type: "task",
+              typeDisplay: "Task",
+            },
+          };
         });
       }
 
@@ -73,9 +83,10 @@ function TaskTable(props) {
     <Table>
       <TableHeader>
         <TableRow>
+          <TableHead>Type</TableHead>
           <TableHead className="w-[300px]">Title</TableHead>
           <TableHead>Status</TableHead>
-          <TableHead>Type</TableHead>
+          <TableHead>Priority</TableHead>
           <TableHead>Sprint</TableHead>
           <TableHead className="">Due Date</TableHead>
           <TableHead></TableHead>
@@ -84,25 +95,15 @@ function TaskTable(props) {
       <TableBody>
         {allData &&
           allData.map((data, index) => (
-            <TableRow key={index}>
-              <TableCell className="font-medium">{data.name}</TableCell>
-              <TableCell>
-                <Badge>{data.status}</Badge>
-              </TableCell>
-              <TableCell>
-                <Badge>{data.type}</Badge>
-              </TableCell>
-              <TableCell>{data.sprint}</TableCell>
-              <TableCell>{data.due_date}</TableCell>
-              <TableCell className="text-right">
-                <Button variant="ghost">
-                  <EnterFullScreenIcon className="w-5 h-5" />
-                </Button>
-                <Button variant="ghost">
-                  <TrashIcon className="w-5 h-5" />
-                </Button>
-              </TableCell>
-            </TableRow>
+            <TaskTableRow
+              key={index}
+              type={data.type}
+              name={data.name}
+              status={data.status}
+              priority={data.priority}
+              sprint={data.sprint}
+              dueDate={data.due_date}
+            />
           ))}
       </TableBody>
     </Table>

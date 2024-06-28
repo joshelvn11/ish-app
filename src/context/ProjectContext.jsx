@@ -138,7 +138,7 @@ export const ProjectContextProvider = ({ children }) => {
   }, [projects]);
 
   useEffect(() => {
-    // Load the project task data whenever the current project changes
+    // Load or reload the project task data whenever the current project changes
     setEpicData(null);
     setUserStoryData(null);
     setTaskData(null);
