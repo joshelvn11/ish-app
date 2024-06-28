@@ -9,6 +9,9 @@ export const ProjectContextProvider = ({ children }) => {
   const { authTokens } = useContext(AuthContext);
   let [projects, setProjects] = useState([]);
   let [currentProject, setCurrentProject] = useState(null);
+  let [epicData, setEpicData] = useState(null);
+  let [userStoryData, setUserStoryData] = useState(null);
+  let [filterOptions, setFilterOptions] = useState({ epics: true });
 
   const getProjects = async () => {
     const apiUrl = import.meta.env.VITE_API_URL;
@@ -47,10 +50,55 @@ export const ProjectContextProvider = ({ children }) => {
     }
   };
 
+  const getEpicData = async () => {
+    if (currentProject) {
+      // Attempt to get epic data if current project is not falsey
+      const apiUrl = import.meta.env.VITE_API_URL;
+      let response = await fetch(
+        `${apiUrl}/projects/${currentProject.id}/epics/`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + String(authTokens.access),
+          },
+        }
+      );
+      let data = await response.json();
+      if (response.status === 200) {
+        setEpicData(data);
+      }
+    }
+  };
+
+  const getUserStoryData = async () => {
+    if (currentProject) {
+      // Attempt to get epic data if current project is not falsey
+      const apiUrl = import.meta.env.VITE_API_URL;
+      let response = await fetch(
+        `${apiUrl}/projects/${currentProject.id}/user-stories/`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + String(authTokens.access),
+          },
+        }
+      );
+      let data = await response.json();
+      if (response.status === 200) {
+        setUserStoryData(data);
+      }
+    }
+  };
+
   let contextData = {
     projects: projects,
     currentProject: currentProject,
     loadProject: loadProject,
+    epicData: epicData,
+    userStoryData: userStoryData,
+    filterOptions: filterOptions,
   };
 
   useEffect(() => {
@@ -64,6 +112,14 @@ export const ProjectContextProvider = ({ children }) => {
       loadProject();
     }
   }, [projects]);
+
+  useEffect(() => {
+    // Load the project task data whenever the current project changes
+    setEpicData(null);
+    setUserStoryData(null);
+    getEpicData();
+    getUserStoryData();
+  }, [currentProject]);
 
   return (
     <ProjectContext.Provider value={contextData}>

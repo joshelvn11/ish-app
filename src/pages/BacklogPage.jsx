@@ -6,60 +6,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 function BacklogPage() {
   const { authTokens } = useContext(AuthContext);
-  const { currentProject } = useContext(ProjectContext);
-
-  let [epicData, setEpicData] = useState(null);
-  let [userStoryData, setUserStoryData] = useState(null);
-
-  const getEpicData = async () => {
-    if (currentProject) {
-      // Attempt to get epic data if current project is not falsey
-      const apiUrl = import.meta.env.VITE_API_URL;
-      let response = await fetch(
-        `${apiUrl}/projects/${currentProject.id}/epics/`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + String(authTokens.access),
-          },
-        }
-      );
-      let data = await response.json();
-      if (response.status === 200) {
-        setEpicData(data);
-      }
-    }
-  };
-
-  const getUserStoryData = async () => {
-    if (currentProject) {
-      // Attempt to get epic data if current project is not falsey
-      const apiUrl = import.meta.env.VITE_API_URL;
-      let response = await fetch(
-        `${apiUrl}/projects/${currentProject.id}/user-stories/`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + String(authTokens.access),
-          },
-        }
-      );
-      let data = await response.json();
-      if (response.status === 200) {
-        console.log(data);
-        setUserStoryData(data);
-      }
-    }
-  };
-
-  useEffect(() => {
-    setEpicData(null);
-    setUserStoryData(null);
-    getEpicData();
-    getUserStoryData();
-  }, [currentProject]);
+  const { currentProject, epicData, userStoryData } =
+    useContext(ProjectContext);
 
   return (
     <div
@@ -71,6 +19,7 @@ function BacklogPage() {
           epicData.map((obj) => (
             <EpicCard
               key={obj.id}
+              epicId={obj.id}
               title={obj.name}
               description={obj.description}
               userStories={userStoryData.filter((us) => us.epic === obj.id)}
