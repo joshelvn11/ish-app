@@ -62,17 +62,17 @@ function TaskTable(props) {
       </TableHeader>
       <TableBody>
         {allData &&
-          allData.map((us) => (
+          allData.map((data) => (
             <TableRow>
-              <TableCell className="font-medium">{us.name}</TableCell>
+              <TableCell className="font-medium">{data.name}</TableCell>
               <TableCell>
-                <Badge>{us.status}</Badge>
+                <Badge>{data.status}</Badge>
               </TableCell>
               <TableCell>
-                <Badge>{us.type}</Badge>
+                <Badge>{data.type}</Badge>
               </TableCell>
-              <TableCell>{us.sprint}</TableCell>
-              <TableCell>{us.due_date}</TableCell>
+              <TableCell>{data.sprint}</TableCell>
+              <TableCell>{data.due_date}</TableCell>
               <TableCell className="text-right">
                 <Button variant="ghost">
                   <EnterFullScreenIcon className="w-5 h-5" />
