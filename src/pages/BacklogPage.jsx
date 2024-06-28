@@ -27,10 +27,10 @@ function BacklogPage() {
           ))
         ) : (
           <>
-            <Skeleton className="w-full h-[100px] rounded-xl" />
-            <Skeleton className="w-full h-[100px] rounded-xl opacity-75" />
-            <Skeleton className="w-full h-[100px] rounded-xl opacity-50" />
-            <Skeleton className="w-full h-[100px] rounded-xl opacity-25" />
+            <Skeleton className="w-full h-[200px] rounded-xl" />
+            <Skeleton className="w-full h-[200px] rounded-xl opacity-75" />
+            <Skeleton className="w-full h-[200px] rounded-xl opacity-50" />
+            <Skeleton className="w-full h-[200px] rounded-xl opacity-25" />
           </>
         )}
       </div>
