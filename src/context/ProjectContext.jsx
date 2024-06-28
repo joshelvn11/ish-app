@@ -11,6 +11,7 @@ export const ProjectContextProvider = ({ children }) => {
   let [currentProject, setCurrentProject] = useState(null);
   let [epicData, setEpicData] = useState(null);
   let [userStoryData, setUserStoryData] = useState(null);
+  let [taskData, setTaskData] = useState(null);
   let [filterOptions, setFilterOptions] = useState({ epics: true });
 
   const getProjects = async () => {
@@ -92,12 +93,35 @@ export const ProjectContextProvider = ({ children }) => {
     }
   };
 
+  const getTaskData = async () => {
+    if (currentProject) {
+      // Attempt to get epic data if current project is not falsey
+      const apiUrl = import.meta.env.VITE_API_URL;
+      let response = await fetch(
+        `${apiUrl}/projects/${currentProject.id}/tasks/`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + String(authTokens.access),
+          },
+        }
+      );
+      let data = await response.json();
+      if (response.status === 200) {
+        console.log("Tasks", taskData);
+        setTaskData(data);
+      }
+    }
+  };
+
   let contextData = {
     projects: projects,
     currentProject: currentProject,
     loadProject: loadProject,
     epicData: epicData,
     userStoryData: userStoryData,
+    taskData: taskData,
     filterOptions: filterOptions,
   };
 
@@ -117,8 +141,10 @@ export const ProjectContextProvider = ({ children }) => {
     // Load the project task data whenever the current project changes
     setEpicData(null);
     setUserStoryData(null);
+    setTaskData(null);
     getEpicData();
     getUserStoryData();
+    getTaskData();
   }, [currentProject]);
 
   return (
