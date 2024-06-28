@@ -36,7 +36,7 @@ function EpicCard(props) {
         </div>
         <p className="pb-3 text-sm">{props.description}</p>
         <CollapsibleContent className="space-y-2">
-          <TaskTable userStories={props.userStories}></TaskTable>
+          <TaskTable groupBy={"EPIC"} groupId={props.epicId}></TaskTable>
         </CollapsibleContent>
       </Collapsible>
     </Card>
