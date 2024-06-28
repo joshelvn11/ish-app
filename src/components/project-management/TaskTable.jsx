@@ -21,6 +21,7 @@ function TaskTable(props) {
   // Set state values
   let [allData, setAllData] = useState(null);
 
+  // Use effect hook to collate and filter task and user story data
   useEffect(() => {
     // Only run filterting when all required data is loaded
     if (currentProject && epicData && userStoryData) {
@@ -62,8 +63,8 @@ function TaskTable(props) {
       </TableHeader>
       <TableBody>
         {allData &&
-          allData.map((data) => (
-            <TableRow>
+          allData.map((data, index) => (
+            <TableRow key={index}>
               <TableCell className="font-medium">{data.name}</TableCell>
               <TableCell>
                 <Badge>{data.status}</Badge>
