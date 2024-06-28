@@ -15,7 +15,7 @@ import { Badge } from "@/components/ui/badge";
 
 function TaskTable(props) {
   // Get context properties
-  const { currentProject, epicData, userStoryData, filterOptions } =
+  const { currentProject, epicData, userStoryData, taskData, filterOptions } =
     useContext(ProjectContext);
 
   // Set state values
@@ -26,26 +26,46 @@ function TaskTable(props) {
     // Only run filterting when all required data is loaded
     if (currentProject && epicData && userStoryData) {
       let userStories;
+      let tasks;
 
       // Filter data by grouping propery
       if (props.groupBy == "EPIC") {
         // Retrieve all the user stories matching the epic id
         userStories = userStoryData.filter((us) => us.epic === props.groupId);
-        console.log("User stories: ", userStories);
 
         // Add the type property to user stories
         userStories = userStories.map((us) => {
           return { ...us, type: "User Story" };
         });
+
+        // Retrieve all the tasks matching the epic id
+        tasks = taskData.filter((task) => task.epic === props.groupId);
+
+        // Add the type property to tasks
+        tasks = tasks.map((task) => {
+          return { ...task, type: "Task" };
+        });
       }
 
       // Update state only if the filtered data has changed
-      setAllData((prevData) => {
-        if (JSON.stringify(prevData) !== JSON.stringify(userStories)) {
-          return userStories;
-        }
-        return prevData;
-      });
+      //   setAllData((prevData) => {
+      //     if (JSON.stringify(prevData) !== JSON.stringify(userStories)) {
+      //       return userStories;
+      //     }
+      //     return prevData;
+      //   });
+
+      // Collate the data based on filter options
+      let collatedData = [];
+
+      if (true) {
+        collatedData = [...collatedData, ...userStories];
+      }
+
+      if (true) {
+        collatedData = [...collatedData, ...tasks];
+      }
+      setAllData(collatedData);
     }
   }, [currentProject, epicData, userStoryData]);
 
