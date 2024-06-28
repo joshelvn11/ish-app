@@ -16,15 +16,22 @@ function BacklogPage() {
     >
       <div className="flex flex-col w-full h-full gap-3">
         {epicData && userStoryData ? (
-          epicData.map((obj) => (
+          <>
+            {epicData.map((obj) => (
+              <EpicCard
+                key={obj.id}
+                epicId={obj.id}
+                title={obj.name}
+                description={obj.description}
+              ></EpicCard>
+            ))}{" "}
             <EpicCard
-              key={obj.id}
-              epicId={obj.id}
-              title={obj.name}
-              description={obj.description}
-              userStories={userStoryData.filter((us) => us.epic === obj.id)}
-            ></EpicCard>
-          ))
+              key={0}
+              epicId={null}
+              title={"No Epic"}
+              description={"Items without an epic"}
+            ></EpicCard>{" "}
+          </>
         ) : (
           <>
             <Skeleton className="w-full h-[200px] rounded-xl" />
