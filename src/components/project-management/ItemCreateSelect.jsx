@@ -44,9 +44,15 @@ function ItemCreateSelect() {
           <SelectValue placeholder="Create" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="EPIC">Epic</SelectItem>
-          <SelectItem value="USERSTORY">User Story</SelectItem>
-          <SelectItem value="TASK">Task</SelectItem>
+          <SelectItem value="EPIC" className="cursor-pointer">
+            Epic
+          </SelectItem>
+          <SelectItem value="USERSTORY" className="cursor-pointer">
+            User Story
+          </SelectItem>
+          <SelectItem value="TASK" className="cursor-pointer">
+            Task
+          </SelectItem>
         </SelectContent>
       </Select>
 
