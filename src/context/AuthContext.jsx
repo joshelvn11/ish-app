@@ -150,7 +150,7 @@ export const AuthProvider = ({ children }) => {
       // and set up token refresh interval
       getProfile();
 
-      const REFRESH_INTERVAL = 1000 * 60 * 4; // 4 minutes
+      const REFRESH_INTERVAL = 1000 * 60 * 1; // 4 minutes
       let interval = setInterval(() => {
         if (authTokens) {
           updateToken();
