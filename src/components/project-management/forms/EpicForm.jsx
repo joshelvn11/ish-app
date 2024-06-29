@@ -36,9 +36,10 @@ import {
 } from "@/components/ui/popover";
 
 function EpicForm(props) {
-  const { projects, epicData } = useContext(ProjectContext);
+  const { currrentProject } = useContext(ProjectContext);
 
   let [create, setCreate] = useState(props.create);
+  let [validationErrors, setValidationErrors] = useState([]);
 
   // Form data state
   let [name, setName] = useState("");
@@ -46,11 +47,44 @@ function EpicForm(props) {
   let [priority, setPriority] = useState("");
   let [status, setStatus] = useState("");
 
-  const updateEpic = () => {};
+  const validateData = () => {
+    let valid = true;
+    setValidationErrors([]);
+    let errors = [];
+    if (name === "") {
+      errors.push("Please enter a valid title");
+      valid = false;
+    }
+
+    if (name.length > 256) {
+      errors.push("Title may not be longer than 256 characters");
+      valid = false;
+    }
+    setValidationErrors(errors);
+    return valid;
+  };
+
+  const updateEpic = (e) => {
+    e.preventDefault();
+    validateData();
+  };
 
   return (
     <div className="space-y-4">
       <div className="space-y-2">
+        {validationErrors.length > 0 && (
+          <Alert variant="destructive" className="mb-6">
+            <ExclamationTriangleIcon className="w-4 h-4" />
+            <AlertTitle>Errors</AlertTitle>
+            <AlertDescription>
+              <ul>
+                {validationErrors.map((error, index) => (
+                  <li key={index}>{error}</li>
+                ))}
+              </ul>
+            </AlertDescription>
+          </Alert>
+        )}
         <form onSubmit={updateEpic}>
           <div className="space-y-4">
             <div className="space-y-2">
