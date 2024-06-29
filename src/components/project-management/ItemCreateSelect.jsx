@@ -15,8 +15,10 @@ import {
   DialogTrigger,
   DialogFooter,
 } from "@/components/ui/dialog";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { PlusIcon } from "@radix-ui/react-icons";
+import EpicForm from "./forms/EpicForm";
 
 const createItem = (value) => {
   console.log("Creating item", value);
@@ -52,19 +54,15 @@ function ItemCreateSelect() {
         <DialogContent>
           <DialogHeader>
             <DialogTitle>
-              Create new {itemType === "EPIC" && <span>Epic</span>}{" "}
-              {itemType === "USERSTORY" && <span>User Story</span>}{" "}
-              {itemType === "TASK" && <span>Task</span>}
+              <p>
+                Create new {itemType === "EPIC" && <span>Epic</span>}{" "}
+                {itemType === "USERSTORY" && <span>User Story</span>}{" "}
+                {itemType === "TASK" && <span>Task</span>}
+              </p>
             </DialogTitle>
-            <DialogDescription>
-              {itemType === "EPIC" && <p>Creating epic</p>}
-            </DialogDescription>
+            <DialogDescription></DialogDescription>
           </DialogHeader>
-          <DialogFooter>
-            <Button type="submit" onClick={closeDialog}>
-              Confirm
-            </Button>
-          </DialogFooter>
+          {itemType === "EPIC" && <EpicForm create={true} />}
         </DialogContent>
       </Dialog>
     </div>
