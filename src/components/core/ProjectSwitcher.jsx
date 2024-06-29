@@ -7,6 +7,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { PlusIcon } from "@radix-ui/react-icons";
 
 function ProjectSwitcher() {
   const { projects, loadProject, currentProject } = useContext(ProjectContext);
@@ -35,6 +36,12 @@ function ProjectSwitcher() {
             {project.name}
           </SelectItem>
         ))}
+        <SelectItem key={0} value={0}>
+          <div className="flex items-center h-full gap-1">
+            <PlusIcon />
+            <p>Create project</p>
+          </div>
+        </SelectItem>
       </SelectContent>
     </Select>
   );
