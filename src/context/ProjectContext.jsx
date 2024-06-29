@@ -150,8 +150,19 @@ export const ProjectContextProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    // Get Projects everytime auth tokens are refreshed
-    getProjects();
+    if (authTokens) {
+      // Get Projects everytime auth tokens are refreshed
+      // and auth tokens are presents
+      getProjects();
+    } else {
+      // If auth tokens are not present reset all data
+      setProjects([]);
+      setCurrentProject(null);
+      setEpicData(null);
+      setSprintData(null);
+      setUserStoryData(null);
+      setTaskData(null);
+    }
   }, [authTokens]);
 
   useEffect(() => {

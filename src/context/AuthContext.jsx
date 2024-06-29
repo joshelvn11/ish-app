@@ -145,15 +145,23 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    getProfile();
+    if (authTokens) {
+      // If auth tokens are present attempt to get profile data
+      // and set up token refresh interval
+      getProfile();
 
-    const REFRESH_INTERVAL = 1000 * 60 * 4; // 4 minutes
-    let interval = setInterval(() => {
-      if (authTokens) {
-        updateToken();
-      }
-    }, REFRESH_INTERVAL);
-    return () => clearInterval(interval);
+      const REFRESH_INTERVAL = 1000 * 60 * 4; // 4 minutes
+      let interval = setInterval(() => {
+        if (authTokens) {
+          updateToken();
+        }
+      }, REFRESH_INTERVAL);
+      return () => clearInterval(interval);
+    } else {
+      // If tokens are null reset auth data
+      setUser(null);
+      setProfile([]);
+    }
   }, [authTokens]);
 
   return (
