@@ -25,10 +25,7 @@ function App() {
                 className="relative flex flex-row w-full max-h-[calc(100vh-61px)] h-full overflow-hidden"
               >
                 <Navbar></Navbar>
-                <div
-                  id="page-content-wrapper"
-                  className="w-full max-h-full p-3 overflow-y-auto"
-                >
+                <div id="page-content-wrapper" className="w-full max-h-full">
                   <Routes>
                     <Route
                       path="/"

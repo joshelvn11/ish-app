@@ -3,6 +3,7 @@ import AuthContext from "@/context/AuthContext";
 import ProjectContext from "@/context/ProjectContext";
 import EpicCard from "@/components/project-management/EpicCard";
 import { Skeleton } from "@/components/ui/skeleton";
+import ItemsToolBar from "@/components/project-management/ItemsToolBar";
 
 function BacklogPage() {
   const { authTokens } = useContext(AuthContext);
@@ -12,9 +13,10 @@ function BacklogPage() {
   return (
     <div
       id="backlog-page"
-      className="flex items-start justify-center w-full h-full"
+      className="flex flex-col items-start justify-center w-full h-full"
     >
-      <div className="flex flex-col w-full h-full gap-3">
+      <ItemsToolBar></ItemsToolBar>
+      <div className="flex flex-col w-full h-full gap-3 p-3 overflow-y-auto">
         {epicData && userStoryData ? (
           <>
             {epicData.map((obj) => (
