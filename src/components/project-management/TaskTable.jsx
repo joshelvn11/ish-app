@@ -19,7 +19,7 @@ function TaskTable(props) {
   // Set state values
   let [allData, setAllData] = useState(null);
 
-  // Use effect hook to collate and filter task and user story data
+  // Use effect hook to collate and filter item data
   useEffect(() => {
     // Only run filterting when all required data is loaded
     if (currentProject && epicData && userStoryData && taskData) {
