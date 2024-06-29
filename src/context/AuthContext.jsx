@@ -87,6 +87,7 @@ export const AuthProvider = ({ children }) => {
   let logoutUser = (e) => {
     e && e.preventDefault();
     localStorage.removeItem("authTokens");
+    localStorage.removeItem("currentProjectId");
     setAuthTokens(null);
     setUser(null);
     navigate("/login");
