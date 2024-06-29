@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 import ProjectContext from "@/context/ProjectContext";
+import AuthContext from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -19,24 +20,12 @@ import {
   CheckIcon,
 } from "@radix-ui/react-icons";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Check, ChevronsUpDown } from "lucide-react";
-import { cn } from "@/lib/utils";
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from "@/components/ui/command";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { useToast } from "@/components/ui/use-toast";
 
 function EpicForm(props) {
-  const { currrentProject } = useContext(ProjectContext);
+  const { currentProject } = useContext(ProjectContext);
+  const { authTokens } = useContext(AuthContext);
+  const { toast } = useToast();
 
   let [create, setCreate] = useState(props.create);
   let [validationErrors, setValidationErrors] = useState([]);
@@ -64,9 +53,39 @@ function EpicForm(props) {
     return valid;
   };
 
-  const updateEpic = (e) => {
+  const updateEpic = async (e) => {
     e.preventDefault();
-    validateData();
+    if (!validateData()) {
+      return;
+    }
+
+    if (create) {
+      const apiUrl = import.meta.env.VITE_API_URL;
+      let response = await fetch(
+        `${apiUrl}/projects/${currentProject.id}/epics/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + String(authTokens.access),
+          },
+          body: JSON.stringify({
+            project: currentProject.id,
+            name: name,
+            description: description,
+            priority: priority,
+            status: status,
+          }),
+        }
+      );
+      let data = await response.json();
+      if (response.status === 201) {
+        toast({ description: "Epic created successfully!" });
+        setCreate(false);
+      } else if (response.status === 400) {
+        console.log("Error creating epic", data);
+      }
+    }
   };
 
   return (

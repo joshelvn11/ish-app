@@ -11,6 +11,7 @@ import Navbar from "./components/core/Navbar";
 import SignUpPage from "./pages/SignUpPage";
 import { ProjectContextProvider } from "./context/ProjectContext";
 import BacklogPage from "./pages/BacklogPage";
+import { Toaster } from "@/components/ui/toaster";
 
 function App() {
   return (
@@ -52,6 +53,7 @@ function App() {
           </AuthProvider>
         </UiContextProvider>
       </BrowserRouter>
+      <Toaster />
     </div>
   );
 }
