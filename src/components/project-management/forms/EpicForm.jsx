@@ -23,16 +23,17 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useToast } from "@/components/ui/use-toast";
 
 function EpicForm(props) {
-  const { currentProject } = useContext(ProjectContext);
+  const { currentProject, getEpicData } = useContext(ProjectContext);
   const { authTokens } = useContext(AuthContext);
   const { toast } = useToast();
 
   let [create, setCreate] = useState(props.create);
   let [validationErrors, setValidationErrors] = useState([]);
+  let [epicId, setEpicId] = useState(props.epicId);
 
   // Form data state
-  let [name, setName] = useState("");
-  let [description, setDescription] = useState("");
+  let [name, setName] = useState(props.title);
+  let [description, setDescription] = useState(props.description);
   let [priority, setPriority] = useState("");
   let [status, setStatus] = useState("");
 
@@ -81,10 +82,12 @@ function EpicForm(props) {
       let data = await response.json();
       if (response.status === 201) {
         toast({ description: "Epic created successfully!" });
+        getEpicData();
         setCreate(false);
       } else if (response.status === 400) {
-        console.log("Error creating epic", data);
+        toast({ variant: "destructive", description: data });
       }
+    } else {
     }
   };
 
