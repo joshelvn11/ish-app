@@ -88,8 +88,9 @@ function EpicForm(props) {
         getEpicData();
         // Set to update mode
         setCreate(false);
-      } else if (response.status === 400) {
-        toast({ variant: "destructive", description: data });
+      } else {
+        console.log(data);
+        toast({ variant: "destructive", description: "Error creating epic" });
       }
     } else {
       const apiUrl = import.meta.env.VITE_API_URL;
@@ -115,8 +116,9 @@ function EpicForm(props) {
         toast({ description: "Epic updated successfully!" });
         // Refresh epic data
         getEpicData();
-      } else if (response.status === 400) {
-        toast({ variant: "destructive", description: data });
+      } else {
+        console.log(data);
+        toast({ variant: "destructive", description: "Error updating epic" });
       }
     }
   };
