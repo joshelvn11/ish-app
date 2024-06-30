@@ -30,6 +30,7 @@ import EpicForm from "./forms/EpicForm";
 function EpicCard(props) {
   const [isOpen, setIsOpen] = useState(true);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  console.log(props);
   return (
     <>
       <Card className="w-full">
@@ -74,6 +75,8 @@ function EpicCard(props) {
             epicId={props.epicId}
             title={props.title}
             description={props.description}
+            priority={props.priority}
+            status={props.status}
           />
         </DialogContent>
       </Dialog>

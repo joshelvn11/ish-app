@@ -25,6 +25,8 @@ function BacklogPage() {
                 epicId={obj.id}
                 title={obj.name}
                 description={obj.description}
+                priority={obj.priority}
+                status={obj.status}
               ></EpicCard>
             ))}{" "}
             <EpicCard

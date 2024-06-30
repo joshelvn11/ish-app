@@ -34,8 +34,8 @@ function EpicForm(props) {
   // Form data state
   let [name, setName] = useState(props.title);
   let [description, setDescription] = useState(props.description);
-  let [priority, setPriority] = useState("");
-  let [status, setStatus] = useState("");
+  let [priority, setPriority] = useState(props.priority);
+  let [status, setStatus] = useState(props.status);
 
   const validateData = () => {
     let valid = true;
@@ -82,12 +82,42 @@ function EpicForm(props) {
       let data = await response.json();
       if (response.status === 201) {
         toast({ description: "Epic created successfully!" });
+        // Set the new epic id to the id returned in the respinse
+        setEpicId(data.id);
+        // Refresh epic data
         getEpicData();
+        // Set to update mode
         setCreate(false);
       } else if (response.status === 400) {
         toast({ variant: "destructive", description: data });
       }
     } else {
+      const apiUrl = import.meta.env.VITE_API_URL;
+      let response = await fetch(
+        `${apiUrl}/projects/${currentProject.id}/epics/${epicId}/`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + String(authTokens.access),
+          },
+          body: JSON.stringify({
+            project: currentProject.id,
+            name: name,
+            description: description,
+            priority: priority,
+            status: status,
+          }),
+        }
+      );
+      let data = await response.json();
+      if (response.status === 200) {
+        toast({ description: "Epic updated successfully!" });
+        // Refresh epic data
+        getEpicData();
+      } else if (response.status === 400) {
+        toast({ variant: "destructive", description: data });
+      }
     }
   };
 
