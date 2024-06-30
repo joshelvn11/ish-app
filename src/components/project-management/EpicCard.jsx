@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import ProjectContext from "@/context/ProjectContext";
 import {
   Card,
   CardContent,
@@ -27,10 +28,15 @@ import { Badge } from "@/components/ui/badge";
 import TaskTable from "./TaskTable";
 import { EnterFullScreenIcon, TrashIcon } from "@radix-ui/react-icons";
 import EpicForm from "./forms/EpicForm";
+import { useContext } from "react";
 
 function EpicCard(props) {
+  const { deleteEpic } = useContext(ProjectContext);
+
   const [isOpen, setIsOpen] = useState(true);
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isDetailDialogOpen, setIsDetailDialogOpen] = useState(false);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+
   return (
     <>
       <Card className="w-full">
@@ -42,10 +48,16 @@ function EpicCard(props) {
           <div className="flex items-center justify-between space-x-4">
             <h3 className="font-semibold">{props.title}</h3>
             <div className="flex items-center h-full">
-              <Button variant="ghost" onClick={() => setIsDialogOpen(true)}>
+              <Button
+                variant="ghost"
+                onClick={() => setIsDetailDialogOpen(true)}
+              >
                 <EnterFullScreenIcon className="w-5 h-5" />
               </Button>
-              <Button variant="ghost">
+              <Button
+                variant="ghost"
+                onClick={() => setIsDeleteDialogOpen(true)}
+              >
                 <TrashIcon className="w-5 h-5" />
               </Button>
               <CollapsibleTrigger asChild>
@@ -90,7 +102,11 @@ function EpicCard(props) {
           </CollapsibleContent>
         </Collapsible>
       </Card>
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+      <Dialog
+        id="epicDetailDialog"
+        open={isDetailDialogOpen}
+        onOpenChange={setIsDetailDialogOpen}
+      >
         <DialogContent>
           <DialogHeader>
             <DialogTitle>
@@ -106,6 +122,30 @@ function EpicCard(props) {
             priority={props.priority}
             status={props.status}
           />
+        </DialogContent>
+      </Dialog>
+      <Dialog
+        id="epic-delete-dialog"
+        open={isDeleteDialogOpen}
+        onOpenChange={setIsDeleteDialogOpen}
+      >
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle className="pb-3">Are you absolutely sure?</DialogTitle>
+            <DialogDescription>
+              This epic will be deleted permanently. Items in this epic will not
+              be deleted and will be moved to items without an epic.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button
+              onClick={() => {
+                deleteEpic(props.epicId);
+              }}
+            >
+              Confirm
+            </Button>
+          </DialogFooter>
         </DialogContent>
       </Dialog>
     </>

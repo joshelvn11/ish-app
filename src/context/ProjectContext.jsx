@@ -1,5 +1,6 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
 import AuthContext from "@/context/AuthContext";
+import { useToast } from "@/components/ui/use-toast";
 
 const ProjectContext = React.createContext();
 
@@ -7,6 +8,7 @@ export default ProjectContext;
 
 export const ProjectContextProvider = ({ children }) => {
   const { authTokens } = useContext(AuthContext);
+  const { toast } = useToast();
   let [projects, setProjects] = useState([]);
   let [currentProject, setCurrentProject] = useState(null);
   let [epicData, setEpicData] = useState(null);
@@ -70,6 +72,28 @@ export const ProjectContextProvider = ({ children }) => {
       if (response.status === 200) {
         setEpicData(data);
       }
+    }
+  };
+
+  const deleteEpic = async (epicId) => {
+    const apiUrl = import.meta.env.VITE_API_URL;
+    let response = await fetch(
+      `${apiUrl}/projects/${currentProject.id}/epics/${epicId}/`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + String(authTokens.access),
+        },
+      }
+    );
+    //let data = await response.json();
+    if (response.status === 204) {
+      toast({ description: "Epic deleted successfully!" });
+      // Refresh epic data
+      getEpicData();
+    } else {
+      toast({ variant: "destructive", description: "Error deleting epic" });
     }
   };
 
@@ -142,6 +166,7 @@ export const ProjectContextProvider = ({ children }) => {
     loadProject: loadProject,
     epicData: epicData,
     getEpicData: getEpicData,
+    deleteEpic: deleteEpic,
     sprintData: sprintData,
     userStoryData: userStoryData,
     taskData: taskData,
