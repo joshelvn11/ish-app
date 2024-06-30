@@ -141,6 +141,7 @@ export const ProjectContextProvider = ({ children }) => {
     currentProject: currentProject,
     loadProject: loadProject,
     epicData: epicData,
+    getEpicData: getEpicData,
     sprintData: sprintData,
     userStoryData: userStoryData,
     taskData: taskData,
