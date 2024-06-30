@@ -133,8 +133,7 @@ function EpicCard(props) {
           <DialogHeader>
             <DialogTitle className="pb-3">Are you absolutely sure?</DialogTitle>
             <DialogDescription>
-              This epic will be deleted permanently. Items in this epic will not
-              be deleted and will be moved to items without an epic.
+              This epic and all child items will be deleted permanently.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
