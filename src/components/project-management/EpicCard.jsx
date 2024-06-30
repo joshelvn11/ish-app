@@ -30,7 +30,6 @@ import EpicForm from "./forms/EpicForm";
 function EpicCard(props) {
   const [isOpen, setIsOpen] = useState(true);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  console.log(props);
   return (
     <>
       <Card className="w-full">
