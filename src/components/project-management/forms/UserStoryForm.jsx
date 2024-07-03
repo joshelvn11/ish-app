@@ -34,13 +34,16 @@ function UserStoryForm(props) {
   let [epicId, setEpicId] = useState(props.epicId);
 
   // Form data state
-  let [name, setName] = useState(props.title);
-  let [description, setDescription] = useState(props.description);
+  let [name, setName] = useState(props.title ?? "");
+  let [description, setDescription] = useState(props.description ?? "");
   let [userStory, setUserStory] = useState(null);
   let [acceptanceCriteria, setAcceptanceCriteria] = useState([]);
   let [newAcceptanceCriteria, setNewAcceptanceCriteria] = useState("");
   let [creatingAcceptanceCriteria, setCreatingAcceptanceCriteria] =
     useState(false);
+  let [subtasks, setSubtasks] = useState([]);
+  let [newSubstask, setNewSubtask] = useState("");
+  let [creatingSubtasks, setCreatingSubtasks] = useState(false);
   let [priority, setPriority] = useState(props.priority);
   let [status, setStatus] = useState(props.status);
 
@@ -158,9 +161,45 @@ function UserStoryForm(props) {
     setNewAcceptanceCriteria("");
   };
 
+  const saveNewSubtask = async () => {
+    // Create a new subtask ID
+    const generateRandomId = () => {
+      // Generate random id
+      let newId = Math.floor(100000 + Math.random() * 900000);
+      // Check if the new id is unqiue
+      if (subtasks.some((item) => item.id === newId)) {
+        // If not recrusively call the function
+        generateRandomId();
+      } else {
+        // If it is unqiue return the id
+        return newId;
+      }
+    };
+
+    const id = generateRandomId();
+
+    // Create new subtask JSON object
+    const object = { id: id, task: newSubstask, done: false };
+
+    // Append the new substask to the acceptance subtask array
+    setSubtasks([...subtasks, object]);
+
+    // Reset variables
+    setCreatingSubtasks(false);
+    setNewSubtask("");
+  };
+
   const updateAcceptanceCriteriaDone = async (id) => {
     setAcceptanceCriteria(
       acceptanceCriteria.map((item) =>
+        item.id === id ? { ...item, ["done"]: !item.done } : item
+      )
+    );
+  };
+
+  const updateSubtaskDone = async (id) => {
+    setNewSubtask(
+      subtasks.map((item) =>
         item.id === id ? { ...item, ["done"]: !item.done } : item
       )
     );
@@ -270,8 +309,59 @@ function UserStoryForm(props) {
                 </div>
               )}
             </div>
+            <div id="subtasks-wrapper" className="space-y-2">
+              <div className="flex items-center justify-between w-full">
+                <Label className="text-md" htmlFor="subtasks">
+                  Subtasks
+                </Label>
+                <Button
+                  size="sm"
+                  onClick={() => {
+                    setCreatingSubtasks(true);
+                  }}
+                >
+                  Add
+                </Button>
+              </div>
+              {subtasks &&
+                subtasks.map((item) => (
+                  <div key={item.id} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={item.id}
+                      checked={item.done}
+                      onClick={() => {
+                        updateSubtaskDone(item.id);
+                      }}
+                    />
+                    <label
+                      htmlFor={item.id}
+                      className={`${
+                        item.done && "line-through text-gray-500"
+                      } text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70`}
+                    >
+                      {item.task}
+                    </label>
+                  </div>
+                ))}
+              {creatingSubtasks && (
+                <div className="relative">
+                  <Input
+                    value={newSubstask}
+                    onChange={(e) => setNewSubtask(e.target.value)}
+                  ></Input>
+                  <Button
+                    onClick={saveNewSubtask}
+                    variant="ghost"
+                    size="sm"
+                    className="absolute transform -translate-y-1/2 right-0.5 top-1/2"
+                  >
+                    Save
+                  </Button>
+                </div>
+              )}
+            </div>
             <div className="space-y-2">
-              <Label className="text-md" tmlFor="priority">
+              <Label className="text-md" htmlFor="priority">
                 Priority
               </Label>
               <Select
