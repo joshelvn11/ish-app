@@ -1,0 +1,12 @@
+[
+  {
+    "id": 872413,
+    "criteria": "When the user clicks the button an alert is displayed",
+    "done": false
+  },
+  {
+    "id": 283911,
+    "criteria": "When the user clicks the close button in the application window is closed",
+    "done": true
+  }
+]

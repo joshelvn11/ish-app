@@ -18,7 +18,8 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { PlusIcon } from "@radix-ui/react-icons";
-import EpicForm from "./forms/EpicForm";
+import EpicForm from "@/components/project-management/forms/EpicForm";
+import UserStoryForm from "@/components/project-management/forms/UserStoryForm";
 
 const createItem = (value) => {
   console.log("Creating item", value);
@@ -69,6 +70,7 @@ function ItemCreateSelect() {
             <DialogDescription></DialogDescription>
           </DialogHeader>
           {itemType === "EPIC" && <EpicForm create={true} />}
+          {itemType === "USERSTORY" && <UserStoryForm create={true} />}
         </DialogContent>
       </Dialog>
     </div>
