@@ -169,6 +169,7 @@ export const ProjectContextProvider = ({ children }) => {
     deleteEpic: deleteEpic,
     sprintData: sprintData,
     userStoryData: userStoryData,
+    getUserStoryData: getUserStoryData,
     taskData: taskData,
     filterOptions: filterOptions,
   };

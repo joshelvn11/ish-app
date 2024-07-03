@@ -27,13 +27,13 @@ import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 
 function UserStoryForm(props) {
-  const { createUserStory } = useContext(ProjectContext);
+  const { currentProject, getUserStoryData } = useContext(ProjectContext);
   const { authTokens } = useContext(AuthContext);
   const { toast } = useToast();
 
   let [create, setCreate] = useState(props.create);
   let [validationErrors, setValidationErrors] = useState([]);
-  let [epicId, setEpicId] = useState(props.epicId);
+  let [userStoryId, setUserStoryId] = useState(props.userStoryId);
 
   // Form data state
   let [name, setName] = useState(props.title ?? "");
@@ -120,6 +120,34 @@ function UserStoryForm(props) {
         item.id === id ? { ...item, ["done"]: !item.done } : item
       )
     );
+  };
+
+  const createUserStory = async (name) => {
+    const apiUrl = import.meta.env.VITE_API_URL;
+    let response = await fetch(
+      `${apiUrl}/projects/${currentProject.id}/user-stories/`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + String(authTokens.access),
+        },
+        body: JSON.stringify({
+          project: currentProject.id,
+          name: name,
+        }),
+      }
+    );
+    let data = await response.json();
+    if (response.status === 201) {
+      toast({ description: "User story created successfully" });
+      // Set the user story id to the newly created id
+      setUserStoryId(data.id);
+      // Refresh user story data
+      getUserStoryData();
+      // Set to update mode
+      setCreate(false);
+    }
   };
 
   return (
@@ -356,7 +384,7 @@ function UserStoryForm(props) {
             </>
           )}
           {create && ( // Only show the create button when in create mode
-            <Button type="submit" className="w-full">
+            <Button onClick={() => createUserStory(name)} className="w-full">
               Create User Story
             </Button>
           )}
