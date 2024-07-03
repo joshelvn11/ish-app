@@ -236,6 +236,52 @@ function UserStoryForm(props) {
                 required
               />
             </div>
+            <div className="flex gap-2">
+              <Select
+                value={priority}
+                onValueChange={(value) => setPriority(value)}
+              >
+                <SelectTrigger className="w-[120px] sm:w-[150px]">
+                  <SelectValue placeholder="Select priority..." />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="OPTIONAL">
+                    <Badge className="bg-blue-500">OPTIONAL</Badge>
+                  </SelectItem>
+                  <SelectItem value="BENEFICIAL">
+                    <Badge className="bg-emerald-600">BENEFICIAL</Badge>
+                  </SelectItem>
+                  <SelectItem value="ESSENTIAL">
+                    <Badge className="bg-amber-500">ESSENTIAL</Badge>
+                  </SelectItem>
+                  <SelectItem value="CRITICAL">
+                    <Badge className="bg-red-600">CRITICAL</Badge>
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+              <Select
+                value={status}
+                onValueChange={(value) => setStatus(value)}
+              >
+                <SelectTrigger className="w-[120px] sm:w-[150px]">
+                  <SelectValue placeholder="Select status..." />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="TO DO">
+                    <Badge className="bg-red-600">TO DO</Badge>
+                  </SelectItem>
+                  <SelectItem value="IN PROGRESS">
+                    <Badge className="bg-amber-500">IN PROGRESS</Badge>
+                  </SelectItem>
+                  <SelectItem value="REVIEW">
+                    <Badge className="bg-blue-500">REVIEW</Badge>
+                  </SelectItem>
+                  <SelectItem value="DONE">
+                    <Badge className="bg-emerald-600">DONE</Badge>
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
             <div className="space-y-2">
               <Label className="text-md" htmlFor="description">
                 Description
@@ -359,60 +405,6 @@ function UserStoryForm(props) {
                   </Button>
                 </div>
               )}
-            </div>
-            <div className="space-y-2">
-              <Label className="text-md" htmlFor="priority">
-                Priority
-              </Label>
-              <Select
-                value={priority}
-                onValueChange={(value) => setPriority(value)}
-              >
-                <SelectTrigger className="w-[120px] sm:w-[150px]">
-                  <SelectValue placeholder="Select priority..." />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="OPTIONAL">
-                    <Badge className="bg-blue-500">OPTIONAL</Badge>
-                  </SelectItem>
-                  <SelectItem value="BENEFICIAL">
-                    <Badge className="bg-emerald-600">BENEFICIAL</Badge>
-                  </SelectItem>
-                  <SelectItem value="ESSENTIAL">
-                    <Badge className="bg-amber-500">ESSENTIAL</Badge>
-                  </SelectItem>
-                  <SelectItem value="CRITICAL">
-                    <Badge className="bg-red-600">CRITICAL</Badge>
-                  </SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-2">
-              <Label className="text-md" htmlFor="status">
-                Status
-              </Label>
-              <Select
-                value={status}
-                onValueChange={(value) => setStatus(value)}
-              >
-                <SelectTrigger className="w-[120px] sm:w-[150px]">
-                  <SelectValue placeholder="Select status..." />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="TO DO">
-                    <Badge className="bg-red-600">TO DO</Badge>
-                  </SelectItem>
-                  <SelectItem value="IN PROGRESS">
-                    <Badge className="bg-amber-500">IN PROGRESS</Badge>
-                  </SelectItem>
-                  <SelectItem value="REVIEW">
-                    <Badge className="bg-blue-500">REVIEW</Badge>
-                  </SelectItem>
-                  <SelectItem value="DONE">
-                    <Badge className="bg-emerald-600">DONE</Badge>
-                  </SelectItem>
-                </SelectContent>
-              </Select>
             </div>
             <Button type="submit" className="w-full">
               {create ? "Create" : "Update"}
