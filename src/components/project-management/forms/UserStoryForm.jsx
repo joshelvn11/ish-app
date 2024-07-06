@@ -27,7 +27,8 @@ import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 
 function UserStoryForm(props) {
-  const { currentProject, getUserStoryData } = useContext(ProjectContext);
+  const { currentProject, getUserStoryData, epicData } =
+    useContext(ProjectContext);
   const { authTokens } = useContext(AuthContext);
   const { toast } = useToast();
 
@@ -37,6 +38,7 @@ function UserStoryForm(props) {
 
   // Form data state
   let [name, setName] = useState(props.name ?? "");
+  let [epic, setEpic] = useState(props.epic ?? null);
   let [description, setDescription] = useState(props.description ?? "");
   let [editingDescription, setEditingDescription] = useState(false);
   let [userStory, setUserStory] = useState(props.userStory);
@@ -75,6 +77,34 @@ function UserStoryForm(props) {
       toast({
         variant: "destructive",
         description: "Problem updating description",
+      });
+    }
+  };
+
+  const updateEpic = async (value) => {
+    const apiUrl = import.meta.env.VITE_API_URL;
+    let response = await fetch(
+      `${apiUrl}/projects/${currentProject.id}/user-stories/${userStoryId}/`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + String(authTokens.access),
+        },
+        body: JSON.stringify({
+          epic: value,
+        }),
+      }
+    );
+    let data = await response.json();
+    if (response.status === 200) {
+      toast({ description: "Epic updated" });
+      setEpic(value);
+      getUserStoryData();
+    } else {
+      toast({
+        variant: "destructive",
+        description: "Problem updating epic",
       });
     }
   };
@@ -185,6 +215,11 @@ function UserStoryForm(props) {
     }
   };
 
+  useEffect(() => {
+    console.log("Epic data", epicData);
+    console.log("Props", props);
+  });
+
   return (
     <div className="space-y-4">
       <div className="space-y-2">
@@ -291,6 +326,21 @@ function UserStoryForm(props) {
                     />
                   </PopoverContent>
                 </Popover>
+              </div>
+              <div className="space-y-2" id="epic-wrapper">
+                <Select value={epic ?? ""} onValueChange={updateEpic}>
+                  <SelectTrigger className="w-[120px] sm:w-[150px]">
+                    <SelectValue placeholder="Select epic..." />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {epicData &&
+                      epicData.map((epic) => (
+                        <SelectItem value={epic.id} key={epic.id}>
+                          {epic.name}
+                        </SelectItem>
+                      ))}
+                  </SelectContent>
+                </Select>
               </div>
               <div className="space-y-2">
                 <div className="flex items-center justify-between w-full">

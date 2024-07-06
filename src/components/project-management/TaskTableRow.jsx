@@ -100,6 +100,7 @@ function TaskTableRow(props) {
               create={false}
               id={props.id}
               name={props.name}
+              epic={props.epic}
               description={props.description}
               duedate={props.duedate}
               status={props.status}

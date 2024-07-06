@@ -100,6 +100,7 @@ function TaskTable(props) {
               id={data.id}
               type={data.type}
               name={data.name}
+              epic={data.epic}
               description={data.description}
               status={data.status}
               priority={data.priority}
