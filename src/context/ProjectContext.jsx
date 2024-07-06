@@ -119,6 +119,7 @@ export const ProjectContextProvider = ({ children }) => {
   };
 
   const getUserStoryData = async () => {
+    setUserStoryData(null);
     if (currentProject) {
       // Attempt to get epic data if current project is not falsey
       const apiUrl = import.meta.env.VITE_API_URL;

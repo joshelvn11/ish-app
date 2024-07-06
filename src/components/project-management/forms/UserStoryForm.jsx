@@ -183,7 +183,6 @@ function UserStoryForm(props) {
     if (response.status === 200) {
       toast({ description: "Due date updated" });
       setDuedate(value);
-      getUserStoryData();
     } else {
       toast({
         variant: "destructive",
@@ -211,7 +210,6 @@ function UserStoryForm(props) {
     if (response.status === 200) {
       toast({ description: "Status updated" });
       setStatus(value);
-      getUserStoryData();
     } else {
       toast({
         variant: "destructive",
@@ -239,7 +237,6 @@ function UserStoryForm(props) {
     if (response.status === 200) {
       toast({ description: "Sprint updated" });
       setSprint(value);
-      getUserStoryData();
     } else {
       toast({
         variant: "destructive",
