@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 import ProjectContext from "@/context/ProjectContext";
+import AuthContext from "@/context/AuthContext";
 import {
   Table,
   TableBody,
@@ -28,21 +29,68 @@ import {
 import { Button } from "@/components/ui/button";
 import { EnterFullScreenIcon, TrashIcon } from "@radix-ui/react-icons";
 import { Badge } from "@/components/ui/badge";
+import { useToast } from "@/components/ui/use-toast";
 import UserStoryForm from "@/components/project-management/forms/UserStoryForm";
 
 function TaskTableRow(props) {
   // Get context data
-  const { sprintData } = useContext(ProjectContext);
+  const { sprintData, currentProject } = useContext(ProjectContext);
+  const { authTokens } = useContext(AuthContext);
+
+  const { toast } = useToast();
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   // Get initial state values from props
+  let [id, setId] = useState(props.id);
   let [type, setType] = useState(props.type);
   let [name, setName] = useState(props.name);
+  let [epic, setEpic] = useState(props.epic);
+  let [description, setDescription] = useState(props.description);
   let [status, setStatus] = useState(props.status);
   let [priority, setPriority] = useState(props.priority);
   let [sprint, setSprint] = useState(props.sprint);
   let [duedate, setDuedate] = useState(props.duedate);
+  let [userStory, setUserStory] = useState(props.userStory);
+  let [acceptanceCriteria, setAcceptanceCriteria] = useState(
+    props.acceptanceCriteria
+  );
+  let [subtasks, setSubtasks] = useState(props.subtasks);
+
+  // Callback function to update data
+  const fetchItemData = async () => {
+    const apiUrl = import.meta.env.VITE_API_URL;
+    let response = await fetch(
+      `${apiUrl}/projects/${currentProject.id}/user-stories/${id}/`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + String(authTokens.access),
+        },
+      }
+    );
+    let data = await response.json();
+    if (response.status === 200) {
+      console.log("Data updated successfully", data);
+      setName(data.name);
+      setEpic(data.epic);
+      setDescription(data.description);
+      setStatus(data.status);
+      setPriority(data.priority);
+      setSprint(data.sprint);
+      setDuedate(data.due_date);
+      setUserStory(data.user_story);
+      setAcceptanceCriteria(data.acceptanceCriteria);
+      setSubtasks(data.subtasks);
+      toast({ description: "Item data updated successfully" });
+    } else {
+      toast({
+        variant: "destructive",
+        description: `Problem fetching data: ${JSON.stringify(data)}`,
+      });
+    }
+  };
 
   return (
     <>
@@ -98,17 +146,18 @@ function TaskTableRow(props) {
           {type.type === "USERSTORY" && (
             <UserStoryForm
               create={false}
-              id={props.id}
-              name={props.name}
-              epic={props.epic}
-              description={props.description}
+              id={id}
+              name={name}
+              epic={epic}
+              description={description}
               duedate={duedate}
               status={status}
               priority={priority}
               sprint={sprint}
-              userStory={props.userStory}
-              acceptanceCriteria={props.acceptanceCriteria}
-              subtasks={props.subtasks}
+              userStory={userStory}
+              acceptanceCriteria={acceptanceCriteria}
+              subtasks={subtasks}
+              fetchItemData={fetchItemData}
             />
           )}
         </DialogContent>

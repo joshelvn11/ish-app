@@ -75,6 +75,7 @@ function UserStoryForm(props) {
     let data = await response.json();
     if (response.status === 200) {
       toast({ description: "Description updated" });
+      props.fetchItemData();
     } else {
       toast({
         variant: "destructive",
@@ -101,6 +102,7 @@ function UserStoryForm(props) {
     let data = await response.json();
     if (response.status === 200) {
       toast({ description: "User Story updated" });
+      props.fetchItemData();
     } else {
       toast({
         variant: "destructive",
@@ -128,6 +130,7 @@ function UserStoryForm(props) {
     if (response.status === 200) {
       toast({ description: "Epic updated" });
       setEpic(value);
+      props.fetchItemData();
     } else {
       toast({
         variant: "destructive",
@@ -155,6 +158,7 @@ function UserStoryForm(props) {
     if (response.status === 200) {
       toast({ description: "Priority updated" });
       setPriority(value);
+      props.fetchItemData();
     } else {
       toast({
         variant: "destructive",
@@ -182,6 +186,7 @@ function UserStoryForm(props) {
     if (response.status === 200) {
       toast({ description: "Due date updated" });
       setDuedate(value);
+      props.fetchItemData();
     } else {
       toast({
         variant: "destructive",
@@ -209,6 +214,7 @@ function UserStoryForm(props) {
     if (response.status === 200) {
       toast({ description: "Status updated" });
       setStatus(value);
+      props.fetchItemData();
     } else {
       toast({
         variant: "destructive",
@@ -236,6 +242,7 @@ function UserStoryForm(props) {
     if (response.status === 200) {
       toast({ description: "Sprint updated" });
       setSprint(value);
+      props.fetchItemData();
     } else {
       toast({
         variant: "destructive",
