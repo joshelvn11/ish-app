@@ -42,6 +42,7 @@ function UserStoryForm(props) {
   let [description, setDescription] = useState(props.description ?? "");
   let [editingDescription, setEditingDescription] = useState(false);
   let [userStory, setUserStory] = useState(props.userStory);
+  let [editingUserStory, setEditingUserStory] = useState(false);
   let [acceptanceCriteria, setAcceptanceCriteria] = useState(
     props.acceptanceCriteria ?? []
   );
@@ -77,6 +78,32 @@ function UserStoryForm(props) {
       toast({
         variant: "destructive",
         description: "Problem updating description",
+      });
+    }
+  };
+
+  const updateUserStory = async () => {
+    const apiUrl = import.meta.env.VITE_API_URL;
+    let response = await fetch(
+      `${apiUrl}/projects/${currentProject.id}/user-stories/${userStoryId}/`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + String(authTokens.access),
+        },
+        body: JSON.stringify({
+          user_story: userStory,
+        }),
+      }
+    );
+    let data = await response.json();
+    if (response.status === 200) {
+      toast({ description: "User Story updated" });
+    } else {
+      toast({
+        variant: "destructive",
+        description: `Problem updating user story: ${JSON.stringify(data)}`,
       });
     }
   };
@@ -439,13 +466,25 @@ function UserStoryForm(props) {
                 />
               </div>
               <div className="space-y-2">
-                <Label className="text-md" htmlFor="userstory">
-                  User Story
-                </Label>
+                <div className="flex items-center justify-between w-full">
+                  <Label className="text-md" htmlFor="userstory">
+                    User Story
+                  </Label>
+                  <Button
+                    size="sm"
+                    onClick={() => {
+                      setEditingUserStory(!editingUserStory);
+                      editingUserStory && updateUserStory();
+                    }}
+                  >
+                    {editingUserStory ? "Save" : "Edit"}
+                  </Button>
+                </div>
                 <Textarea
                   id="userstory"
                   type="text"
                   value={userStory}
+                  readOnly={!editingUserStory}
                   onChange={(e) => setUserStory(e.target.value)}
                 />
               </div>
