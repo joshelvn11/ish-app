@@ -7,7 +7,7 @@ import ItemsToolBar from "@/components/project-management/ItemsToolBar";
 
 function BacklogPage() {
   const { authTokens } = useContext(AuthContext);
-  const { currentProject, epicData, userStoryData } =
+  const { currentProject, epicData, userStoryData, taskData } =
     useContext(ProjectContext);
 
   return (
@@ -29,12 +29,16 @@ function BacklogPage() {
                 status={obj.status}
               ></EpicCard>
             ))}{" "}
-            <EpicCard
-              key={0}
-              epicId={null}
-              title={"No Epic"}
-              description={"Items without an epic"}
-            ></EpicCard>{" "}
+            {((userStoryData &&
+              userStoryData.some((userStory) => userStory.epic == null)) ||
+              (taskData && taskData.some((task) => task.epic == null))) && (
+              <EpicCard
+                key={0}
+                epicId={null}
+                title={"No Epic"}
+                description={"Items without an epic"}
+              ></EpicCard>
+            )}
           </>
         ) : (
           <>
