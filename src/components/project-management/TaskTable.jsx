@@ -23,6 +23,7 @@ function TaskTable(props) {
   useEffect(() => {
     // Only run filterting when all required data is loaded
     if (currentProject && epicData && userStoryData && taskData) {
+      console.log("Reloading item data");
       let userStories;
       let tasks;
 
@@ -57,14 +58,6 @@ function TaskTable(props) {
         });
       }
 
-      // Update state only if the filtered data has changed
-      //   setAllData((prevData) => {
-      //     if (JSON.stringify(prevData) !== JSON.stringify(userStories)) {
-      //       return userStories;
-      //     }
-      //     return prevData;
-      //   });
-
       // Collate the data based on filter options
       let collatedData = [];
 
@@ -77,7 +70,7 @@ function TaskTable(props) {
       }
       setAllData(collatedData);
     }
-  }, [currentProject, epicData, userStoryData]);
+  }, [currentProject, epicData, userStoryData, taskData]);
 
   return (
     <Table>

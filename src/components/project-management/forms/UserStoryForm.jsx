@@ -155,7 +155,6 @@ function UserStoryForm(props) {
     if (response.status === 200) {
       toast({ description: "Priority updated" });
       setPriority(value);
-      getUserStoryData();
     } else {
       toast({
         variant: "destructive",
