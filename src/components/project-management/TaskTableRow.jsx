@@ -124,19 +124,7 @@ function TaskTableRow(props) {
           </Badge>
         </TableCell>
         <TableCell>
-          <Select value={sprint ?? ""}>
-            <SelectTrigger className="w-[120px] sm:w-[180px]">
-              <SelectValue placeholder="Select Sprint" />
-            </SelectTrigger>
-            <SelectContent>
-              {sprintData &&
-                sprintData.map((sprint) => (
-                  <SelectItem key={sprint.id} value={sprint.id}>
-                    {sprint.name}
-                  </SelectItem>
-                ))}
-            </SelectContent>
-          </Select>
+          {sprint && sprintData.find((item) => item.id == sprint).name}
         </TableCell>
         <TableCell>{duedate}</TableCell>
         <TableCell className="text-right">
