@@ -38,6 +38,7 @@ function UserStoryForm(props) {
   // Form data state
   let [name, setName] = useState(props.title ?? "");
   let [description, setDescription] = useState(props.description ?? "");
+  let [editingDescription, setEditingDescription] = useState(false);
   let [userStory, setUserStory] = useState(null);
   let [acceptanceCriteria, setAcceptanceCriteria] = useState([]);
   let [newAcceptanceCriteria, setNewAcceptanceCriteria] = useState("");
@@ -49,6 +50,29 @@ function UserStoryForm(props) {
   let [duedate, setDuedate] = useState("");
   let [priority, setPriority] = useState(props.priority);
   let [status, setStatus] = useState(props.status);
+
+  const saveDescription = async () => {
+    const apiUrl = import.meta.env.VITE_API_URL;
+    let response = await fetch(
+      `${apiUrl}/projects/${currentProject.id}/user-stories/${userStoryId}/`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + String(authTokens.access),
+        },
+        body: JSON.stringify({
+          description: description,
+        }),
+      }
+    );
+    let data = await response.json();
+    if (response.status === 201) {
+      toast({ description: "Description updated" });
+    } else {
+      toast({ description: "Problem updating description" });
+    }
+  };
 
   const saveNewAcceptanceCriteria = async () => {
     // Create a new acceptance criteria ID
@@ -147,6 +171,12 @@ function UserStoryForm(props) {
       getUserStoryData();
       // Set to update mode
       setCreate(false);
+    } else {
+      console.log(data);
+      toast({
+        variant: "destructive",
+        description: `Problem creating user story: ${JSON.stringify(data)}`,
+      });
     }
   };
 
@@ -258,13 +288,25 @@ function UserStoryForm(props) {
                 </Popover>
               </div>
               <div className="space-y-2">
-                <Label className="text-md" htmlFor="description">
-                  Description
-                </Label>
+                <div className="flex items-center justify-between w-full">
+                  <Label className="text-md" htmlFor="description">
+                    Description
+                  </Label>
+                  <Button
+                    size="sm"
+                    onClick={() => {
+                      setEditingDescription(!editingDescription);
+                      editingDescription && saveDescription();
+                    }}
+                  >
+                    {editingDescription ? "Save" : "Edit"}
+                  </Button>
+                </div>
                 <Textarea
                   id="description"
                   type="text"
                   value={description}
+                  readOnly={!editingDescription}
                   onChange={(e) => setDescription(e.target.value)}
                 />
               </div>
