@@ -106,10 +106,22 @@ function TaskTableRow(props) {
         </TableCell>
         <TableCell className="font-medium">{name}</TableCell>
         <TableCell>
-          <Badge>{status}</Badge>
+          <Badge
+            className={
+              status && `bg-${status.toLowerCase().replace(/\s+/g, "")}`
+            }
+          >
+            {status}
+          </Badge>
         </TableCell>
         <TableCell>
-          <Badge>{priority}</Badge>
+          <Badge
+            className={
+              priority && `bg-${priority.toLowerCase().replace(/\s+/g, "")}`
+            }
+          >
+            {priority}
+          </Badge>
         </TableCell>
         <TableCell>
           <Select value={sprint ?? ""}>

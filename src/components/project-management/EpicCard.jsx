@@ -70,29 +70,25 @@ function EpicCard(props) {
           </div>
           {(props.status || props.priority) && (
             <div id="badge-wrapper" className="flex gap-2 pb-2">
-              {props.priority === "OPTIONAL" && (
-                <Badge className="bg-blue-500">OPTIONAL</Badge>
+              {props.priority && (
+                <Badge
+                  className={
+                    props.priority &&
+                    `bg-${props.priority.toLowerCase().replace(/\s+/g, "")}`
+                  }
+                >
+                  {props.priority}
+                </Badge>
               )}
-              {props.priority === "BENEFICIAL" && (
-                <Badge className="bg-emerald-600">BENEFICIAL</Badge>
-              )}
-              {props.priority === "ESSENTIAL" && (
-                <Badge className="bg-amber-500">ESSENTIAL</Badge>
-              )}
-              {props.priority === "CRITICAL" && (
-                <Badge className="bg-red-600">CRITICAL</Badge>
-              )}
-              {props.status === "TO DO" && (
-                <Badge className="bg-red-600">TO DO</Badge>
-              )}
-              {props.status === "IN PROGRESS" && (
-                <Badge className="bg-amber-500">IN PROGRESS</Badge>
-              )}
-              {props.status === "REVIEW" && (
-                <Badge className="bg-blue-500">REVIEW</Badge>
-              )}
-              {props.status === "DONE" && (
-                <Badge className="bg-emerald-600">DONE</Badge>
+              {props.status && (
+                <Badge
+                  className={
+                    props.status &&
+                    `bg-${props.status.toLowerCase().replace(/\s+/g, "")}`
+                  }
+                >
+                  {props.status}
+                </Badge>
               )}
             </div>
           )}

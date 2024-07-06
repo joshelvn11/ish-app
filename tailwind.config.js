@@ -51,8 +51,29 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        fontFamily: {
-          playwrite: ['"Playwrite PT"', "sans-serif"],
+        todo: {
+          DEFAULT: "#DB2026",
+        },
+        inprogress: {
+          DEFAULT: "#DB8F03",
+        },
+        review: {
+          DEFAULT: "#2656B7",
+        },
+        done: {
+          DEFAULT: "#1D9A30",
+        },
+        optional: {
+          DEFAULT: "#1D9A30",
+        },
+        beneficial: {
+          DEFAULT: "#2656B7",
+        },
+        essential: {
+          DEFAULT: "#FFAF05",
+        },
+        critical: {
+          DEFAULT: "#DB2026",
         },
       },
       borderRadius: {

@@ -447,16 +447,16 @@ function UserStoryForm(props) {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="OPTIONAL">
-                  <Badge className="bg-blue-500">OPTIONAL</Badge>
+                  <Badge className="bg-optional">OPTIONAL</Badge>
                 </SelectItem>
                 <SelectItem value="BENEFICIAL">
-                  <Badge className="bg-emerald-600">BENEFICIAL</Badge>
+                  <Badge className="bg-beneficial">BENEFICIAL</Badge>
                 </SelectItem>
                 <SelectItem value="ESSENTIAL">
-                  <Badge className="bg-amber-500">ESSENTIAL</Badge>
+                  <Badge className="bg-essential">ESSENTIAL</Badge>
                 </SelectItem>
                 <SelectItem value="CRITICAL">
-                  <Badge className="bg-red-600">CRITICAL</Badge>
+                  <Badge className="bg-critical">CRITICAL</Badge>
                 </SelectItem>
               </SelectContent>
             </Select>
@@ -466,16 +466,16 @@ function UserStoryForm(props) {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="TO DO">
-                  <Badge className="bg-red-600">TO DO</Badge>
+                  <Badge className="bg-todo">TO DO</Badge>
                 </SelectItem>
                 <SelectItem value="IN PROGRESS">
-                  <Badge className="bg-amber-500">IN PROGRESS</Badge>
+                  <Badge className="bg-inprogress">IN PROGRESS</Badge>
                 </SelectItem>
                 <SelectItem value="REVIEW">
-                  <Badge className="bg-blue-500">REVIEW</Badge>
+                  <Badge className="bg-review">REVIEW</Badge>
                 </SelectItem>
                 <SelectItem value="DONE">
-                  <Badge className="bg-emerald-600">DONE</Badge>
+                  <Badge className="bg-done">DONE</Badge>
                 </SelectItem>
               </SelectContent>
             </Select>
