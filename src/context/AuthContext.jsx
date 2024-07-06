@@ -134,7 +134,6 @@ export const AuthProvider = ({ children }) => {
     authTokens: authTokens,
     user: user,
     profile: profile,
-    authTokens: authTokens,
     loginUser: loginUser,
     logoutUser: logoutUser,
     loginError: loginError,
