@@ -69,8 +69,12 @@ function ItemCreateSelect() {
             </DialogTitle>
             <DialogDescription></DialogDescription>
           </DialogHeader>
-          {itemType === "EPIC" && <EpicForm create={true} />}
-          {itemType === "USERSTORY" && <UserStoryForm create={true} />}
+          {itemType === "EPIC" && (
+            <EpicForm create={true} closeDialog={closeDialog} />
+          )}
+          {itemType === "USERSTORY" && (
+            <UserStoryForm create={true} closeDialog={closeDialog} />
+          )}
         </DialogContent>
       </Dialog>
     </div>

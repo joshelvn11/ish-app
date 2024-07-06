@@ -58,196 +58,227 @@ function UserStoryForm(props) {
   let [sprint, setSprint] = useState(props.sprint ?? "");
 
   const saveDescription = async () => {
-    const apiUrl = import.meta.env.VITE_API_URL;
-    let response = await fetch(
-      `${apiUrl}/projects/${currentProject.id}/user-stories/${userStoryId}/`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + String(authTokens.access),
-        },
-        body: JSON.stringify({
-          description: description,
-        }),
+    if (!create) {
+      // Only attempt update if not in create mode
+      const apiUrl = import.meta.env.VITE_API_URL;
+      let response = await fetch(
+        `${apiUrl}/projects/${currentProject.id}/user-stories/${userStoryId}/`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + String(authTokens.access),
+          },
+          body: JSON.stringify({
+            description: description,
+          }),
+        }
+      );
+      let data = await response.json();
+      if (response.status === 200) {
+        toast({ description: "Description updated" });
+        props.fetchItemData();
+      } else {
+        toast({
+          variant: "destructive",
+          description: "Problem updating description",
+        });
       }
-    );
-    let data = await response.json();
-    if (response.status === 200) {
-      toast({ description: "Description updated" });
-      props.fetchItemData();
-    } else {
-      toast({
-        variant: "destructive",
-        description: "Problem updating description",
-      });
     }
   };
 
   const updateUserStory = async () => {
-    const apiUrl = import.meta.env.VITE_API_URL;
-    let response = await fetch(
-      `${apiUrl}/projects/${currentProject.id}/user-stories/${userStoryId}/`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + String(authTokens.access),
-        },
-        body: JSON.stringify({
-          user_story: userStory,
-        }),
+    if (!create) {
+      // Only attempt update if not in create mode
+      const apiUrl = import.meta.env.VITE_API_URL;
+      let response = await fetch(
+        `${apiUrl}/projects/${currentProject.id}/user-stories/${userStoryId}/`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + String(authTokens.access),
+          },
+          body: JSON.stringify({
+            user_story: userStory,
+          }),
+        }
+      );
+      let data = await response.json();
+      if (response.status === 200) {
+        toast({ description: "User Story updated" });
+        props.fetchItemData();
+      } else {
+        toast({
+          variant: "destructive",
+          description: `Problem updating user story: ${JSON.stringify(data)}`,
+        });
       }
-    );
-    let data = await response.json();
-    if (response.status === 200) {
-      toast({ description: "User Story updated" });
-      props.fetchItemData();
-    } else {
-      toast({
-        variant: "destructive",
-        description: `Problem updating user story: ${JSON.stringify(data)}`,
-      });
     }
   };
 
   const updateEpic = async (value) => {
-    const apiUrl = import.meta.env.VITE_API_URL;
-    let response = await fetch(
-      `${apiUrl}/projects/${currentProject.id}/user-stories/${userStoryId}/`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + String(authTokens.access),
-        },
-        body: JSON.stringify({
-          epic: value,
-        }),
+    if (!create) {
+      // Only attempt update if not in create mode
+      const apiUrl = import.meta.env.VITE_API_URL;
+      let response = await fetch(
+        `${apiUrl}/projects/${currentProject.id}/user-stories/${userStoryId}/`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + String(authTokens.access),
+          },
+          body: JSON.stringify({
+            epic: value,
+          }),
+        }
+      );
+      let data = await response.json();
+      if (response.status === 200) {
+        toast({ description: "Epic updated" });
+        setEpic(value);
+        props.fetchItemData();
+      } else {
+        toast({
+          variant: "destructive",
+          description: "Problem updating epic",
+        });
       }
-    );
-    let data = await response.json();
-    if (response.status === 200) {
-      toast({ description: "Epic updated" });
-      setEpic(value);
-      props.fetchItemData();
     } else {
-      toast({
-        variant: "destructive",
-        description: "Problem updating epic",
-      });
+      setEpic(value);
     }
   };
 
   const updatePriority = async (value) => {
-    const apiUrl = import.meta.env.VITE_API_URL;
-    let response = await fetch(
-      `${apiUrl}/projects/${currentProject.id}/user-stories/${userStoryId}/`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + String(authTokens.access),
-        },
-        body: JSON.stringify({
-          priority: value,
-        }),
+    if (!create) {
+      // Only attempt update if not in create mode
+      const apiUrl = import.meta.env.VITE_API_URL;
+      let response = await fetch(
+        `${apiUrl}/projects/${currentProject.id}/user-stories/${userStoryId}/`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + String(authTokens.access),
+          },
+          body: JSON.stringify({
+            priority: value,
+          }),
+        }
+      );
+      let data = await response.json();
+      if (response.status === 200) {
+        toast({ description: "Priority updated" });
+        setPriority(value);
+        props.fetchItemData();
+      } else {
+        toast({
+          variant: "destructive",
+          description: `Problem updating priority: ${JSON.stringify(data)}`,
+        });
       }
-    );
-    let data = await response.json();
-    if (response.status === 200) {
-      toast({ description: "Priority updated" });
-      setPriority(value);
-      props.fetchItemData();
     } else {
-      toast({
-        variant: "destructive",
-        description: `Problem updating priority: ${JSON.stringify(data)}`,
-      });
+      setPriority(value);
     }
   };
 
   const updateDueDate = async (value) => {
-    const apiUrl = import.meta.env.VITE_API_URL;
-    let response = await fetch(
-      `${apiUrl}/projects/${currentProject.id}/user-stories/${userStoryId}/`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + String(authTokens.access),
-        },
-        body: JSON.stringify({
-          due_date: value.toISOString().split("T")[0],
-        }),
+    if (!create) {
+      // Only attempt update if not in create mode
+      const apiUrl = import.meta.env.VITE_API_URL;
+      let response = await fetch(
+        `${apiUrl}/projects/${currentProject.id}/user-stories/${userStoryId}/`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + String(authTokens.access),
+          },
+          body: JSON.stringify({
+            due_date: value.toISOString().split("T")[0],
+          }),
+        }
+      );
+      let data = await response.json();
+      if (response.status === 200) {
+        toast({ description: "Due date updated" });
+        setDuedate(value);
+        props.fetchItemData();
+      } else {
+        toast({
+          variant: "destructive",
+          description: `Problem updating due date: ${JSON.stringify(data)}`,
+        });
       }
-    );
-    let data = await response.json();
-    if (response.status === 200) {
-      toast({ description: "Due date updated" });
-      setDuedate(value);
-      props.fetchItemData();
     } else {
-      toast({
-        variant: "destructive",
-        description: `Problem updating due date: ${JSON.stringify(data)}`,
-      });
+      setDuedate(value);
     }
   };
 
   const updateStatus = async (value) => {
-    const apiUrl = import.meta.env.VITE_API_URL;
-    let response = await fetch(
-      `${apiUrl}/projects/${currentProject.id}/user-stories/${userStoryId}/`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + String(authTokens.access),
-        },
-        body: JSON.stringify({
-          status: value,
-        }),
+    if (!create) {
+      // Only attempt update if not in create mode
+      const apiUrl = import.meta.env.VITE_API_URL;
+      let response = await fetch(
+        `${apiUrl}/projects/${currentProject.id}/user-stories/${userStoryId}/`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + String(authTokens.access),
+          },
+          body: JSON.stringify({
+            status: value,
+          }),
+        }
+      );
+      let data = await response.json();
+      if (response.status === 200) {
+        toast({ description: "Status updated" });
+        setStatus(value);
+        props.fetchItemData();
+      } else {
+        toast({
+          variant: "destructive",
+          description: `Problem updating status: ${JSON.stringify(data)}`,
+        });
       }
-    );
-    let data = await response.json();
-    if (response.status === 200) {
-      toast({ description: "Status updated" });
-      setStatus(value);
-      props.fetchItemData();
     } else {
-      toast({
-        variant: "destructive",
-        description: `Problem updating status: ${JSON.stringify(data)}`,
-      });
+      setStatus(value);
     }
   };
 
   const updateSprint = async (value) => {
-    const apiUrl = import.meta.env.VITE_API_URL;
-    let response = await fetch(
-      `${apiUrl}/projects/${currentProject.id}/user-stories/${userStoryId}/`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + String(authTokens.access),
-        },
-        body: JSON.stringify({
-          sprint: value,
-        }),
+    if (!create) {
+      // Only attempt update if not in create mode
+      const apiUrl = import.meta.env.VITE_API_URL;
+      let response = await fetch(
+        `${apiUrl}/projects/${currentProject.id}/user-stories/${userStoryId}/`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + String(authTokens.access),
+          },
+          body: JSON.stringify({
+            sprint: value,
+          }),
+        }
+      );
+      let data = await response.json();
+      if (response.status === 200) {
+        toast({ description: "Sprint updated" });
+        setSprint(value);
+        props.fetchItemData();
+      } else {
+        toast({
+          variant: "destructive",
+          description: `Problem updating spint: ${JSON.stringify(data)}`,
+        });
       }
-    );
-    let data = await response.json();
-    if (response.status === 200) {
-      toast({ description: "Sprint updated" });
-      setSprint(value);
-      props.fetchItemData();
     } else {
-      toast({
-        variant: "destructive",
-        description: `Problem updating spint: ${JSON.stringify(data)}`,
-      });
+      setSprint(value);
     }
   };
 
@@ -324,6 +355,11 @@ function UserStoryForm(props) {
   };
 
   const createUserStory = async (name) => {
+    // Format due date
+    let formattedDate = null;
+    if (duedate) formattedDate = duedate.toISOString().split("T")[0];
+
+    // Make API request
     const apiUrl = import.meta.env.VITE_API_URL;
     let response = await fetch(
       `${apiUrl}/projects/${currentProject.id}/user-stories/`,
@@ -336,6 +372,15 @@ function UserStoryForm(props) {
         body: JSON.stringify({
           project: currentProject.id,
           name: name,
+          epic: epic,
+          sprint: sprint,
+          description: description,
+          user_story: userStory,
+          acceptance_criteria: acceptanceCriteria,
+          subtasks: subtasks,
+          due_date: formattedDate,
+          priority: priority,
+          status: status,
         }),
       }
     );
@@ -348,6 +393,8 @@ function UserStoryForm(props) {
       getUserStoryData();
       // Set to update mode
       setCreate(false);
+      // Close the dialog
+      props.closeDialog();
     } else {
       console.log(data);
       toast({
@@ -387,261 +434,257 @@ function UserStoryForm(props) {
               required
             />
           </div>
-          {!create && ( // Only show these fields if the item has already been created
-            <>
-              <div className="flex flex-wrap gap-2">
-                <Select value={priority} onValueChange={updatePriority}>
-                  <SelectTrigger className="w-[120px] sm:w-[150px]">
-                    <SelectValue placeholder="Select priority..." />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="OPTIONAL">
-                      <Badge className="bg-blue-500">OPTIONAL</Badge>
-                    </SelectItem>
-                    <SelectItem value="BENEFICIAL">
-                      <Badge className="bg-emerald-600">BENEFICIAL</Badge>
-                    </SelectItem>
-                    <SelectItem value="ESSENTIAL">
-                      <Badge className="bg-amber-500">ESSENTIAL</Badge>
-                    </SelectItem>
-                    <SelectItem value="CRITICAL">
-                      <Badge className="bg-red-600">CRITICAL</Badge>
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
-                <Select value={status} onValueChange={updateStatus}>
-                  <SelectTrigger className="w-[120px] sm:w-[150px]">
-                    <SelectValue placeholder="Select status..." />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="TO DO">
-                      <Badge className="bg-red-600">TO DO</Badge>
-                    </SelectItem>
-                    <SelectItem value="IN PROGRESS">
-                      <Badge className="bg-amber-500">IN PROGRESS</Badge>
-                    </SelectItem>
-                    <SelectItem value="REVIEW">
-                      <Badge className="bg-blue-500">REVIEW</Badge>
-                    </SelectItem>
-                    <SelectItem value="DONE">
-                      <Badge className="bg-emerald-600">DONE</Badge>
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant={"outline"}
-                      className={cn(
-                        "w-[240px] pl-3 text-left font-normal",
-                        !duedate && "text-muted-foreground"
-                      )}
-                    >
-                      {duedate ? (
-                        format(duedate, "PPP")
-                      ) : (
-                        <span>Select due date</span>
-                      )}
-                      <CalendarIcon className="w-4 h-4 ml-auto opacity-50" />
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0" align="start">
-                    <Calendar
-                      mode="single"
-                      selected={duedate}
-                      onSelect={(date) => {
-                        updateDueDate(date);
-                      }}
-                      disabled={(date) => date < new Date("1900-01-01")}
-                      initialFocus
-                    />
-                  </PopoverContent>
-                </Popover>
-                <Select
-                  value={epic ?? ""}
-                  onValueChange={updateEpic}
-                  className="w-full sm:w-full"
+          <div className="flex flex-wrap gap-2">
+            <Select value={priority} onValueChange={updatePriority}>
+              <SelectTrigger className="w-[120px] sm:w-[150px]">
+                <SelectValue placeholder="Select priority..." />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="OPTIONAL">
+                  <Badge className="bg-blue-500">OPTIONAL</Badge>
+                </SelectItem>
+                <SelectItem value="BENEFICIAL">
+                  <Badge className="bg-emerald-600">BENEFICIAL</Badge>
+                </SelectItem>
+                <SelectItem value="ESSENTIAL">
+                  <Badge className="bg-amber-500">ESSENTIAL</Badge>
+                </SelectItem>
+                <SelectItem value="CRITICAL">
+                  <Badge className="bg-red-600">CRITICAL</Badge>
+                </SelectItem>
+              </SelectContent>
+            </Select>
+            <Select value={status} onValueChange={updateStatus}>
+              <SelectTrigger className="w-[120px] sm:w-[150px]">
+                <SelectValue placeholder="Select status..." />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="TO DO">
+                  <Badge className="bg-red-600">TO DO</Badge>
+                </SelectItem>
+                <SelectItem value="IN PROGRESS">
+                  <Badge className="bg-amber-500">IN PROGRESS</Badge>
+                </SelectItem>
+                <SelectItem value="REVIEW">
+                  <Badge className="bg-blue-500">REVIEW</Badge>
+                </SelectItem>
+                <SelectItem value="DONE">
+                  <Badge className="bg-emerald-600">DONE</Badge>
+                </SelectItem>
+              </SelectContent>
+            </Select>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant={"outline"}
+                  className={cn(
+                    "w-[240px] pl-3 text-left font-normal",
+                    !duedate && "text-muted-foreground"
+                  )}
                 >
-                  <SelectTrigger className="w-[120px] sm:w-[150px]">
-                    <SelectValue placeholder="Select epic..." />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {epicData &&
-                      epicData.map((epic) => (
-                        <SelectItem value={epic.id} key={epic.id}>
-                          {epic.name}
-                        </SelectItem>
-                      ))}
-                  </SelectContent>
-                </Select>
-                <Select
-                  value={sprint ?? ""}
-                  onValueChange={updateSprint}
-                  className="w-full sm:w-full"
+                  {duedate ? (
+                    format(duedate, "PPP")
+                  ) : (
+                    <span>Select due date</span>
+                  )}
+                  <CalendarIcon className="w-4 h-4 ml-auto opacity-50" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0" align="start">
+                <Calendar
+                  mode="single"
+                  selected={duedate}
+                  onSelect={(date) => {
+                    updateDueDate(date);
+                  }}
+                  disabled={(date) => date < new Date("1900-01-01")}
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
+            <Select
+              value={epic ?? ""}
+              onValueChange={updateEpic}
+              className="w-full sm:w-full"
+            >
+              <SelectTrigger className="w-[120px] sm:w-[150px]">
+                <SelectValue placeholder="Select epic..." />
+              </SelectTrigger>
+              <SelectContent>
+                {epicData &&
+                  epicData.map((epic) => (
+                    <SelectItem value={epic.id} key={epic.id}>
+                      {epic.name}
+                    </SelectItem>
+                  ))}
+              </SelectContent>
+            </Select>
+            <Select
+              value={sprint ?? ""}
+              onValueChange={updateSprint}
+              className="w-full sm:w-full"
+            >
+              <SelectTrigger className="w-[120px] sm:w-[150px]">
+                <SelectValue placeholder="Select sprint..." />
+              </SelectTrigger>
+              <SelectContent>
+                {sprintData &&
+                  sprintData.map((sprint) => (
+                    <SelectItem value={sprint.id} key={sprint.id}>
+                      {sprint.name}
+                    </SelectItem>
+                  ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="space-y-2">
+            <div className="flex items-center justify-between w-full">
+              <Label className="text-md" htmlFor="description">
+                Description
+              </Label>
+              <Button
+                size="sm"
+                onClick={() => {
+                  setEditingDescription(!editingDescription);
+                  editingDescription && saveDescription();
+                }}
+              >
+                {editingDescription ? "Save" : "Edit"}
+              </Button>
+            </div>
+            <Textarea
+              id="description"
+              type="text"
+              value={description}
+              readOnly={!editingDescription}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+          </div>
+          <div className="space-y-2">
+            <div className="flex items-center justify-between w-full">
+              <Label className="text-md" htmlFor="userstory">
+                User Story
+              </Label>
+              <Button
+                size="sm"
+                onClick={() => {
+                  setEditingUserStory(!editingUserStory);
+                  editingUserStory && updateUserStory();
+                }}
+              >
+                {editingUserStory ? "Save" : "Edit"}
+              </Button>
+            </div>
+            <Textarea
+              id="userstory"
+              type="text"
+              value={userStory}
+              readOnly={!editingUserStory}
+              onChange={(e) => setUserStory(e.target.value)}
+            />
+          </div>
+          <div className="space-y-2">
+            <div className="flex items-center justify-between w-full">
+              <Label className="text-md" htmlFor="acceptance-criteria">
+                Acceptance Criteria
+              </Label>
+              <Button
+                size="sm"
+                onClick={() => {
+                  setCreatingAcceptanceCriteria(true);
+                }}
+              >
+                Add
+              </Button>
+            </div>
+            {acceptanceCriteria &&
+              acceptanceCriteria.map((item) => (
+                <div key={item.id} className="flex items-center space-x-2">
+                  <Checkbox
+                    id={item.id}
+                    checked={item.done}
+                    onClick={() => {
+                      updateAcceptanceCriteriaDone(item.id);
+                    }}
+                  />
+                  <label
+                    htmlFor={item.id}
+                    className={`${
+                      item.done && "line-through text-gray-500"
+                    } text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70`}
+                  >
+                    {item.criteria}
+                  </label>
+                </div>
+              ))}
+            {creatingAcceptanceCriteria && (
+              <div className="relative">
+                <Input
+                  value={newAcceptanceCriteria}
+                  onChange={(e) => setNewAcceptanceCriteria(e.target.value)}
+                ></Input>
+                <Button
+                  onClick={saveNewAcceptanceCriteria}
+                  variant="ghost"
+                  size="sm"
+                  className="absolute transform -translate-y-1/2 right-0.5 top-1/2"
                 >
-                  <SelectTrigger className="w-[120px] sm:w-[150px]">
-                    <SelectValue placeholder="Select sprint..." />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {sprintData &&
-                      sprintData.map((sprint) => (
-                        <SelectItem value={sprint.id} key={sprint.id}>
-                          {sprint.name}
-                        </SelectItem>
-                      ))}
-                  </SelectContent>
-                </Select>
+                  Save
+                </Button>
               </div>
-              <div className="space-y-2">
-                <div className="flex items-center justify-between w-full">
-                  <Label className="text-md" htmlFor="description">
-                    Description
-                  </Label>
-                  <Button
-                    size="sm"
+            )}
+          </div>
+          <div id="subtasks-wrapper" className="space-y-2">
+            <div className="flex items-center justify-between w-full">
+              <Label className="text-md" htmlFor="subtasks">
+                Subtasks
+              </Label>
+              <Button
+                size="sm"
+                onClick={() => {
+                  setCreatingSubtasks(true);
+                }}
+              >
+                Add
+              </Button>
+            </div>
+            {subtasks &&
+              subtasks.map((item) => (
+                <div key={item.id} className="flex items-center space-x-2">
+                  <Checkbox
+                    id={item.id}
+                    checked={item.done}
                     onClick={() => {
-                      setEditingDescription(!editingDescription);
-                      editingDescription && saveDescription();
+                      updateSubtaskDone(item.id);
                     }}
+                  />
+                  <label
+                    htmlFor={item.id}
+                    className={`${
+                      item.done && "line-through text-gray-500"
+                    } text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70`}
                   >
-                    {editingDescription ? "Save" : "Edit"}
-                  </Button>
+                    {item.task}
+                  </label>
                 </div>
-                <Textarea
-                  id="description"
-                  type="text"
-                  value={description}
-                  readOnly={!editingDescription}
-                  onChange={(e) => setDescription(e.target.value)}
-                />
+              ))}
+            {creatingSubtasks && (
+              <div className="relative">
+                <Input
+                  value={newSubstask}
+                  onChange={(e) => setNewSubtask(e.target.value)}
+                ></Input>
+                <Button
+                  onClick={saveNewSubtask}
+                  variant="ghost"
+                  size="sm"
+                  className="absolute transform -translate-y-1/2 right-0.5 top-1/2"
+                >
+                  Save
+                </Button>
               </div>
-              <div className="space-y-2">
-                <div className="flex items-center justify-between w-full">
-                  <Label className="text-md" htmlFor="userstory">
-                    User Story
-                  </Label>
-                  <Button
-                    size="sm"
-                    onClick={() => {
-                      setEditingUserStory(!editingUserStory);
-                      editingUserStory && updateUserStory();
-                    }}
-                  >
-                    {editingUserStory ? "Save" : "Edit"}
-                  </Button>
-                </div>
-                <Textarea
-                  id="userstory"
-                  type="text"
-                  value={userStory}
-                  readOnly={!editingUserStory}
-                  onChange={(e) => setUserStory(e.target.value)}
-                />
-              </div>
-              <div className="space-y-2">
-                <div className="flex items-center justify-between w-full">
-                  <Label className="text-md" htmlFor="acceptance-criteria">
-                    Acceptance Criteria
-                  </Label>
-                  <Button
-                    size="sm"
-                    onClick={() => {
-                      setCreatingAcceptanceCriteria(true);
-                    }}
-                  >
-                    Add
-                  </Button>
-                </div>
-                {acceptanceCriteria &&
-                  acceptanceCriteria.map((item) => (
-                    <div key={item.id} className="flex items-center space-x-2">
-                      <Checkbox
-                        id={item.id}
-                        checked={item.done}
-                        onClick={() => {
-                          updateAcceptanceCriteriaDone(item.id);
-                        }}
-                      />
-                      <label
-                        htmlFor={item.id}
-                        className={`${
-                          item.done && "line-through text-gray-500"
-                        } text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70`}
-                      >
-                        {item.criteria}
-                      </label>
-                    </div>
-                  ))}
-                {creatingAcceptanceCriteria && (
-                  <div className="relative">
-                    <Input
-                      value={newAcceptanceCriteria}
-                      onChange={(e) => setNewAcceptanceCriteria(e.target.value)}
-                    ></Input>
-                    <Button
-                      onClick={saveNewAcceptanceCriteria}
-                      variant="ghost"
-                      size="sm"
-                      className="absolute transform -translate-y-1/2 right-0.5 top-1/2"
-                    >
-                      Save
-                    </Button>
-                  </div>
-                )}
-              </div>
-              <div id="subtasks-wrapper" className="space-y-2">
-                <div className="flex items-center justify-between w-full">
-                  <Label className="text-md" htmlFor="subtasks">
-                    Subtasks
-                  </Label>
-                  <Button
-                    size="sm"
-                    onClick={() => {
-                      setCreatingSubtasks(true);
-                    }}
-                  >
-                    Add
-                  </Button>
-                </div>
-                {subtasks &&
-                  subtasks.map((item) => (
-                    <div key={item.id} className="flex items-center space-x-2">
-                      <Checkbox
-                        id={item.id}
-                        checked={item.done}
-                        onClick={() => {
-                          updateSubtaskDone(item.id);
-                        }}
-                      />
-                      <label
-                        htmlFor={item.id}
-                        className={`${
-                          item.done && "line-through text-gray-500"
-                        } text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70`}
-                      >
-                        {item.task}
-                      </label>
-                    </div>
-                  ))}
-                {creatingSubtasks && (
-                  <div className="relative">
-                    <Input
-                      value={newSubstask}
-                      onChange={(e) => setNewSubtask(e.target.value)}
-                    ></Input>
-                    <Button
-                      onClick={saveNewSubtask}
-                      variant="ghost"
-                      size="sm"
-                      className="absolute transform -translate-y-1/2 right-0.5 top-1/2"
-                    >
-                      Save
-                    </Button>
-                  </div>
-                )}
-              </div>
-            </>
-          )}
+            )}
+          </div>
           {create && ( // Only show the create button when in create mode
             <Button onClick={() => createUserStory(name)} className="w-full">
               Create User Story

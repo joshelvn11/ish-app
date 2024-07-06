@@ -92,6 +92,12 @@ function TaskTableRow(props) {
     }
   };
 
+  // Callback function to close dialog
+  const closeDialog = () => {
+    console.log("Closing dialog");
+    setIsDialogOpen(false);
+  };
+
   return (
     <>
       <TableRow>
@@ -158,6 +164,7 @@ function TaskTableRow(props) {
               acceptanceCriteria={acceptanceCriteria}
               subtasks={subtasks}
               fetchItemData={fetchItemData}
+              closeDialog={closeDialog}
             />
           )}
         </DialogContent>
