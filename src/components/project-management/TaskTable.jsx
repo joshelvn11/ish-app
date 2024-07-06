@@ -36,7 +36,7 @@ function TaskTable(props) {
           return {
             ...us,
             type: {
-              type: "user-story",
+              type: "USERSTORY",
               typeDisplay: "User Story",
             },
           };
@@ -97,12 +97,17 @@ function TaskTable(props) {
           allData.map((data, index) => (
             <TaskTableRow
               key={index}
+              id={data.id}
               type={data.type}
               name={data.name}
+              description={data.description}
               status={data.status}
               priority={data.priority}
               sprint={data.sprint}
-              dueDate={data.due_date}
+              duedate={data.due_date}
+              userStory={data.user_story}
+              acceptanceCriteria={data.acceptance_criteria}
+              subtasks={data.subtasks}
             />
           ))}
       </TableBody>

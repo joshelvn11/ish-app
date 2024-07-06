@@ -33,21 +33,23 @@ function UserStoryForm(props) {
 
   let [create, setCreate] = useState(props.create);
   let [validationErrors, setValidationErrors] = useState([]);
-  let [userStoryId, setUserStoryId] = useState(props.userStoryId);
+  let [userStoryId, setUserStoryId] = useState(props.id);
 
   // Form data state
-  let [name, setName] = useState(props.title ?? "");
+  let [name, setName] = useState(props.name ?? "");
   let [description, setDescription] = useState(props.description ?? "");
   let [editingDescription, setEditingDescription] = useState(false);
-  let [userStory, setUserStory] = useState(null);
-  let [acceptanceCriteria, setAcceptanceCriteria] = useState([]);
+  let [userStory, setUserStory] = useState(props.userStory);
+  let [acceptanceCriteria, setAcceptanceCriteria] = useState(
+    props.acceptanceCriteria ?? []
+  );
   let [newAcceptanceCriteria, setNewAcceptanceCriteria] = useState("");
   let [creatingAcceptanceCriteria, setCreatingAcceptanceCriteria] =
     useState(false);
-  let [subtasks, setSubtasks] = useState([]);
+  let [subtasks, setSubtasks] = useState(props.subtasks ?? []);
   let [newSubstask, setNewSubtask] = useState("");
   let [creatingSubtasks, setCreatingSubtasks] = useState(false);
-  let [duedate, setDuedate] = useState("");
+  let [duedate, setDuedate] = useState(props.duedate);
   let [priority, setPriority] = useState(props.priority);
   let [status, setStatus] = useState(props.status);
 
@@ -67,10 +69,13 @@ function UserStoryForm(props) {
       }
     );
     let data = await response.json();
-    if (response.status === 201) {
+    if (response.status === 200) {
       toast({ description: "Description updated" });
     } else {
-      toast({ description: "Problem updating description" });
+      toast({
+        variant: "destructive",
+        description: "Problem updating description",
+      });
     }
   };
 
