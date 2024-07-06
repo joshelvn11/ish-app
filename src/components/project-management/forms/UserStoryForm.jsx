@@ -128,7 +128,6 @@ function UserStoryForm(props) {
     if (response.status === 200) {
       toast({ description: "Epic updated" });
       setEpic(value);
-      getUserStoryData();
     } else {
       toast({
         variant: "destructive",
