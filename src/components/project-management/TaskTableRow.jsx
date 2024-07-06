@@ -98,6 +98,16 @@ function TaskTableRow(props) {
     setIsDialogOpen(false);
   };
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+
+    const day = date.getDate();
+    const month = date.toLocaleString("default", { month: "long" });
+    const year = date.getFullYear();
+
+    return `${day} ${month} ${year}`;
+  };
+
   return (
     <>
       <TableRow>
@@ -126,7 +136,7 @@ function TaskTableRow(props) {
         <TableCell>
           {sprint && sprintData.find((item) => item.id == sprint).name}
         </TableCell>
-        <TableCell>{duedate}</TableCell>
+        <TableCell>{duedate && formatDate(duedate)}</TableCell>
         <TableCell className="text-right">
           <Button
             variant="ghost"
