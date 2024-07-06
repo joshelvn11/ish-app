@@ -27,7 +27,7 @@ import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 
 function UserStoryForm(props) {
-  const { currentProject, getUserStoryData, epicData } =
+  const { currentProject, getUserStoryData, epicData, sprintData } =
     useContext(ProjectContext);
   const { authTokens } = useContext(AuthContext);
   const { toast } = useToast();
@@ -55,6 +55,7 @@ function UserStoryForm(props) {
   let [duedate, setDuedate] = useState(props.duedate);
   let [priority, setPriority] = useState(props.priority);
   let [status, setStatus] = useState(props.status);
+  let [sprint, setSprint] = useState(props.sprint);
 
   const saveDescription = async () => {
     const apiUrl = import.meta.env.VITE_API_URL;
@@ -220,6 +221,34 @@ function UserStoryForm(props) {
     }
   };
 
+  const updateSprint = async (value) => {
+    const apiUrl = import.meta.env.VITE_API_URL;
+    let response = await fetch(
+      `${apiUrl}/projects/${currentProject.id}/user-stories/${userStoryId}/`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + String(authTokens.access),
+        },
+        body: JSON.stringify({
+          sprint: value,
+        }),
+      }
+    );
+    let data = await response.json();
+    if (response.status === 200) {
+      toast({ description: "Sprint updated" });
+      setSprint(value);
+      getUserStoryData();
+    } else {
+      toast({
+        variant: "destructive",
+        description: `Problem updating spint: ${JSON.stringify(data)}`,
+      });
+    }
+  };
+
   const saveNewAcceptanceCriteria = async () => {
     // Create a new acceptance criteria ID
     const generateRandomId = () => {
@@ -358,7 +387,7 @@ function UserStoryForm(props) {
           </div>
           {!create && ( // Only show these fields if the item has already been created
             <>
-              <div className="flex gap-2">
+              <div className="flex flex-wrap gap-2">
                 <Select value={priority} onValueChange={updatePriority}>
                   <SelectTrigger className="w-[120px] sm:w-[150px]">
                     <SelectValue placeholder="Select priority..." />
@@ -426,9 +455,11 @@ function UserStoryForm(props) {
                     />
                   </PopoverContent>
                 </Popover>
-              </div>
-              <div className="space-y-2" id="epic-wrapper">
-                <Select value={epic ?? ""} onValueChange={updateEpic}>
+                <Select
+                  value={epic ?? ""}
+                  onValueChange={updateEpic}
+                  className="w-full sm:w-full"
+                >
                   <SelectTrigger className="w-[120px] sm:w-[150px]">
                     <SelectValue placeholder="Select epic..." />
                   </SelectTrigger>
@@ -437,6 +468,23 @@ function UserStoryForm(props) {
                       epicData.map((epic) => (
                         <SelectItem value={epic.id} key={epic.id}>
                           {epic.name}
+                        </SelectItem>
+                      ))}
+                  </SelectContent>
+                </Select>
+                <Select
+                  value={sprint ?? ""}
+                  onValueChange={updateSprint}
+                  className="w-full sm:w-full"
+                >
+                  <SelectTrigger className="w-[120px] sm:w-[150px]">
+                    <SelectValue placeholder="Select sprint..." />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {sprintData &&
+                      sprintData.map((sprint) => (
+                        <SelectItem value={sprint.id} key={sprint.id}>
+                          {sprint.name}
                         </SelectItem>
                       ))}
                   </SelectContent>

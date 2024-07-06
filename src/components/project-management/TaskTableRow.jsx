@@ -102,9 +102,10 @@ function TaskTableRow(props) {
               name={props.name}
               epic={props.epic}
               description={props.description}
-              duedate={props.duedate}
-              status={props.status}
-              priority={props.priority}
+              duedate={duedate}
+              status={status}
+              priority={priority}
+              sprint={sprint}
               userStory={props.userStory}
               acceptanceCriteria={props.acceptanceCriteria}
               subtasks={props.subtasks}
