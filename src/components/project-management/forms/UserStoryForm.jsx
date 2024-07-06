@@ -53,9 +53,9 @@ function UserStoryForm(props) {
   let [newSubstask, setNewSubtask] = useState("");
   let [creatingSubtasks, setCreatingSubtasks] = useState(false);
   let [duedate, setDuedate] = useState(props.duedate);
-  let [priority, setPriority] = useState(props.priority);
-  let [status, setStatus] = useState(props.status);
-  let [sprint, setSprint] = useState(props.sprint);
+  let [priority, setPriority] = useState(props.priority ?? "");
+  let [status, setStatus] = useState(props.status ?? "");
+  let [sprint, setSprint] = useState(props.sprint ?? "");
 
   const saveDescription = async () => {
     const apiUrl = import.meta.env.VITE_API_URL;
