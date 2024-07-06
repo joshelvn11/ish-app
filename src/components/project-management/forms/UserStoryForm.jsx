@@ -109,6 +109,90 @@ function UserStoryForm(props) {
     }
   };
 
+  const updatePriority = async (value) => {
+    const apiUrl = import.meta.env.VITE_API_URL;
+    let response = await fetch(
+      `${apiUrl}/projects/${currentProject.id}/user-stories/${userStoryId}/`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + String(authTokens.access),
+        },
+        body: JSON.stringify({
+          priority: value,
+        }),
+      }
+    );
+    let data = await response.json();
+    if (response.status === 200) {
+      toast({ description: "Priority updated" });
+      setPriority(value);
+      getUserStoryData();
+    } else {
+      toast({
+        variant: "destructive",
+        description: `Problem updating priority: ${JSON.stringify(data)}`,
+      });
+    }
+  };
+
+  const updateDueDate = async (value) => {
+    const apiUrl = import.meta.env.VITE_API_URL;
+    let response = await fetch(
+      `${apiUrl}/projects/${currentProject.id}/user-stories/${userStoryId}/`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + String(authTokens.access),
+        },
+        body: JSON.stringify({
+          due_date: value.toISOString().split("T")[0],
+        }),
+      }
+    );
+    let data = await response.json();
+    if (response.status === 200) {
+      toast({ description: "Due date updated" });
+      setDuedate(value);
+      getUserStoryData();
+    } else {
+      toast({
+        variant: "destructive",
+        description: `Problem updating due date: ${JSON.stringify(data)}`,
+      });
+    }
+  };
+
+  const updateStatus = async (value) => {
+    const apiUrl = import.meta.env.VITE_API_URL;
+    let response = await fetch(
+      `${apiUrl}/projects/${currentProject.id}/user-stories/${userStoryId}/`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + String(authTokens.access),
+        },
+        body: JSON.stringify({
+          status: value,
+        }),
+      }
+    );
+    let data = await response.json();
+    if (response.status === 200) {
+      toast({ description: "Status updated" });
+      setStatus(value);
+      getUserStoryData();
+    } else {
+      toast({
+        variant: "destructive",
+        description: `Problem updating status: ${JSON.stringify(data)}`,
+      });
+    }
+  };
+
   const saveNewAcceptanceCriteria = async () => {
     // Create a new acceptance criteria ID
     const generateRandomId = () => {
@@ -215,11 +299,6 @@ function UserStoryForm(props) {
     }
   };
 
-  useEffect(() => {
-    console.log("Epic data", epicData);
-    console.log("Props", props);
-  });
-
   return (
     <div className="space-y-4">
       <div className="space-y-2">
@@ -253,10 +332,7 @@ function UserStoryForm(props) {
           {!create && ( // Only show these fields if the item has already been created
             <>
               <div className="flex gap-2">
-                <Select
-                  value={priority}
-                  onValueChange={(value) => setPriority(value)}
-                >
+                <Select value={priority} onValueChange={updatePriority}>
                   <SelectTrigger className="w-[120px] sm:w-[150px]">
                     <SelectValue placeholder="Select priority..." />
                   </SelectTrigger>
@@ -275,10 +351,7 @@ function UserStoryForm(props) {
                     </SelectItem>
                   </SelectContent>
                 </Select>
-                <Select
-                  value={status}
-                  onValueChange={(value) => setStatus(value)}
-                >
+                <Select value={status} onValueChange={updateStatus}>
                   <SelectTrigger className="w-[120px] sm:w-[150px]">
                     <SelectValue placeholder="Select status..." />
                   </SelectTrigger>
@@ -319,7 +392,7 @@ function UserStoryForm(props) {
                       mode="single"
                       selected={duedate}
                       onSelect={(date) => {
-                        setDuedate(date);
+                        updateDueDate(date);
                       }}
                       disabled={(date) => date < new Date("1900-01-01")}
                       initialFocus
