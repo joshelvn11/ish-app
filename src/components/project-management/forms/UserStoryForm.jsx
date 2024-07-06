@@ -25,6 +25,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useToast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
+import { CloudFog } from "lucide-react";
 
 function UserStoryForm(props) {
   const { currentProject, getUserStoryData, epicData, sprintData } =
@@ -56,6 +57,15 @@ function UserStoryForm(props) {
   let [priority, setPriority] = useState(props.priority ?? "");
   let [status, setStatus] = useState(props.status ?? "");
   let [sprint, setSprint] = useState(props.sprint ?? "");
+
+  const formatDate = (date) => {
+    if (date) {
+      const offset = date.getTimezoneOffset();
+      date = new Date(date.getTime() - offset * 60 * 1000);
+      return date.toISOString().split("T")[0];
+    }
+    return date;
+  };
 
   const saveDescription = async () => {
     if (!create) {
@@ -196,7 +206,7 @@ function UserStoryForm(props) {
             Authorization: "Bearer " + String(authTokens.access),
           },
           body: JSON.stringify({
-            due_date: value.toISOString().split("T")[0],
+            due_date: formatDate(value),
           }),
         }
       );
@@ -355,10 +365,6 @@ function UserStoryForm(props) {
   };
 
   const createUserStory = async (name) => {
-    // Format due date
-    let formattedDate = null;
-    if (duedate) formattedDate = duedate.toISOString().split("T")[0];
-
     // Make API request
     const apiUrl = import.meta.env.VITE_API_URL;
     let response = await fetch(
@@ -378,7 +384,7 @@ function UserStoryForm(props) {
           user_story: userStory,
           acceptance_criteria: acceptanceCriteria,
           subtasks: subtasks,
-          due_date: formattedDate,
+          due_date: formatDate(duedate),
           priority: priority,
           status: status,
         }),
