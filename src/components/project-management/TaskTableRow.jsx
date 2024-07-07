@@ -31,6 +31,7 @@ import { EnterFullScreenIcon, TrashIcon } from "@radix-ui/react-icons";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/components/ui/use-toast";
 import UserStoryForm from "@/components/project-management/forms/UserStoryForm";
+import { useEffect } from "react";
 
 function TaskTableRow(props) {
   // Get context data
@@ -72,7 +73,6 @@ function TaskTableRow(props) {
     );
     let data = await response.json();
     if (response.status === 200) {
-      console.log("Data updated successfully", data);
       setName(data.name);
       setEpic(data.epic);
       setDescription(data.description);
@@ -81,7 +81,7 @@ function TaskTableRow(props) {
       setSprint(data.sprint);
       setDuedate(data.due_date);
       setUserStory(data.user_story);
-      setAcceptanceCriteria(data.acceptanceCriteria);
+      setAcceptanceCriteria(data.acceptance_criteria);
       setSubtasks(data.subtasks);
       toast({ description: "Item data updated successfully" });
     } else {
@@ -134,7 +134,9 @@ function TaskTableRow(props) {
           </Badge>
         </TableCell>
         <TableCell>
-          {sprint && sprintData.find((item) => item.id == sprint).name}
+          {sprint &&
+            sprintData &&
+            sprintData.find((item) => item.id == sprint).name}
         </TableCell>
         <TableCell>{duedate && formatDate(duedate)}</TableCell>
         <TableCell className="text-right">

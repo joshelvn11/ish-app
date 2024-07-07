@@ -312,12 +312,46 @@ function UserStoryForm(props) {
     // Create new acceptance criteria JSON object
     const object = { id: id, criteria: newAcceptanceCriteria, done: false };
 
-    // Append the new acceptance criteria to the acceptance criteria state array
-    setAcceptanceCriteria([...acceptanceCriteria, object]);
+    // Create new array of acceptance criteria
+    const newAcceptanceCriteriaArray = [...acceptanceCriteria, object];
 
-    // Reset variables
-    setCreatingAcceptanceCriteria(false);
-    setNewAcceptanceCriteria("");
+    // Attempt to update the value on the server
+    if (!create) {
+      // Only attempt update if not in create mode
+      const apiUrl = import.meta.env.VITE_API_URL;
+      let response = await fetch(
+        `${apiUrl}/projects/${currentProject.id}/user-stories/${userStoryId}/`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + String(authTokens.access),
+          },
+          body: JSON.stringify({
+            acceptance_criteria: newAcceptanceCriteriaArray,
+          }),
+        }
+      );
+      let data = await response.json();
+      if (response.status === 200) {
+        toast({ description: "Acceptance criteria updated" });
+        setAcceptanceCriteria([...acceptanceCriteria, object]);
+        // Reset variables
+        setCreatingAcceptanceCriteria(false);
+        setNewAcceptanceCriteria("");
+        props.fetchItemData();
+      } else {
+        toast({
+          variant: "destructive",
+          description: `Problem updating acceptance criteria: ${JSON.stringify(
+            data
+          )}`,
+        });
+      }
+    } else {
+      setAcceptanceCriteria([...acceptanceCriteria, object]);
+      setNewAcceptanceCriteria("");
+    }
   };
 
   const saveNewSubtask = async () => {
@@ -349,11 +383,39 @@ function UserStoryForm(props) {
   };
 
   const updateAcceptanceCriteriaDone = async (id) => {
-    setAcceptanceCriteria(
-      acceptanceCriteria.map((item) =>
-        item.id === id ? { ...item, ["done"]: !item.done } : item
-      )
+    const updatedAcceptanceCriteria = acceptanceCriteria.map((item) =>
+      item.id === id ? { ...item, ["done"]: !item.done } : item
     );
+    setAcceptanceCriteria(updatedAcceptanceCriteria);
+    if (!create) {
+      // Only attempt update if not in create mode
+      const apiUrl = import.meta.env.VITE_API_URL;
+      let response = await fetch(
+        `${apiUrl}/projects/${currentProject.id}/user-stories/${userStoryId}/`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + String(authTokens.access),
+          },
+          body: JSON.stringify({
+            acceptance_criteria: updatedAcceptanceCriteria,
+          }),
+        }
+      );
+      let data = await response.json();
+      if (response.status === 200) {
+        toast({ description: "Acceptance criteria updated" });
+        props.fetchItemData();
+      } else {
+        toast({
+          variant: "destructive",
+          description: `Problem updating acceptance criteria: ${JSON.stringify(
+            data
+          )}`,
+        });
+      }
+    }
   };
 
   const updateSubtaskDone = async (id) => {
