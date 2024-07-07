@@ -374,12 +374,44 @@ function UserStoryForm(props) {
     // Create new subtask JSON object
     const object = { id: id, task: newSubstask, done: false };
 
-    // Append the new substask to the acceptance subtask array
-    setSubtasks([...subtasks, object]);
+    // Create an updated array
+    const updatedSubstasksArray = [...subtasks, object];
 
-    // Reset variables
-    setCreatingSubtasks(false);
-    setNewSubtask("");
+    // Attempt to update the value on the server
+    if (!create) {
+      // Only attempt update if not in create mode
+      const apiUrl = import.meta.env.VITE_API_URL;
+      let response = await fetch(
+        `${apiUrl}/projects/${currentProject.id}/user-stories/${userStoryId}/`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + String(authTokens.access),
+          },
+          body: JSON.stringify({
+            subtasks: updatedSubstasksArray,
+          }),
+        }
+      );
+      let data = await response.json();
+      if (response.status === 200) {
+        toast({ description: "Subtasks updated" });
+        setSubtasks(updatedSubstasksArray);
+        // Reset variables
+        setCreatingSubtasks(false);
+        setNewSubtask("");
+        props.fetchItemData();
+      } else {
+        toast({
+          variant: "destructive",
+          description: `Problem updating subtasks: ${JSON.stringify(data)}`,
+        });
+      }
+    } else {
+      setSubtasks(updatedSubstasksArray);
+      setNewSubtask("");
+    }
   };
 
   const updateAcceptanceCriteriaDone = async (id) => {
@@ -419,11 +451,37 @@ function UserStoryForm(props) {
   };
 
   const updateSubtaskDone = async (id) => {
-    setNewSubtask(
-      subtasks.map((item) =>
-        item.id === id ? { ...item, ["done"]: !item.done } : item
-      )
+    const updatedSubtasks = subtasks.map((item) =>
+      item.id === id ? { ...item, ["done"]: !item.done } : item
     );
+    setSubtasks(updatedSubtasks);
+    if (!create) {
+      // Only attempt update if not in create mode
+      const apiUrl = import.meta.env.VITE_API_URL;
+      let response = await fetch(
+        `${apiUrl}/projects/${currentProject.id}/user-stories/${userStoryId}/`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + String(authTokens.access),
+          },
+          body: JSON.stringify({
+            subtasks: updatedSubtasks,
+          }),
+        }
+      );
+      let data = await response.json();
+      if (response.status === 200) {
+        toast({ description: "Subtasks updated" });
+        props.fetchItemData();
+      } else {
+        toast({
+          variant: "destructive",
+          description: `Problem updating subtasks: ${JSON.stringify(data)}`,
+        });
+      }
+    }
   };
 
   const createUserStory = async (name) => {
