@@ -25,7 +25,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useToast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
-import { CloudFog } from "lucide-react";
+import { Pencil } from "lucide-react";
 
 function UserStoryForm(props) {
   const { currentProject, getUserStoryData, epicData, sprintData } =
@@ -725,7 +725,10 @@ function UserStoryForm(props) {
             </div>
             {acceptanceCriteria &&
               acceptanceCriteria.map((item) => (
-                <div key={item.id} className="flex items-center space-x-2">
+                <div
+                  key={item.id}
+                  className="relative flex items-center space-x-2 group"
+                >
                   <Checkbox
                     id={item.id}
                     checked={item.done}
@@ -733,14 +736,26 @@ function UserStoryForm(props) {
                       updateAcceptanceCriteriaDone(item.id);
                     }}
                   />
-                  <label
-                    htmlFor={item.id}
-                    className={`${
-                      item.done && "line-through text-gray-500"
-                    } text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70`}
-                  >
-                    {item.criteria}
-                  </label>
+                  <div className="relative w-full">
+                    <label
+                      htmlFor={item.id}
+                      className={`${
+                        item.done && "line-through text-gray-500"
+                      } text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70`}
+                    >
+                      <p className="max-w-[500px] break-words">
+                        {item.criteria}
+                      </p>
+                    </label>
+                    <div className="absolute transform -translate-y-1/2 right-0.5 top-1/2 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <Button variant="ghost" size="sm">
+                        Edit
+                      </Button>
+                      <Button variant="ghost" size="sm">
+                        Delete
+                      </Button>
+                    </div>
+                  </div>
                 </div>
               ))}
             {creatingAcceptanceCriteria && (
@@ -790,7 +805,7 @@ function UserStoryForm(props) {
                       item.done && "line-through text-gray-500"
                     } text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70`}
                   >
-                    {item.task}
+                    <p className="max-w-[500px] break-words">{item.task}</p>
                   </label>
                 </div>
               ))}
