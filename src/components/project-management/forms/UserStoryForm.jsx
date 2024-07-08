@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import ProjectContext from "@/context/ProjectContext";
 import AuthContext from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
@@ -50,6 +50,9 @@ function UserStoryForm(props) {
   let [newAcceptanceCriteria, setNewAcceptanceCriteria] = useState("");
   let [creatingAcceptanceCriteria, setCreatingAcceptanceCriteria] =
     useState(false);
+  let [editingAcceptanceCriteria, setEditingAcceptanceCriteria] =
+    useState(null);
+  let acceptanceCriteriaInputRef = useRef(null);
   let [subtasks, setSubtasks] = useState(props.subtasks ?? []);
   let [newSubstask, setNewSubtask] = useState("");
   let [creatingSubtasks, setCreatingSubtasks] = useState(false);
@@ -450,6 +453,50 @@ function UserStoryForm(props) {
     }
   };
 
+  const updateAcceptanceCriteriaItem = async () => {
+    const inputValue = acceptanceCriteriaInputRef.current.value;
+
+    const updatedAcceptanceCriteria = acceptanceCriteria.map((item) =>
+      item.id === editingAcceptanceCriteria
+        ? { ...item, ["criteria"]: inputValue }
+        : item
+    );
+
+    setEditingAcceptanceCriteria(null);
+
+    if (!create) {
+      // Only attempt update if not in create mode
+      const apiUrl = import.meta.env.VITE_API_URL;
+      let response = await fetch(
+        `${apiUrl}/projects/${currentProject.id}/user-stories/${userStoryId}/`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + String(authTokens.access),
+          },
+          body: JSON.stringify({
+            acceptance_criteria: updatedAcceptanceCriteria,
+          }),
+        }
+      );
+      let data = await response.json();
+      if (response.status === 200) {
+        toast({ description: "Acceptance criteria updated" });
+        props.fetchItemData();
+      } else {
+        toast({
+          variant: "destructive",
+          description: `Problem updating acceptance criteria: ${JSON.stringify(
+            data
+          )}`,
+        });
+      }
+    }
+
+    setAcceptanceCriteria(updatedAcceptanceCriteria);
+  };
+
   const updateSubtaskDone = async (id) => {
     const updatedSubtasks = subtasks.map((item) =>
       item.id === id ? { ...item, ["done"]: !item.done } : item
@@ -522,7 +569,6 @@ function UserStoryForm(props) {
       // Close the dialog
       props.closeDialog();
     } else {
-      console.log(data);
       toast({
         variant: "destructive",
         description: `Problem creating user story: ${JSON.stringify(data)}`,
@@ -531,7 +577,10 @@ function UserStoryForm(props) {
   };
 
   return (
-    <div className="space-y-4">
+    <div
+      id="user-story-form-container"
+      className="max-h-[75vh] space-y-4 overflow-y-scroll px-2"
+    >
       <div className="space-y-2">
         {validationErrors.length > 0 && (
           <Alert variant="destructive" className="mb-6">
@@ -737,23 +786,45 @@ function UserStoryForm(props) {
                     }}
                   />
                   <div className="relative w-full">
-                    <label
+                    <Input
+                      defaultValue={item.criteria}
                       htmlFor={item.id}
+                      readOnly={!(editingAcceptanceCriteria === item.id)}
+                      ref={
+                        editingAcceptanceCriteria === item.id
+                          ? acceptanceCriteriaInputRef
+                          : null
+                      }
                       className={`${
                         item.done && "line-through text-gray-500"
                       } text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70`}
-                    >
-                      <p className="max-w-[500px] break-words">
-                        {item.criteria}
-                      </p>
-                    </label>
+                    />
                     <div className="absolute transform -translate-y-1/2 right-0.5 top-1/2 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <Button variant="ghost" size="sm">
-                        Edit
-                      </Button>
-                      <Button variant="ghost" size="sm">
-                        Delete
-                      </Button>
+                      {!(editingAcceptanceCriteria === item.id) && (
+                        <>
+                          <Button
+                            variant=""
+                            size="sm"
+                            onClick={() => {
+                              setEditingAcceptanceCriteria(item.id);
+                            }}
+                          >
+                            Edit
+                          </Button>
+                          <Button variant="ghost" size="sm">
+                            Delete
+                          </Button>
+                        </>
+                      )}
+                      {editingAcceptanceCriteria === item.id && (
+                        <Button
+                          variant=""
+                          size="sm"
+                          onClick={updateAcceptanceCriteriaItem}
+                        >
+                          Save
+                        </Button>
+                      )}
                     </div>
                   </div>
                 </div>
