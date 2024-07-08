@@ -62,7 +62,7 @@ function TaskTableRow(props) {
   const fetchItemData = async () => {
     const apiUrl = import.meta.env.VITE_API_URL;
     let response = await fetch(
-      `${apiUrl}/projects/${currentProject.id}/user-stories/${id}/`,
+      `${apiUrl}/projects/${currentProject.id}/items/${id}/`,
       {
         method: "GET",
         headers: {
@@ -112,7 +112,7 @@ function TaskTableRow(props) {
     <>
       <TableRow>
         <TableCell>
-          <Badge>{type.typeDisplay}</Badge>
+          <Badge>{type}</Badge>
         </TableCell>
         <TableCell className="font-medium">{name}</TableCell>
         <TableCell>
@@ -161,24 +161,23 @@ function TaskTableRow(props) {
             </DialogTitle>
             <DialogDescription></DialogDescription>
           </DialogHeader>
-          {type.type === "USERSTORY" && (
-            <UserStoryForm
-              create={false}
-              id={id}
-              name={name}
-              epic={epic}
-              description={description}
-              duedate={duedate}
-              status={status}
-              priority={priority}
-              sprint={sprint}
-              userStory={userStory}
-              acceptanceCriteria={acceptanceCriteria}
-              subtasks={subtasks}
-              fetchItemData={fetchItemData}
-              closeDialog={closeDialog}
-            />
-          )}
+
+          <UserStoryForm
+            create={false}
+            id={id}
+            name={name}
+            epic={epic}
+            description={description}
+            duedate={duedate}
+            status={status}
+            priority={priority}
+            sprint={sprint}
+            userStory={userStory}
+            acceptanceCriteria={acceptanceCriteria}
+            subtasks={subtasks}
+            fetchItemData={fetchItemData}
+            closeDialog={closeDialog}
+          />
         </DialogContent>
       </Dialog>
     </>

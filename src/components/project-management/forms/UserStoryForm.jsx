@@ -75,7 +75,7 @@ function UserStoryForm(props) {
       // Only attempt update if not in create mode
       const apiUrl = import.meta.env.VITE_API_URL;
       let response = await fetch(
-        `${apiUrl}/projects/${currentProject.id}/user-stories/${userStoryId}/`,
+        `${apiUrl}/projects/${currentProject.id}/items/${userStoryId}/`,
         {
           method: "PATCH",
           headers: {
@@ -105,7 +105,7 @@ function UserStoryForm(props) {
       // Only attempt update if not in create mode
       const apiUrl = import.meta.env.VITE_API_URL;
       let response = await fetch(
-        `${apiUrl}/projects/${currentProject.id}/user-stories/${userStoryId}/`,
+        `${apiUrl}/projects/${currentProject.id}/items/${userStoryId}/`,
         {
           method: "PATCH",
           headers: {
@@ -135,7 +135,7 @@ function UserStoryForm(props) {
       // Only attempt update if not in create mode
       const apiUrl = import.meta.env.VITE_API_URL;
       let response = await fetch(
-        `${apiUrl}/projects/${currentProject.id}/user-stories/${userStoryId}/`,
+        `${apiUrl}/projects/${currentProject.id}/items/${userStoryId}/`,
         {
           method: "PATCH",
           headers: {
@@ -168,7 +168,7 @@ function UserStoryForm(props) {
       // Only attempt update if not in create mode
       const apiUrl = import.meta.env.VITE_API_URL;
       let response = await fetch(
-        `${apiUrl}/projects/${currentProject.id}/user-stories/${userStoryId}/`,
+        `${apiUrl}/projects/${currentProject.id}/items/${userStoryId}/`,
         {
           method: "PATCH",
           headers: {
@@ -201,7 +201,7 @@ function UserStoryForm(props) {
       // Only attempt update if not in create mode
       const apiUrl = import.meta.env.VITE_API_URL;
       let response = await fetch(
-        `${apiUrl}/projects/${currentProject.id}/user-stories/${userStoryId}/`,
+        `${apiUrl}/projects/${currentProject.id}/items/${userStoryId}/`,
         {
           method: "PATCH",
           headers: {
@@ -234,7 +234,7 @@ function UserStoryForm(props) {
       // Only attempt update if not in create mode
       const apiUrl = import.meta.env.VITE_API_URL;
       let response = await fetch(
-        `${apiUrl}/projects/${currentProject.id}/user-stories/${userStoryId}/`,
+        `${apiUrl}/projects/${currentProject.id}/items/${userStoryId}/`,
         {
           method: "PATCH",
           headers: {
@@ -267,7 +267,7 @@ function UserStoryForm(props) {
       // Only attempt update if not in create mode
       const apiUrl = import.meta.env.VITE_API_URL;
       let response = await fetch(
-        `${apiUrl}/projects/${currentProject.id}/user-stories/${userStoryId}/`,
+        `${apiUrl}/projects/${currentProject.id}/items/${userStoryId}/`,
         {
           method: "PATCH",
           headers: {
@@ -323,7 +323,7 @@ function UserStoryForm(props) {
       // Only attempt update if not in create mode
       const apiUrl = import.meta.env.VITE_API_URL;
       let response = await fetch(
-        `${apiUrl}/projects/${currentProject.id}/user-stories/${userStoryId}/`,
+        `${apiUrl}/projects/${currentProject.id}/items/${userStoryId}/`,
         {
           method: "PATCH",
           headers: {
@@ -385,7 +385,7 @@ function UserStoryForm(props) {
       // Only attempt update if not in create mode
       const apiUrl = import.meta.env.VITE_API_URL;
       let response = await fetch(
-        `${apiUrl}/projects/${currentProject.id}/user-stories/${userStoryId}/`,
+        `${apiUrl}/projects/${currentProject.id}/items/${userStoryId}/`,
         {
           method: "PATCH",
           headers: {
@@ -426,7 +426,7 @@ function UserStoryForm(props) {
       // Only attempt update if not in create mode
       const apiUrl = import.meta.env.VITE_API_URL;
       let response = await fetch(
-        `${apiUrl}/projects/${currentProject.id}/user-stories/${userStoryId}/`,
+        `${apiUrl}/projects/${currentProject.id}/items/${userStoryId}/`,
         {
           method: "PATCH",
           headers: {
@@ -468,7 +468,7 @@ function UserStoryForm(props) {
       // Only attempt update if not in create mode
       const apiUrl = import.meta.env.VITE_API_URL;
       let response = await fetch(
-        `${apiUrl}/projects/${currentProject.id}/user-stories/${userStoryId}/`,
+        `${apiUrl}/projects/${currentProject.id}/items/${userStoryId}/`,
         {
           method: "PATCH",
           headers: {
@@ -506,7 +506,7 @@ function UserStoryForm(props) {
       // Only attempt update if not in create mode
       const apiUrl = import.meta.env.VITE_API_URL;
       let response = await fetch(
-        `${apiUrl}/projects/${currentProject.id}/user-stories/${userStoryId}/`,
+        `${apiUrl}/projects/${currentProject.id}/items/${userStoryId}/`,
         {
           method: "PATCH",
           headers: {
@@ -535,7 +535,7 @@ function UserStoryForm(props) {
     // Make API request
     const apiUrl = import.meta.env.VITE_API_URL;
     let response = await fetch(
-      `${apiUrl}/projects/${currentProject.id}/user-stories/`,
+      `${apiUrl}/projects/${currentProject.id}/items/`,
       {
         method: "POST",
         headers: {

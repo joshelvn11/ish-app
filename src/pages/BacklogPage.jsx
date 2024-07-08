@@ -7,8 +7,7 @@ import ItemsToolBar from "@/components/project-management/ItemsToolBar";
 
 function BacklogPage() {
   const { authTokens } = useContext(AuthContext);
-  const { currentProject, epicData, userStoryData, taskData } =
-    useContext(ProjectContext);
+  const { currentProject, epicData, itemData } = useContext(ProjectContext);
 
   return (
     <div
@@ -17,7 +16,7 @@ function BacklogPage() {
     >
       <ItemsToolBar></ItemsToolBar>
       <div className="flex flex-col w-full h-full gap-3 p-3 overflow-y-auto">
-        {epicData && userStoryData ? (
+        {epicData && itemData ? (
           <>
             {epicData.map((obj) => (
               <EpicCard
@@ -29,9 +28,7 @@ function BacklogPage() {
                 status={obj.status}
               ></EpicCard>
             ))}{" "}
-            {((userStoryData &&
-              userStoryData.some((userStory) => userStory.epic == null)) ||
-              (taskData && taskData.some((task) => task.epic == null))) && (
+            {itemData && itemData.some((item) => item.epic == null) && (
               <EpicCard
                 key={0}
                 epicId={null}

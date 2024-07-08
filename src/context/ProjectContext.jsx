@@ -13,8 +13,7 @@ export const ProjectContextProvider = ({ children }) => {
   let [currentProject, setCurrentProject] = useState(null);
   let [epicData, setEpicData] = useState(null);
   let [sprintData, setSprintData] = useState(null);
-  let [userStoryData, setUserStoryData] = useState(null);
-  let [taskData, setTaskData] = useState(null);
+  let [itemData, setItemData] = useState(null);
   let [filterOptions, setFilterOptions] = useState({ epics: true });
 
   const getProjects = async () => {
@@ -118,12 +117,12 @@ export const ProjectContextProvider = ({ children }) => {
     }
   };
 
-  const getUserStoryData = async () => {
+  const getItemData = async () => {
     if (currentProject) {
       // Attempt to get epic data if current project is not falsey
       const apiUrl = import.meta.env.VITE_API_URL;
       let response = await fetch(
-        `${apiUrl}/projects/${currentProject.id}/user-stories/`,
+        `${apiUrl}/projects/${currentProject.id}/items/`,
         {
           method: "GET",
           headers: {
@@ -134,28 +133,7 @@ export const ProjectContextProvider = ({ children }) => {
       );
       let data = await response.json();
       if (response.status === 200) {
-        setUserStoryData(data);
-      }
-    }
-  };
-
-  const getTaskData = async () => {
-    if (currentProject) {
-      // Attempt to get epic data if current project is not falsey
-      const apiUrl = import.meta.env.VITE_API_URL;
-      let response = await fetch(
-        `${apiUrl}/projects/${currentProject.id}/tasks/`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + String(authTokens.access),
-          },
-        }
-      );
-      let data = await response.json();
-      if (response.status === 200) {
-        setTaskData(data);
+        setItemData(data);
       }
     }
   };
@@ -168,9 +146,8 @@ export const ProjectContextProvider = ({ children }) => {
     getEpicData: getEpicData,
     deleteEpic: deleteEpic,
     sprintData: sprintData,
-    userStoryData: userStoryData,
-    getUserStoryData: getUserStoryData,
-    taskData: taskData,
+    itemData: itemData,
+    getItemData: getItemData,
     filterOptions: filterOptions,
   };
 
@@ -185,8 +162,7 @@ export const ProjectContextProvider = ({ children }) => {
       setCurrentProject(null);
       setEpicData(null);
       setSprintData(null);
-      setUserStoryData(null);
-      setTaskData(null);
+      setItemData(null);
     }
   }, [authTokens]);
 
@@ -201,12 +177,10 @@ export const ProjectContextProvider = ({ children }) => {
     // Load or reload the project task data whenever the current project changes
     setEpicData(null);
     setSprintData(null);
-    setUserStoryData(null);
-    setTaskData(null);
+    setItemData(null);
     getEpicData();
     getSprintData();
-    getUserStoryData();
-    getTaskData();
+    getItemData();
   }, [currentProject]);
 
   return (
