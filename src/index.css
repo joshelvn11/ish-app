@@ -73,4 +73,7 @@
   body {
     @apply bg-background text-foreground;
   }
+  div {
+    @apply scrollbar-thin scrollbar-thumb-primary scrollbar-track-transparent;
+  }
 }
