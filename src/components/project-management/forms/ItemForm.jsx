@@ -27,7 +27,7 @@ import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { Pencil } from "lucide-react";
 
-function UserStoryForm(props) {
+function ItemForm(props) {
   const { currentProject, getUserStoryData, epicData, sprintData } =
     useContext(ProjectContext);
   const { authTokens } = useContext(AuthContext);
@@ -908,4 +908,4 @@ function UserStoryForm(props) {
   );
 }
 
-export default UserStoryForm;
+export default ItemForm;

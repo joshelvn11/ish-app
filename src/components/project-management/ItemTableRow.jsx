@@ -30,10 +30,10 @@ import { Button } from "@/components/ui/button";
 import { EnterFullScreenIcon, TrashIcon } from "@radix-ui/react-icons";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/components/ui/use-toast";
-import UserStoryForm from "@/components/project-management/forms/UserStoryForm";
+import ItemForm from "@/components/project-management/forms/ItemForm";
 import { useEffect } from "react";
 
-function TaskTableRow(props) {
+function ItemTableRow(props) {
   // Get context data
   const { sprintData, currentProject } = useContext(ProjectContext);
   const { authTokens } = useContext(AuthContext);
@@ -162,7 +162,7 @@ function TaskTableRow(props) {
             <DialogDescription></DialogDescription>
           </DialogHeader>
 
-          <UserStoryForm
+          <ItemForm
             create={false}
             id={id}
             name={name}
@@ -184,4 +184,4 @@ function TaskTableRow(props) {
   );
 }
 
-export default TaskTableRow;
+export default ItemTableRow;

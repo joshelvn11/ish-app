@@ -25,7 +25,7 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
-import TaskTable from "./TaskTable";
+import ItemTable from "./ItemTable";
 import { EnterFullScreenIcon, TrashIcon } from "@radix-ui/react-icons";
 import EpicForm from "./forms/EpicForm";
 import { useContext } from "react";
@@ -94,7 +94,7 @@ function EpicCard(props) {
           )}
           <p className="pb-3 text-sm">{props.description}</p>
           <CollapsibleContent className="space-y-2">
-            <TaskTable groupBy={"EPIC"} groupId={props.epicId}></TaskTable>
+            <ItemTable groupBy={"EPIC"} groupId={props.epicId}></ItemTable>
           </CollapsibleContent>
         </Collapsible>
       </Card>

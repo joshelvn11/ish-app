@@ -9,9 +9,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import TaskTableRow from "@/components/project-management/TaskTableRow";
+import ItemTableRow from "@/components/project-management/ItemTableRow";
 
-function TaskTable(props) {
+function ItemTable(props) {
   // Get context properties
   const { currentProject, epicData, itemData, filterOptions } =
     useContext(ProjectContext);
@@ -52,7 +52,7 @@ function TaskTable(props) {
       <TableBody>
         {filteredData &&
           filteredData.map((item, index) => (
-            <TaskTableRow
+            <ItemTableRow
               key={index}
               id={item.id}
               type={item.item_type}
@@ -73,4 +73,4 @@ function TaskTable(props) {
   );
 }
 
-export default TaskTable;
+export default ItemTable;
