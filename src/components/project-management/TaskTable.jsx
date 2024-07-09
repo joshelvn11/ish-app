@@ -40,10 +40,10 @@ function TaskTable(props) {
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead>Type</TableHead>
-          <TableHead className="w-[300px]">Title</TableHead>
-          <TableHead>Status</TableHead>
-          <TableHead>Priority</TableHead>
+          <TableHead className="w-[150px]">Type</TableHead>
+          <TableHead className="w-[300px] max-w-[350px]">Title</TableHead>
+          <TableHead className="w-[150px]">Status</TableHead>
+          <TableHead className="w-[150px]">Priority</TableHead>
           <TableHead>Sprint</TableHead>
           <TableHead className="">Due Date</TableHead>
           <TableHead></TableHead>
