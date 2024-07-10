@@ -56,6 +56,8 @@ function ItemForm(props) {
   let [subtasks, setSubtasks] = useState(props.subtasks ?? []);
   let [newSubstask, setNewSubtask] = useState("");
   let [creatingSubtasks, setCreatingSubtasks] = useState(false);
+  let [editingSubtask, setEditingSubtask] = useState(null);
+  let subtaskInputRef = useRef(null);
   let [duedate, setDuedate] = useState(props.duedate);
   let [priority, setPriority] = useState(props.priority ?? "");
   let [status, setStatus] = useState(props.status ?? "");
@@ -497,6 +499,46 @@ function ItemForm(props) {
     setAcceptanceCriteria(updatedAcceptanceCriteria);
   };
 
+  const updateSubtaskItem = async () => {
+    const inputValue = subtaskInputRef.current.value;
+
+    const updatedSubtasks = subtasks.map((item) =>
+      item.id === editingSubtask ? { ...item, ["task"]: inputValue } : item
+    );
+
+    setEditingSubtask(null);
+
+    if (!create) {
+      // Only attempt update if not in create mode
+      const apiUrl = import.meta.env.VITE_API_URL;
+      let response = await fetch(
+        `${apiUrl}/projects/${currentProject.id}/items/${userStoryId}/`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + String(authTokens.access),
+          },
+          body: JSON.stringify({
+            subtasks: updatedSubtasks,
+          }),
+        }
+      );
+      let data = await response.json();
+      if (response.status === 200) {
+        toast({ description: "Subtask updated" });
+        props.fetchItemData();
+      } else {
+        toast({
+          variant: "destructive",
+          description: `Problem updating subtask: ${JSON.stringify(data)}`,
+        });
+      }
+    }
+
+    setSubtasks(updatedSubtasks);
+  };
+
   const updateSubtaskDone = async (id) => {
     const updatedSubtasks = subtasks.map((item) =>
       item.id === id ? { ...item, ["done"]: !item.done } : item
@@ -862,7 +904,10 @@ function ItemForm(props) {
             </div>
             {subtasks &&
               subtasks.map((item) => (
-                <div key={item.id} className="flex items-center space-x-2">
+                <div
+                  key={item.id}
+                  className="relative flex items-center space-x-2 group"
+                >
                   <Checkbox
                     id={item.id}
                     checked={item.done}
@@ -870,14 +915,44 @@ function ItemForm(props) {
                       updateSubtaskDone(item.id);
                     }}
                   />
-                  <label
-                    htmlFor={item.id}
-                    className={`${
-                      item.done && "line-through text-gray-500"
-                    } text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70`}
-                  >
-                    <p className="max-w-[500px] break-words">{item.task}</p>
-                  </label>
+                  <div className="relative w-full">
+                    <Input
+                      defaultValue={item.task}
+                      htmlFor={item.id}
+                      readOnly={!(editingSubtask === item.id)}
+                      ref={editingSubtask === item.id ? subtaskInputRef : null}
+                      className={`${
+                        item.done && "line-through text-gray-500"
+                      } text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70`}
+                    />
+                    <div className="absolute transform -translate-y-1/2 right-0.5 top-1/2 opacity-0 group-hover:opacity-100 transition-opacity">
+                      {!(editingSubtask === item.id) && (
+                        <>
+                          <Button
+                            variant=""
+                            size="sm"
+                            onClick={() => {
+                              setEditingSubtask(item.id);
+                            }}
+                          >
+                            Edit
+                          </Button>
+                          <Button variant="ghost" size="sm">
+                            Delete
+                          </Button>
+                        </>
+                      )}
+                      {editingSubtask === item.id && (
+                        <Button
+                          variant=""
+                          size="sm"
+                          onClick={updateSubtaskItem}
+                        >
+                          Save
+                        </Button>
+                      )}
+                    </div>
+                  </div>
                 </div>
               ))}
             {creatingSubtasks && (
