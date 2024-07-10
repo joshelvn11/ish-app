@@ -29,6 +29,7 @@ export const ProjectContextProvider = ({ children }) => {
     if (response.status === 200) {
       setProjects(data);
     }
+    return data;
   };
 
   const loadProject = (id) => {
@@ -140,6 +141,7 @@ export const ProjectContextProvider = ({ children }) => {
 
   let contextData = {
     projects: projects,
+    getProjects: getProjects,
     currentProject: currentProject,
     loadProject: loadProject,
     epicData: epicData,

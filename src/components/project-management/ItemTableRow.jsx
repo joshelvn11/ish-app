@@ -106,7 +106,6 @@ function ItemTableRow(props) {
 
   // Callback function to close dialog
   const closeDialog = () => {
-    console.log("Closing dialog");
     setIsDialogOpen(false);
   };
 
