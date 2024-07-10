@@ -26,6 +26,17 @@ import {
   DialogTrigger,
   DialogFooter,
 } from "@/components/ui/dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { EnterFullScreenIcon, TrashIcon } from "@radix-ui/react-icons";
 import { Badge } from "@/components/ui/badge";
@@ -108,6 +119,30 @@ function ItemTableRow(props) {
     return `${day} ${month} ${year}`;
   };
 
+  const deleteItem = async () => {
+    const apiUrl = import.meta.env.VITE_API_URL;
+    let response = await fetch(
+      `${apiUrl}/projects/${currentProject.id}/items/${id}/`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + String(authTokens.access),
+        },
+      }
+    );
+    if (response.status === 204) {
+      toast({
+        description: `Item deleted successfully`,
+      });
+    } else {
+      toast({
+        variant: "destructive",
+        description: `Problem deleting item: ${JSON.stringify(data)}`,
+      });
+    }
+  };
+
   return (
     <>
       <TableRow>
@@ -148,9 +183,31 @@ function ItemTableRow(props) {
           >
             <EnterFullScreenIcon className="w-5 h-5" />
           </Button>
-          <Button variant="ghost">
-            <TrashIcon className="w-5 h-5" />
-          </Button>
+          <AlertDialog>
+            <AlertDialogTrigger>
+              <Button variant="ghost">
+                <TrashIcon className="w-5 h-5" />
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This action cannot be undone.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction
+                  onClick={() => {
+                    deleteItem();
+                  }}
+                >
+                  Continue
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </TableCell>
       </TableRow>
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
