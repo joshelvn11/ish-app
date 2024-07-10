@@ -499,6 +499,44 @@ function ItemForm(props) {
     setAcceptanceCriteria(updatedAcceptanceCriteria);
   };
 
+  const deleteAcceptanceCriteriaItem = async (id) => {
+    const updatedAcceptanceCriteria = acceptanceCriteria.filter(
+      (item) => item.id !== id
+    );
+
+    if (!create) {
+      // Only attempt update if not in create mode
+      const apiUrl = import.meta.env.VITE_API_URL;
+      let response = await fetch(
+        `${apiUrl}/projects/${currentProject.id}/items/${userStoryId}/`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + String(authTokens.access),
+          },
+          body: JSON.stringify({
+            acceptance_criteria: updatedAcceptanceCriteria,
+          }),
+        }
+      );
+      let data = await response.json();
+      if (response.status === 200) {
+        toast({ description: "Acceptance criteria updated" });
+        props.fetchItemData();
+      } else {
+        toast({
+          variant: "destructive",
+          description: `Problem updating acceptance criteria: ${JSON.stringify(
+            data
+          )}`,
+        });
+      }
+    }
+
+    setAcceptanceCriteria(updatedAcceptanceCriteria);
+  };
+
   const updateSubtaskItem = async () => {
     const inputValue = subtaskInputRef.current.value;
 
@@ -532,6 +570,41 @@ function ItemForm(props) {
         toast({
           variant: "destructive",
           description: `Problem updating subtask: ${JSON.stringify(data)}`,
+        });
+      }
+    }
+
+    setSubtasks(updatedSubtasks);
+  };
+
+  const deleteSubtaskItem = async (id) => {
+    const updatedSubtasks = subtasks.filter((item) => item.id !== id);
+
+    if (!create) {
+      // Only attempt update if not in create mode
+      const apiUrl = import.meta.env.VITE_API_URL;
+      let response = await fetch(
+        `${apiUrl}/projects/${currentProject.id}/items/${userStoryId}/`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + String(authTokens.access),
+          },
+          body: JSON.stringify({
+            subtasks: updatedSubtasks,
+          }),
+        }
+      );
+      let data = await response.json();
+      if (response.status === 200) {
+        props.fetchItemData();
+      } else {
+        toast({
+          variant: "destructive",
+          description: `Problem updating deleting subtask: ${JSON.stringify(
+            data
+          )}`,
         });
       }
     }
@@ -853,7 +926,13 @@ function ItemForm(props) {
                           >
                             Edit
                           </Button>
-                          <Button variant="ghost" size="sm">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => {
+                              deleteAcceptanceCriteriaItem(item.id);
+                            }}
+                          >
                             Delete
                           </Button>
                         </>
@@ -937,7 +1016,13 @@ function ItemForm(props) {
                           >
                             Edit
                           </Button>
-                          <Button variant="ghost" size="sm">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => {
+                              deleteSubtaskItem(item.id);
+                            }}
+                          >
                             Delete
                           </Button>
                         </>
