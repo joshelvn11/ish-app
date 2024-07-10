@@ -46,7 +46,8 @@ import { useEffect } from "react";
 
 function ItemTableRow(props) {
   // Get context data
-  const { sprintData, currentProject } = useContext(ProjectContext);
+  const { sprintData, currentProject, getItemData } =
+    useContext(ProjectContext);
   const { authTokens } = useContext(AuthContext);
 
   const { toast } = useToast();
@@ -132,6 +133,7 @@ function ItemTableRow(props) {
       }
     );
     if (response.status === 204) {
+      getItemData();
       toast({
         description: `Item deleted successfully`,
       });

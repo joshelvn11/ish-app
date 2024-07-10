@@ -28,7 +28,7 @@ import { format } from "date-fns";
 import { Pencil } from "lucide-react";
 
 function ItemForm(props) {
-  const { currentProject, getUserStoryData, epicData, sprintData } =
+  const { currentProject, getItemData, epicData, sprintData } =
     useContext(ProjectContext);
   const { authTokens } = useContext(AuthContext);
   const { toast } = useToast();
@@ -153,7 +153,7 @@ function ItemForm(props) {
       if (response.status === 200) {
         toast({ description: "Epic updated" });
         setEpic(value);
-        getUserStoryData();
+        getItemData();
       } else {
         toast({
           variant: "destructive",
@@ -678,7 +678,7 @@ function ItemForm(props) {
       // Set the user story id to the newly created id
       setUserStoryId(data.id);
       // Refresh user story data
-      getUserStoryData();
+      getItemData();
       // Set to update mode
       setCreate(false);
       // Close the dialog
