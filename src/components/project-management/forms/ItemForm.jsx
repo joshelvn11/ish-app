@@ -725,8 +725,25 @@ function ItemForm(props) {
             />
           </div>
           <div className="flex flex-wrap gap-2">
+            <Select
+              value={epic ?? ""}
+              onValueChange={updateEpic}
+              className="w-full sm:w-full"
+            >
+              <SelectTrigger className="w-[100%]">
+                <SelectValue placeholder="Select epic..." />
+              </SelectTrigger>
+              <SelectContent>
+                {epicData &&
+                  epicData.map((epic) => (
+                    <SelectItem value={epic.id} key={epic.id}>
+                      {epic.name}
+                    </SelectItem>
+                  ))}
+              </SelectContent>
+            </Select>
             <Select value={priority} onValueChange={updatePriority}>
-              <SelectTrigger className="w-[120px] sm:w-[150px]">
+              <SelectTrigger style={{ width: "calc(50% - 4px)" }}>
                 <SelectValue placeholder="Select priority..." />
               </SelectTrigger>
               <SelectContent>
@@ -745,7 +762,7 @@ function ItemForm(props) {
               </SelectContent>
             </Select>
             <Select value={status} onValueChange={updateStatus}>
-              <SelectTrigger className="w-[120px] sm:w-[150px]">
+              <SelectTrigger style={{ width: "calc(50% - 4px)" }}>
                 <SelectValue placeholder="Select status..." />
               </SelectTrigger>
               <SelectContent>
@@ -793,28 +810,11 @@ function ItemForm(props) {
               </PopoverContent>
             </Popover>
             <Select
-              value={epic ?? ""}
-              onValueChange={updateEpic}
-              className="w-full sm:w-full"
-            >
-              <SelectTrigger className="w-[120px] sm:w-[150px]">
-                <SelectValue placeholder="Select epic..." />
-              </SelectTrigger>
-              <SelectContent>
-                {epicData &&
-                  epicData.map((epic) => (
-                    <SelectItem value={epic.id} key={epic.id}>
-                      {epic.name}
-                    </SelectItem>
-                  ))}
-              </SelectContent>
-            </Select>
-            <Select
               value={sprint ?? ""}
               onValueChange={updateSprint}
               className="w-full sm:w-full"
             >
-              <SelectTrigger className="w-[120px] sm:w-[150px]">
+              <SelectTrigger style={{ width: "calc(100% - 248px)" }}>
                 <SelectValue placeholder="Select sprint..." />
               </SelectTrigger>
               <SelectContent>
