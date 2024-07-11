@@ -14,7 +14,13 @@ export const ProjectContextProvider = ({ children }) => {
   let [epicData, setEpicData] = useState(null);
   let [sprintData, setSprintData] = useState(null);
   let [itemData, setItemData] = useState(null);
-  let [filterOptions, setFilterOptions] = useState({ epics: true });
+  let [backlogFilterOptions, setBacklogFilterOptions] = useState({
+    sortBy: "",
+    sortOrder: "",
+    filterType: ["USER STORY", "TASK", "BUG", "DOCUMENTATION"],
+    filterStatus: ["TO DO", "IN PROGRESS", "REVIEW", "DONE"],
+    filterPriority: ["OPTIONAL", "BENEFICIAL", "ESSENTIAL", "CRITICAL"],
+  });
 
   const getProjects = async () => {
     const apiUrl = import.meta.env.VITE_API_URL;
@@ -139,6 +145,10 @@ export const ProjectContextProvider = ({ children }) => {
     }
   };
 
+  useEffect(() => {
+    console.log(backlogFilterOptions);
+  }, [backlogFilterOptions]);
+
   let contextData = {
     projects: projects,
     getProjects: getProjects,
@@ -150,7 +160,8 @@ export const ProjectContextProvider = ({ children }) => {
     sprintData: sprintData,
     itemData: itemData,
     getItemData: getItemData,
-    filterOptions: filterOptions,
+    backlogFilterOptions: backlogFilterOptions,
+    setBacklogFilterOptions: setBacklogFilterOptions,
   };
 
   useEffect(() => {

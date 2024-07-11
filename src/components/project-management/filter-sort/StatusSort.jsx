@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import ProjectContext from "@/context/ProjectContext";
 import {
   Select,
   SelectContent,
@@ -11,8 +12,18 @@ import {
 import { ArrowDownWideNarrow } from "lucide-react";
 
 function StatusSort() {
+  const { backlogFilterOptions, setBacklogFilterOptions } =
+    useContext(ProjectContext);
+
+  const handleValueChange = (value) => {
+    setBacklogFilterOptions((prevState) => ({
+      ...prevState,
+      sortBy: value,
+    }));
+  };
+
   return (
-    <Select>
+    <Select value={""} onValueChange={handleValueChange}>
       <SelectTrigger className="w-[180px]">
         <ArrowDownWideNarrow className="size-5" />
         <SelectValue placeholder="Sort by" />

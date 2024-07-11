@@ -13,7 +13,7 @@ import ItemTableRow from "@/components/project-management/ItemTableRow";
 
 function ItemTable(props) {
   // Get context properties
-  const { currentProject, epicData, itemData, filterOptions } =
+  const { currentProject, epicData, itemData, backlogFilterOptions } =
     useContext(ProjectContext);
 
   // Set state values
@@ -23,18 +23,26 @@ function ItemTable(props) {
   useEffect(() => {
     // Only run filterting when all required data is loaded
     if (currentProject && epicData && itemData) {
-      console.log("Reloading item data");
-
       let filteredItems;
 
-      // Filter data by grouping propery
-      if (props.groupBy == "EPIC") {
-        // Retrieve all the user stories matching the epic id
-        filteredItems = itemData.filter((item) => item.epic === props.groupId);
+      // Retrieve all the user stories matching the epic id
+      filteredItems = itemData.filter((item) => item.epic === props.groupId);
+
+      // Sort by status
+      if (backlogFilterOptions.sortBy === "STATUS") {
+        let statusOrder = ["TO DO", "IN PROGRESS", "REVIEW", "DONE"];
+        if (backlogFilterOptions.sortOrder === "DESC") {
+          // Reverse the order if DESC
+          statusOrder = statusOrder.reverse();
+        }
+        filteredItems = filteredItems.sort((a, b) => {
+          return statusOrder.indexOf(a.status) - statusOrder.indexOf(b.status);
+        });
       }
+
       setFilteredData(filteredItems);
     }
-  }, [currentProject, epicData, itemData]);
+  }, [currentProject, epicData, itemData, backlogFilterOptions]);
 
   return (
     <Table>
@@ -51,9 +59,9 @@ function ItemTable(props) {
       </TableHeader>
       <TableBody>
         {filteredData &&
-          filteredData.map((item, index) => (
+          filteredData.map((item) => (
             <ItemTableRow
-              key={index}
+              key={item.id}
               id={item.id}
               type={item.item_type}
               name={item.name}
