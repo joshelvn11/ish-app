@@ -38,6 +38,18 @@ function ItemTable(props) {
         filteredItems = filteredItems.sort((a, b) => {
           return statusOrder.indexOf(a.status) - statusOrder.indexOf(b.status);
         });
+      } else if (backlogFilterOptions.sortBy === "PRIORITY") {
+        let priorityOrder = ["OPTIONAL", "BENEFICIAL", "ESSENTIAL", "CRITICAL"];
+        if (backlogFilterOptions.sortOrder === "DESC") {
+          // Reverse the order if DESC
+          priorityOrder = priorityOrder.reverse();
+        }
+        filteredItems = filteredItems.sort((a, b) => {
+          return (
+            priorityOrder.indexOf(a.priority) -
+            priorityOrder.indexOf(b.priority)
+          );
+        });
       }
 
       setFilteredData(filteredItems);

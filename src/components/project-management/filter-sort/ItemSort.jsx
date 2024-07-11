@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/select";
 import { ArrowDownWideNarrow } from "lucide-react";
 
-function StatusSort() {
+function ItemSort() {
   const { backlogFilterOptions, setBacklogFilterOptions } =
     useContext(ProjectContext);
 
@@ -41,4 +41,4 @@ function StatusSort() {
   );
 }
 
-export default StatusSort;
+export default ItemSort;
