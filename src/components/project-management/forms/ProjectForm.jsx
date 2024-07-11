@@ -6,6 +6,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
+import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 function ProjectForm(props) {
   const { loadProject, getProjects } = useContext(ProjectContext);
@@ -14,8 +16,30 @@ function ProjectForm(props) {
 
   let [name, setName] = useState("");
   let [description, setDescription] = useState("");
+  let [validationErrors, setValidationErrors] = useState([]);
+
+  const validateData = () => {
+    let valid = true;
+    setValidationErrors([]);
+    let errors = [];
+    if (name === "") {
+      errors.push("Please enter a valid title");
+      valid = false;
+    }
+
+    if (name.length > 50) {
+      errors.push("Title may not be longer than 50 characters");
+      valid = false;
+    }
+    setValidationErrors(errors);
+    return valid;
+  };
 
   const createProject = async () => {
+    if (!validateData()) {
+      return;
+    }
+
     const apiUrl = import.meta.env.VITE_API_URL;
     let response = await fetch(`${apiUrl}/projects/`, {
       method: "POST",
@@ -40,45 +64,54 @@ function ProjectForm(props) {
     } else {
       toast({
         variant: "destructive",
-        description: "Problem creating project",
+        description: `Problem creating project: ${JSON.stringify(data)}`,
       });
     }
   };
 
   return (
     <div className="space-y-4">
+      {validationErrors.length > 0 && (
+        <Alert variant="destructive" className="mb-6">
+          <ExclamationTriangleIcon className="w-4 h-4" />
+          <AlertTitle>Errors</AlertTitle>
+          <AlertDescription>
+            <ul>
+              {validationErrors.map((error, index) => (
+                <li key={index}>{error}</li>
+              ))}
+            </ul>
+          </AlertDescription>
+        </Alert>
+      )}
       <div className="space-y-2">
-        <div className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="name">Title</Label>
-            <Input
-              id="name"
-              type="text"
-              placeholder=""
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="description">Description</Label>
-            <Textarea
-              id="description"
-              type="text"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            />
-          </div>
-          <Button
-            onClick={() => {
-              createProject();
-            }}
-            className="w-full"
-          >
-            Create
-          </Button>
-        </div>
+        <Label htmlFor="name">Title</Label>
+        <Input
+          id="name"
+          type="text"
+          placeholder=""
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+        />
       </div>
+      <div className="space-y-2">
+        <Label htmlFor="description">Description</Label>
+        <Textarea
+          id="description"
+          type="text"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
+      </div>
+      <Button
+        onClick={() => {
+          createProject();
+        }}
+        className="w-full"
+      >
+        Create
+      </Button>
     </div>
   );
 }
