@@ -7,7 +7,8 @@ import ItemsToolBar from "@/components/project-management/ItemsToolBar";
 
 function BacklogPage() {
   const { authTokens } = useContext(AuthContext);
-  const { currentProject, epicData, itemData } = useContext(ProjectContext);
+  const { currentProject, epicData, itemData, backlogFilterOptions } =
+    useContext(ProjectContext);
 
   return (
     <div
@@ -26,6 +27,7 @@ function BacklogPage() {
                 description={obj.description}
                 priority={obj.priority}
                 status={obj.status}
+                filterOptions={backlogFilterOptions}
               ></EpicCard>
             ))}{" "}
             {itemData && itemData.some((item) => item.epic == null) && (
@@ -34,6 +36,7 @@ function BacklogPage() {
                 epicId={null}
                 title={"No Epic"}
                 description={"Items without an epic"}
+                filterOptions={backlogFilterOptions}
               ></EpicCard>
             )}
           </>

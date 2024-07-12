@@ -29,18 +29,18 @@ function ItemTable(props) {
       filteredItems = itemData.filter((item) => item.epic === props.groupId);
 
       // Sort by status
-      if (backlogFilterOptions.sortBy === "STATUS") {
+      if (props.filterOptions.sortBy === "STATUS") {
         let statusOrder = ["TO DO", "IN PROGRESS", "REVIEW", "DONE"];
-        if (backlogFilterOptions.sortOrder === "DESC") {
+        if (props.filterOptions.sortOrder === "DESC") {
           // Reverse the order if DESC
           statusOrder = statusOrder.reverse();
         }
         filteredItems = filteredItems.sort((a, b) => {
           return statusOrder.indexOf(a.status) - statusOrder.indexOf(b.status);
         });
-      } else if (backlogFilterOptions.sortBy === "PRIORITY") {
+      } else if (props.filterOptions.sortBy === "PRIORITY") {
         let priorityOrder = ["OPTIONAL", "BENEFICIAL", "ESSENTIAL", "CRITICAL"];
-        if (backlogFilterOptions.sortOrder === "DESC") {
+        if (props.filterOptions.sortOrder === "DESC") {
           // Reverse the order if DESC
           priorityOrder = priorityOrder.reverse();
         }

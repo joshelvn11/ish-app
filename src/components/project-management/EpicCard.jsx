@@ -94,7 +94,10 @@ function EpicCard(props) {
           )}
           <p className="pb-3 text-sm">{props.description}</p>
           <CollapsibleContent className="space-y-2">
-            <ItemTable groupId={props.epicId}></ItemTable>
+            <ItemTable
+              groupId={props.epicId}
+              filterOptions={props.filterOptions}
+            ></ItemTable>
           </CollapsibleContent>
         </Collapsible>
       </Card>
