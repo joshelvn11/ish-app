@@ -31,6 +31,16 @@ function ItemFilter(props) {
     }));
   };
 
+  const setFilterType = (itemType) => {
+    props.setFilterOptions((prevState) => ({
+      ...prevState,
+      filterType: {
+        ...prevState.filterType,
+        [itemType]: !prevState.filterType[itemType],
+      },
+    }));
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
@@ -134,8 +144,54 @@ function ItemFilter(props) {
           <DropdownMenuSubTrigger>Type</DropdownMenuSubTrigger>
           <DropdownMenuPortal>
             <DropdownMenuSubContent>
-              <DropdownMenuItem>User Story</DropdownMenuItem>
-              <DropdownMenuItem>Task</DropdownMenuItem>
+              <DropdownMenuItem
+                className="flex justify-between w-full"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setFilterType("USER_STORY");
+                }}
+              >
+                User Story
+                {props.filterOptions.filterType.USER_STORY === true && (
+                  <Check className="size-4" />
+                )}
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                className="flex justify-between w-full"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setFilterType("TASK");
+                }}
+              >
+                Task
+                {props.filterOptions.filterType.TASK === true && (
+                  <Check className="size-4" />
+                )}
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                className="flex justify-between w-full"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setFilterType("DOCUMENTATION");
+                }}
+              >
+                Doc
+                {props.filterOptions.filterType.DOCUMENTATION === true && (
+                  <Check className="size-4" />
+                )}
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                className="flex justify-between w-full"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setFilterType("BUG");
+                }}
+              >
+                Bug
+                {props.filterOptions.filterType.BUG === true && (
+                  <Check className="size-4" />
+                )}
+              </DropdownMenuItem>
             </DropdownMenuSubContent>
           </DropdownMenuPortal>
         </DropdownMenuSub>

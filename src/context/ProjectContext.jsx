@@ -17,9 +17,24 @@ export const ProjectContextProvider = ({ children }) => {
   let [backlogFilterOptions, setBacklogFilterOptions] = useState({
     sortBy: "",
     sortOrder: "",
-    filterType: ["USER STORY", "TASK", "BUG", "DOCUMENTATION"],
-    filterStatus: ["TO DO", "IN PROGRESS", "REVIEW", "DONE"],
-    filterPriority: ["OPTIONAL", "BENEFICIAL", "ESSENTIAL", "CRITICAL"],
+    filterType: {
+      USER_STORY: true,
+      TASK: true,
+      DOCUMENTATION: true,
+      BUG: true,
+    },
+    filterStatus: {
+      TO_DO: true,
+      IN_PROGRESS: true,
+      REVIEW: true,
+      DONE: true,
+    },
+    filterPriority: {
+      OPTIONAL: true,
+      BENEFICIAL: true,
+      ESSENTIAL: true,
+      CRITICAL: true,
+    },
   });
 
   const getProjects = async () => {
@@ -96,8 +111,11 @@ export const ProjectContextProvider = ({ children }) => {
           }),
         }
       );
-      if (response.ok) {
-        console.log("User project settings updated");
+      if (!response.ok) {
+        toast({
+          variant: "destructive",
+          description: "Problem saving filter options",
+        });
       }
     }
   };
