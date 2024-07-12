@@ -92,6 +92,28 @@ function ItemTable(props) {
         filteredItems = filteredItems.filter((item) => item.status !== "DONE");
       }
 
+      // Remove item priorities
+      if (props.filterOptions.filterPriority.OPTIONAL === false) {
+        filteredItems = filteredItems.filter(
+          (item) => item.priority !== "OPTIONAL"
+        );
+      }
+      if (props.filterOptions.filterPriority.BENEFICIAL === false) {
+        filteredItems = filteredItems.filter(
+          (item) => item.priority !== "BENEFICIAL"
+        );
+      }
+      if (props.filterOptions.filterPriority.ESSENTIAL === false) {
+        filteredItems = filteredItems.filter(
+          (item) => item.priority !== "ESSENTIAL"
+        );
+      }
+      if (props.filterOptions.filterPriority.CRITICAL === false) {
+        filteredItems = filteredItems.filter(
+          (item) => item.priority !== "CRITICAL"
+        );
+      }
+
       setFilteredData(filteredItems);
     }
   }, [currentProject, epicData, itemData, backlogFilterOptions]);

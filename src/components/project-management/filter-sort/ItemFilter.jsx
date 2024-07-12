@@ -51,6 +51,16 @@ function ItemFilter(props) {
     }));
   };
 
+  const setFilterPriority = (priority) => {
+    props.setFilterOptions((prevState) => ({
+      ...prevState,
+      filterPriority: {
+        ...prevState.filterPriority,
+        [priority]: !prevState.filterPriority[priority],
+      },
+    }));
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
@@ -254,6 +264,61 @@ function ItemFilter(props) {
               >
                 Done
                 {props.filterOptions.filterStatus.DONE === true && (
+                  <Check className="size-4" />
+                )}
+              </DropdownMenuItem>
+            </DropdownMenuSubContent>
+          </DropdownMenuPortal>
+        </DropdownMenuSub>
+        <DropdownMenuSub>
+          <DropdownMenuSubTrigger>Priority</DropdownMenuSubTrigger>
+          <DropdownMenuPortal>
+            <DropdownMenuSubContent>
+              <DropdownMenuItem
+                className="flex justify-between w-full"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setFilterPriority("OPTIONAL");
+                }}
+              >
+                Optional
+                {props.filterOptions.filterPriority.OPTIONAL === true && (
+                  <Check className="size-4" />
+                )}
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                className="flex justify-between w-full"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setFilterPriority("BENEFICIAL");
+                }}
+              >
+                Beneficial
+                {props.filterOptions.filterPriority.BENEFICIAL === true && (
+                  <Check className="size-4" />
+                )}
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                className="flex justify-between w-full"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setFilterPriority("ESSENTIAL");
+                }}
+              >
+                Essential
+                {props.filterOptions.filterPriority.ESSENTIAL === true && (
+                  <Check className="size-4" />
+                )}
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                className="flex justify-between w-full"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setFilterPriority("CRITICAL");
+                }}
+              >
+                Critical
+                {props.filterOptions.filterPriority.CRITICAL === true && (
                   <Check className="size-4" />
                 )}
               </DropdownMenuItem>
