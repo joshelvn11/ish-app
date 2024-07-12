@@ -48,11 +48,17 @@ function ItemCreateSelect() {
           <SelectItem value="EPIC" className="cursor-pointer">
             Epic
           </SelectItem>
-          <SelectItem value="USERSTORY" className="cursor-pointer">
+          <SelectItem value="USER STORY" className="cursor-pointer">
             User Story
           </SelectItem>
           <SelectItem value="TASK" className="cursor-pointer">
             Task
+          </SelectItem>
+          <SelectItem value="DOCUMENTATION" className="cursor-pointer">
+            Documentation
+          </SelectItem>
+          <SelectItem value="BUG" className="cursor-pointer">
+            Bug
           </SelectItem>
         </SelectContent>
       </Select>
@@ -63,8 +69,10 @@ function ItemCreateSelect() {
             <DialogTitle>
               <p>
                 Create new {itemType === "EPIC" && <span>Epic</span>}{" "}
-                {itemType === "USERSTORY" && <span>User Story</span>}{" "}
+                {itemType === "USER STORY" && <span>User Story</span>}{" "}
                 {itemType === "TASK" && <span>Task</span>}
+                {itemType === "DOCUMENTATION" && <span>Documentation</span>}
+                {itemType === "BUG" && <span>Bug</span>}
               </p>
             </DialogTitle>
             <DialogDescription></DialogDescription>
@@ -72,8 +80,15 @@ function ItemCreateSelect() {
           {itemType === "EPIC" && (
             <EpicForm create={true} closeDialog={closeDialog} />
           )}
-          {itemType === "USERSTORY" && (
-            <ItemForm create={true} closeDialog={closeDialog} />
+          {(itemType === "USER STORY" ||
+            itemType === "TASK" ||
+            itemType === "BUG" ||
+            itemType === "DOCUMENTATION") && (
+            <ItemForm
+              create={true}
+              itemType={itemType}
+              closeDialog={closeDialog}
+            />
           )}
         </DialogContent>
       </Dialog>

@@ -646,7 +646,7 @@ function ItemForm(props) {
     }
   };
 
-  const createUserStory = async (name) => {
+  const createItem = async (name) => {
     // Make API request
     const apiUrl = import.meta.env.VITE_API_URL;
     let response = await fetch(
@@ -659,6 +659,7 @@ function ItemForm(props) {
         },
         body: JSON.stringify({
           project: currentProject.id,
+          item_type: props.itemType,
           name: name,
           epic: epic,
           sprint: sprint,
@@ -1058,8 +1059,8 @@ function ItemForm(props) {
             )}
           </div>
           {create && ( // Only show the create button when in create mode
-            <Button onClick={() => createUserStory(name)} className="w-full">
-              Create User Story
+            <Button onClick={() => createItem(name)} className="w-full">
+              Create
             </Button>
           )}
         </div>
