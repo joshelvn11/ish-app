@@ -7,15 +7,23 @@ import ItemsToolBar from "@/components/project-management/ItemsToolBar";
 
 function BacklogPage() {
   const { authTokens } = useContext(AuthContext);
-  const { currentProject, epicData, itemData, backlogFilterOptions } =
-    useContext(ProjectContext);
+  const {
+    currentProject,
+    epicData,
+    itemData,
+    backlogFilterOptions,
+    setBacklogFilterOptions,
+  } = useContext(ProjectContext);
 
   return (
     <div
       id="backlog-page"
       className="flex flex-col items-start justify-center w-full h-full"
     >
-      <ItemsToolBar></ItemsToolBar>
+      <ItemsToolBar
+        filterOptions={backlogFilterOptions}
+        setFilterOptions={setBacklogFilterOptions}
+      ></ItemsToolBar>
       <div className="flex flex-col w-full h-full gap-3 p-3 overflow-y-auto">
         {epicData && itemData ? (
           <>

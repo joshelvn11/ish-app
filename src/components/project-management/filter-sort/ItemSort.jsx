@@ -9,26 +9,33 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ArrowDownWideNarrow } from "lucide-react";
+import { ArrowDownWideNarrow, ArrowDownUp } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
-function ItemSort() {
+function ItemSort(props) {
   const { backlogFilterOptions, setBacklogFilterOptions } =
     useContext(ProjectContext);
 
   const handleValueChange = (value) => {
-    setBacklogFilterOptions((prevState) => ({
+    props.setFilterOptions((prevState) => ({
       ...prevState,
       sortBy: value,
     }));
   };
 
   return (
-    <Select value={""} onValueChange={handleValueChange}>
+    <Select
+      value={props.filterOptions.sortBy}
+      onValueChange={handleValueChange}
+    >
       <SelectTrigger className="w-[180px]">
-        <ArrowDownWideNarrow className="size-5" />
+        <ArrowDownWideNarrow className="size-4" />
         <SelectValue placeholder="Sort by" />
       </SelectTrigger>
       <SelectContent>
+        <SelectItem className="flex gap-2">
+          <ArrowDownUp className="size-5" /> Ascending
+        </SelectItem>
         <SelectGroup>
           <SelectLabel>Options</SelectLabel>
           <SelectItem value="STATUS">Status</SelectItem>
