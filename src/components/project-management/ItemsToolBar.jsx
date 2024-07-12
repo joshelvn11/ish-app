@@ -1,8 +1,6 @@
 import React from "react";
-import ItemCreateSelect from "./ItemCreateSelect";
-import ItemSort from "./filter-sort/ItemSort";
-import ItemSortOrder from "./filter-sort/ItemSortOrder";
-import ItemFilter from "./filter-sort/ItemFilter";
+import ItemCreateSelect from "@/components/project-management/ItemCreateSelect";
+import ItemFilter from "@/components/project-management/filter-sort/ItemFilter";
 
 function ItemsToolBar(props) {
   return (
@@ -12,14 +10,6 @@ function ItemsToolBar(props) {
           filterOptions={props.filterOptions}
           setFilterOptions={props.setFilterOptions}
         ></ItemFilter>
-        <ItemSort
-          filterOptions={props.filterOptions}
-          setFilterOptions={props.setFilterOptions}
-        />
-        <ItemSortOrder
-          filterOptions={props.filterOptions}
-          setFilterOptions={props.setFilterOptions}
-        />
       </div>
       <div>
         <ItemCreateSelect />
