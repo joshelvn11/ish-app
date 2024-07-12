@@ -62,7 +62,6 @@ export const ProjectContextProvider = ({ children }) => {
 
   const getUserProjectSettings = async () => {
     if (currentProject) {
-      // Attempt to get epic data if current project is not falsey
       const apiUrl = import.meta.env.VITE_API_URL;
       let response = await fetch(
         `${apiUrl}/projects/${currentProject.id}/user-settings/`,
@@ -80,6 +79,32 @@ export const ProjectContextProvider = ({ children }) => {
       }
     }
   };
+
+  const updateUserProjectSettings = async () => {
+    if (currentProject) {
+      const apiUrl = import.meta.env.VITE_API_URL;
+      let response = await fetch(
+        `${apiUrl}/projects/${currentProject.id}/user-settings/`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + String(authTokens.access),
+          },
+          body: JSON.stringify({
+            backlog_filter_options: backlogFilterOptions,
+          }),
+        }
+      );
+      if (response.ok) {
+        console.log("User project settings updated");
+      }
+    }
+  };
+
+  useEffect(() => {
+    updateUserProjectSettings();
+  }, [backlogFilterOptions]);
 
   const getEpicData = async () => {
     if (currentProject) {
