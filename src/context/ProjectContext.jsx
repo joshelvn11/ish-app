@@ -60,6 +60,27 @@ export const ProjectContextProvider = ({ children }) => {
     }
   };
 
+  const getUserProjectSettings = async () => {
+    if (currentProject) {
+      // Attempt to get epic data if current project is not falsey
+      const apiUrl = import.meta.env.VITE_API_URL;
+      let response = await fetch(
+        `${apiUrl}/projects/${currentProject.id}/user-settings/`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + String(authTokens.access),
+          },
+        }
+      );
+      let data = await response.json();
+      if (response.ok) {
+        setBacklogFilterOptions(data.backlog_filter_options);
+      }
+    }
+  };
+
   const getEpicData = async () => {
     if (currentProject) {
       // Attempt to get epic data if current project is not falsey
@@ -145,10 +166,6 @@ export const ProjectContextProvider = ({ children }) => {
     }
   };
 
-  useEffect(() => {
-    console.log(backlogFilterOptions);
-  }, [backlogFilterOptions]);
-
   let contextData = {
     projects: projects,
     getProjects: getProjects,
@@ -191,6 +208,7 @@ export const ProjectContextProvider = ({ children }) => {
     setEpicData(null);
     setSprintData(null);
     setItemData(null);
+    getUserProjectSettings();
     getEpicData();
     getSprintData();
     getItemData();

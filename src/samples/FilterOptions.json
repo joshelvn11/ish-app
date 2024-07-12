@@ -1,0 +1,7 @@
+{
+  "sortBy": "",
+  "sortOrder": "",
+  "filterType": ["USER STORY", "TASK", "BUG", "DOCUMENTATION"],
+  "filterStatus": ["TO DO", "IN PROGRESS", "REVIEW", "DONE"],
+  "filterPriority": ["OPTIONAL", "BENEFICIAL", "ESSENTIAL", "CRITICAL"]
+}
