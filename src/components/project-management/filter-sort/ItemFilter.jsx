@@ -41,6 +41,16 @@ function ItemFilter(props) {
     }));
   };
 
+  const setFilterStatus = (status) => {
+    props.setFilterOptions((prevState) => ({
+      ...prevState,
+      filterStatus: {
+        ...prevState.filterStatus,
+        [status]: !prevState.filterStatus[status],
+      },
+    }));
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
@@ -189,6 +199,61 @@ function ItemFilter(props) {
               >
                 Bug
                 {props.filterOptions.filterType.BUG === true && (
+                  <Check className="size-4" />
+                )}
+              </DropdownMenuItem>
+            </DropdownMenuSubContent>
+          </DropdownMenuPortal>
+        </DropdownMenuSub>
+        <DropdownMenuSub>
+          <DropdownMenuSubTrigger>Status</DropdownMenuSubTrigger>
+          <DropdownMenuPortal>
+            <DropdownMenuSubContent>
+              <DropdownMenuItem
+                className="flex justify-between w-full"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setFilterStatus("TO_DO");
+                }}
+              >
+                To Do
+                {props.filterOptions.filterStatus.TO_DO === true && (
+                  <Check className="size-4" />
+                )}
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                className="flex justify-between w-full"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setFilterStatus("IN_PROGRESS");
+                }}
+              >
+                In Progress
+                {props.filterOptions.filterStatus.IN_PROGRESS === true && (
+                  <Check className="size-4" />
+                )}
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                className="flex justify-between w-full"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setFilterStatus("REVIEW");
+                }}
+              >
+                Review
+                {props.filterOptions.filterStatus.REVIEW === true && (
+                  <Check className="size-4" />
+                )}
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                className="flex justify-between w-full"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setFilterStatus("DONE");
+                }}
+              >
+                Done
+                {props.filterOptions.filterStatus.DONE === true && (
                   <Check className="size-4" />
                 )}
               </DropdownMenuItem>

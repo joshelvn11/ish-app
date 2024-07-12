@@ -52,6 +52,46 @@ function ItemTable(props) {
         });
       }
 
+      // Remove item types
+      if (props.filterOptions.filterType.USER_STORY === false) {
+        filteredItems = filteredItems.filter(
+          (item) => item.item_type !== "USER STORY"
+        );
+      }
+      if (props.filterOptions.filterType.TASK === false) {
+        filteredItems = filteredItems.filter(
+          (item) => item.item_type !== "TASK"
+        );
+      }
+      if (props.filterOptions.filterType.DOCUMENTATION === false) {
+        filteredItems = filteredItems.filter(
+          (item) => item.item_type !== "DOCUMENTATION"
+        );
+      }
+      if (props.filterOptions.filterType.BUG === false) {
+        filteredItems = filteredItems.filter(
+          (item) => item.item_type !== "BUG"
+        );
+      }
+
+      // Remove item statuses
+      if (props.filterOptions.filterStatus.TO_DO === false) {
+        filteredItems = filteredItems.filter((item) => item.status !== "TO DO");
+      }
+      if (props.filterOptions.filterStatus.IN_PROGRESS === false) {
+        filteredItems = filteredItems.filter(
+          (item) => item.status !== "IN PROGRESS"
+        );
+      }
+      if (props.filterOptions.filterStatus.REVIEW === false) {
+        filteredItems = filteredItems.filter(
+          (item) => item.status !== "REVIEW"
+        );
+      }
+      if (props.filterOptions.filterStatus.DONE === false) {
+        filteredItems = filteredItems.filter((item) => item.status !== "DONE");
+      }
+
       setFilteredData(filteredItems);
     }
   }, [currentProject, epicData, itemData, backlogFilterOptions]);
