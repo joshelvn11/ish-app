@@ -19,11 +19,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { PlusIcon } from "@radix-ui/react-icons";
 import EpicForm from "@/components/project-management/forms/EpicForm";
+import SprintForm from "@/components/project-management/forms/SprintForm";
 import ItemForm from "@/components/project-management/forms/ItemForm";
-
-const createItem = (value) => {
-  console.log("Creating item", value);
-};
 
 function ItemCreateSelect() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -48,6 +45,9 @@ function ItemCreateSelect() {
           <SelectItem value="EPIC" className="cursor-pointer">
             Epic
           </SelectItem>
+          <SelectItem value="SPRINT" className="cursor-pointer">
+            Sprint
+          </SelectItem>
           <SelectItem value="USER STORY" className="cursor-pointer">
             User Story
           </SelectItem>
@@ -69,6 +69,7 @@ function ItemCreateSelect() {
             <DialogTitle>
               <p>
                 Create new {itemType === "EPIC" && <span>Epic</span>}{" "}
+                {itemType === "SPRINT" && <span>Sprint</span>}{" "}
                 {itemType === "USER STORY" && <span>User Story</span>}{" "}
                 {itemType === "TASK" && <span>Task</span>}
                 {itemType === "DOCUMENTATION" && <span>Documentation</span>}
@@ -79,6 +80,9 @@ function ItemCreateSelect() {
           </DialogHeader>
           {itemType === "EPIC" && (
             <EpicForm create={true} closeDialog={closeDialog} />
+          )}
+          {itemType === "SPRINT" && (
+            <SprintForm create={true} closeDialog={closeDialog} />
           )}
           {(itemType === "USER STORY" ||
             itemType === "TASK" ||
