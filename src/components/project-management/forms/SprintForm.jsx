@@ -18,15 +18,27 @@ import { ExclamationTriangleIcon, CalendarIcon } from "@radix-ui/react-icons";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 function SprintForm(props) {
-  const { loadProject, getProjects } = useContext(ProjectContext);
+  const { getSprintData, currentProject } = useContext(ProjectContext);
   const { authTokens } = useContext(AuthContext);
   const { toast } = useToast();
+
+  let [create, setCreate] = useState(props.create);
+  let [validationErrors, setValidationErrors] = useState([]);
+  let [sprintId, setSprintId] = useState(props.id);
 
   let [name, setName] = useState("");
   let [description, setDescription] = useState("");
   let [startDate, setStartDate] = useState(null);
   let [endDate, setEndDate] = useState(null);
-  let [validationErrors, setValidationErrors] = useState([]);
+
+  const formatDate = (date) => {
+    if (date) {
+      const offset = date.getTimezoneOffset();
+      date = new Date(date.getTime() - offset * 60 * 1000);
+      return date.toISOString().split("T")[0];
+    }
+    return date;
+  };
 
   const validateData = () => {
     let valid = true;
@@ -41,41 +53,128 @@ function SprintForm(props) {
       errors.push("Title may not be longer than 50 characters");
       valid = false;
     }
+
+    if (!startDate || !endDate) {
+      errors.push("Both start date and end date must be provided");
+      valid = false;
+    }
+
+    if (startDate && endDate && endDate <= startDate) {
+      errors.push("End date must be after start date");
+      valid = false;
+    }
+
     setValidationErrors(errors);
     return valid;
   };
 
-  const createProject = async () => {
+  const createSprint = async () => {
     if (!validateData()) {
       return;
     }
 
+    // Make API request
     const apiUrl = import.meta.env.VITE_API_URL;
-    let response = await fetch(`${apiUrl}/projects/`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + String(authTokens.access),
-      },
-      body: JSON.stringify({
-        name: name,
-        description: description,
-      }),
-    });
+    let response = await fetch(
+      `${apiUrl}/projects/${currentProject.id}/sprints/`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + String(authTokens.access),
+        },
+        body: JSON.stringify({
+          project: currentProject.id,
+          name: name,
+          description: description,
+          start_date: formatDate(startDate),
+          end_date: formatDate(endDate),
+        }),
+      }
+    );
     let data = await response.json();
     if (response.status === 201) {
-      toast({ description: "Project created successfully" });
-      // Refresh project data
-      await getProjects();
-      // Load the newly created project as the current project
-      loadProject(data.id);
+      // Refresh the sprint data
+      getSprintData();
+      // Display success message
+      toast({ description: "Sprint created successfully" });
+      // Set the sprint id to the newly created id
+      setSprintId(data.id);
+      // Set to update mode
+      setCreate(false);
       // Close the dialog
       props.closeDialog();
     } else {
       toast({
         variant: "destructive",
-        description: `Problem creating project: ${JSON.stringify(data)}`,
+        description: `Problem creating sprint: ${JSON.stringify(data)}`,
       });
+    }
+  };
+
+  const updateStartDate = async (value) => {
+    if (!create) {
+      // Only attempt update if not in create mode
+      const apiUrl = import.meta.env.VITE_API_URL;
+      let response = await fetch(
+        `${apiUrl}/projects/${currentProject.id}/items/${userStoryId}/`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + String(authTokens.access),
+          },
+          body: JSON.stringify({
+            start_date: formatDate(value),
+          }),
+        }
+      );
+      let data = await response.json();
+      if (response.status === 200) {
+        toast({ description: "Start date updated" });
+        setStartDate(value);
+        props.fetchItemData();
+      } else {
+        toast({
+          variant: "destructive",
+          description: `Problem updating start date: ${JSON.stringify(data)}`,
+        });
+      }
+    } else {
+      setStartDate(value);
+    }
+  };
+
+  const updateEndDate = async (value) => {
+    if (!create) {
+      // Only attempt update if not in create mode
+      const apiUrl = import.meta.env.VITE_API_URL;
+      let response = await fetch(
+        `${apiUrl}/projects/${currentProject.id}/items/${userStoryId}/`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + String(authTokens.access),
+          },
+          body: JSON.stringify({
+            start_date: formatDate(value),
+          }),
+        }
+      );
+      let data = await response.json();
+      if (response.status === 200) {
+        toast({ description: "End date updated" });
+        setEndDate(value);
+        props.fetchItemData();
+      } else {
+        toast({
+          variant: "destructive",
+          description: `Problem updating end date: ${JSON.stringify(data)}`,
+        });
+      }
+    } else {
+      setEndDate(value);
     }
   };
 
@@ -114,59 +213,62 @@ function SprintForm(props) {
           onChange={(e) => setDescription(e.target.value)}
         />
       </div>
-      <Popover>
-        <PopoverTrigger asChild>
-          <Button
-            variant={"outline"}
-            className={cn(
-              "w-[240px] pl-3 text-left font-normal",
-              !startDate && "text-muted-foreground"
-            )}
-          >
-            {startDate ? format(startDate, "PPP") : <span>Select start</span>}
-            <CalendarIcon className="w-4 h-4 ml-auto opacity-50" />
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent className="w-auto p-0" align="start">
-          <Calendar
-            mode="single"
-            selected={startDate}
-            onSelect={(date) => {
-              updateDueDate(date);
-            }}
-            disabled={(date) => date < new Date("1900-01-01")}
-            initialFocus
-          />
-        </PopoverContent>
-      </Popover>
-      <Popover>
-        <PopoverTrigger asChild>
-          <Button
-            variant={"outline"}
-            className={cn(
-              "w-[240px] pl-3 text-left font-normal",
-              !endDate && "text-muted-foreground"
-            )}
-          >
-            {endDate ? format(endDate, "PPP") : <span>Select end date</span>}
-            <CalendarIcon className="w-4 h-4 ml-auto opacity-50" />
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent className="w-auto p-0" align="start">
-          <Calendar
-            mode="single"
-            selected={endDate}
-            onSelect={(date) => {
-              updateDueDate(date);
-            }}
-            disabled={(date) => date < new Date("1900-01-01")}
-            initialFocus
-          />
-        </PopoverContent>
-      </Popover>
+      <div className="w-full flex justify-between items-center">
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button
+              variant={"outline"}
+              className={cn(
+                "w-[240px] pl-3 text-left font-normal",
+                !startDate && "text-muted-foreground"
+              )}
+            >
+              {startDate ? format(startDate, "PPP") : <span>Select start</span>}
+              <CalendarIcon className="w-4 h-4 ml-auto opacity-50" />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-auto p-0" align="start">
+            <Calendar
+              mode="single"
+              selected={startDate}
+              onSelect={(date) => {
+                updateStartDate(date);
+              }}
+              disabled={(date) => date < new Date("1900-01-01")}
+              initialFocus
+            />
+          </PopoverContent>
+        </Popover>
+        <p>to</p>
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button
+              variant={"outline"}
+              className={cn(
+                "w-[240px] pl-3 text-left font-normal",
+                !endDate && "text-muted-foreground"
+              )}
+            >
+              {endDate ? format(endDate, "PPP") : <span>Select end date</span>}
+              <CalendarIcon className="w-4 h-4 ml-auto opacity-50" />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-auto p-0" align="start">
+            <Calendar
+              mode="single"
+              selected={endDate}
+              onSelect={(date) => {
+                updateEndDate(date);
+              }}
+              disabled={(date) => date < new Date("1900-01-01")}
+              initialFocus
+            />
+          </PopoverContent>
+        </Popover>
+      </div>
       <Button
         onClick={() => {
-          createProject();
+          createSprint();
         }}
         className="w-full"
       >
