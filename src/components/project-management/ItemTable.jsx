@@ -52,6 +52,13 @@ function ItemTable(props) {
         });
       }
 
+      // Filter status
+      if (props.filterOptions.filterSprint != "") {
+        filteredItems = filteredItems.filter(
+          (item) => item.sprint === props.filterOptions.filterSprint
+        );
+      }
+
       // Remove item types
       if (props.filterOptions.filterType.USER_STORY === false) {
         filteredItems = filteredItems.filter(

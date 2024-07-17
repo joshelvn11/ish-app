@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { ClipboardList, Home, Dumbbell } from "lucide-react";
+import { ClipboardList, Home, IterationCcw } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import UiContext from "@/context/UiContext";
 import AuthContext from "@/context/AuthContext";
@@ -53,7 +53,7 @@ function Navbar() {
                 path == "/sprints" ? "bg-muted" : null
               }`}
             >
-              <Dumbbell className="w-4 h-4" />
+              <IterationCcw className="w-4 h-4" />
               Sprints{" "}
             </Link>
           </nav>
