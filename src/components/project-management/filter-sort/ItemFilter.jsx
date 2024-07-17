@@ -101,7 +101,6 @@ function ItemFilter(props) {
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuLabel>Sorting</DropdownMenuLabel>
-          <DropdownMenuSeparator />
           <DropdownMenuSub>
             <DropdownMenuSubTrigger>Sort by</DropdownMenuSubTrigger>
             <DropdownMenuPortal>
