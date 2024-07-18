@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import ItemCreateSelect from "@/components/project-management/ItemCreateSelect";
 import ItemFilter from "@/components/project-management/filter-sort/ItemFilter";
 
@@ -18,7 +18,7 @@ function ItemsToolBar(props) {
       setIsScrolling(
         setTimeout(() => {
           setIsScrolling(false);
-        }, 200)
+        }, 100)
       );
     };
 
