@@ -37,7 +37,9 @@ function ItemsToolBar(props) {
   return (
     <div
       id="items-toolbar"
-      className="sticky top-0 z-10 flex gap-2 items-center justify-between w-full p-3 border-b bg-background overflow-x-scroll overflow-y-hidden"
+      className={`sticky top-0 z-10 flex gap-2 items-center justify-between w-full p-3 border-b bg-background overflow-x-scroll overflow-y-hidden  ${
+        isScrolling ? "pointer-events-none" : ""
+      }`}
     >
       <div className="flex gap-2">
         <ItemFilter
