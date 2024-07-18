@@ -33,13 +33,14 @@ import { useContext } from "react";
 function EpicCard(props) {
   const { deleteEpic } = useContext(ProjectContext);
 
+  const [isHidden, setIsHidden] = useState(false);
   const [isOpen, setIsOpen] = useState(true);
   const [isDetailDialogOpen, setIsDetailDialogOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
   return (
     <>
-      <Card className="w-full">
+      <Card className={`w-full ${isHidden ? "hidden" : ""}`}>
         <Collapsible
           open={isOpen}
           onOpenChange={setIsOpen}
@@ -97,6 +98,7 @@ function EpicCard(props) {
             <ItemTable
               groupId={props.epicId}
               filterOptions={props.filterOptions}
+              hideParent={setIsHidden}
             ></ItemTable>
           </CollapsibleContent>
         </Collapsible>

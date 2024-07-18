@@ -122,6 +122,16 @@ function ItemTable(props) {
       }
 
       setFilteredData(filteredItems);
+
+      // If no items set parent to hidden
+      if (
+        props.filterOptions.hideEmptyEpics === true &&
+        filteredItems.length === 0
+      ) {
+        props.hideParent(true);
+      } else {
+        props.hideParent(false);
+      }
     }
   }, [currentProject, epicData, itemData, backlogFilterOptions]);
 

@@ -22,7 +22,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ListFilter, Check, IterationCcw } from "lucide-react";
+import { Switch } from "@/components/ui/switch";
+import { ListFilter, Check, IterationCcw, Settings } from "lucide-react";
 
 function ItemFilter(props) {
   const { sprintData } = useContext(ProjectContext);
@@ -80,6 +81,13 @@ function ItemFilter(props) {
     }));
   };
 
+  const toggleHideEmptyEpics = (value) => {
+    props.setFilterOptions((prevState) => ({
+      ...prevState,
+      hideEmptyEpics: !props.filterOptions.hideEmptyEpics,
+    }));
+  };
+
   const formatDate = (dateString) => {
     const date = new Date(dateString);
 
@@ -88,6 +96,11 @@ function ItemFilter(props) {
     const year = date.getFullYear();
 
     return `${day} ${month} ${year}`;
+  };
+
+  const preventMenuClose = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
   };
 
   return (
@@ -382,6 +395,26 @@ function ItemFilter(props) {
             ))}
         </SelectContent>
       </Select>
+      <DropdownMenu>
+        <DropdownMenuTrigger>
+          <Button variant="outline">
+            <Settings className="mr-2 size-4" />
+            Options
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="w-[220px]">
+          <DropdownMenuItem
+            className="flex justify-between"
+            onClick={preventMenuClose}
+          >
+            <div>Hide Empty Epics</div>
+            <Switch
+              checked={props.filterOptions.hideEmptyEpics}
+              onCheckedChange={toggleHideEmptyEpics}
+            ></Switch>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
     </div>
   );
 }

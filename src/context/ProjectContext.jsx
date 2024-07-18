@@ -36,6 +36,7 @@ export const ProjectContextProvider = ({ children }) => {
       CRITICAL: true,
     },
     filterSprint: "",
+    hideEmptyEpics: false,
   });
 
   const getProjects = async () => {
