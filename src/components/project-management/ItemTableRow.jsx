@@ -147,11 +147,11 @@ function ItemTableRow(props) {
   return (
     <>
       <TableRow>
-        <TableCell>
+        <TableCell className="min-w-[150px]">
           <Badge>{type}</Badge>
         </TableCell>
-        <TableCell className="font-medium">{name}</TableCell>
-        <TableCell>
+        <TableCell className="font-medium min-w-[200px]">{name}</TableCell>
+        <TableCell className="min-w-[120px]">
           <Badge
             className={
               status && `bg-${status.toLowerCase().replace(/\s+/g, "")}`
@@ -160,7 +160,7 @@ function ItemTableRow(props) {
             {status}
           </Badge>
         </TableCell>
-        <TableCell>
+        <TableCell className="min-w-[120px]">
           <Badge
             className={
               priority && `bg-${priority.toLowerCase().replace(/\s+/g, "")}`
@@ -169,13 +169,15 @@ function ItemTableRow(props) {
             {priority}
           </Badge>
         </TableCell>
-        <TableCell>
+        <TableCell className="min-w-[120px]">
           {sprint &&
             sprintData &&
             sprintData.find((item) => item.id == sprint).name}
         </TableCell>
-        <TableCell>{duedate && formatDate(duedate)}</TableCell>
-        <TableCell className="text-right">
+        <TableCell className="min-w-[120px]">
+          {duedate && formatDate(duedate)}
+        </TableCell>
+        <TableCell className="text-right min-w-[120px]">
           <Button
             variant="ghost"
             onClick={() => {
