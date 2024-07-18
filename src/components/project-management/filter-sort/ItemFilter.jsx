@@ -375,7 +375,7 @@ function ItemFilter(props) {
           setFilterSprint(value);
         }}
       >
-        <SelectTrigger className="w-[200px] sm:w-[320px]">
+        <SelectTrigger className="w-[350px]">
           <div className="flex items-center justify-start gap-3">
             <IterationCcw className="w-4 h-4" />{" "}
             <SelectValue placeholder="Select Sprint" />
