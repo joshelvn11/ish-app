@@ -19,3 +19,27 @@ The target audience for this application is therefore primarily solo developers 
 the essentials while not being bogged down in the admin and complexity of commercial applications. While this is the intended audience
 anyone is able to use the application and adapt it as far as they can for their personal process and workflow - it works just as well
 as a personal task manager or for any product development related process.
+
+## Architecture
+
+### Backend
+
+### Front End
+
+## Layout & Structure
+
+## Features & Functions
+
+## Design
+
+## Database
+
+### Schema
+
+## Deployment
+
+## Testing
+
+## Future Ideas & Roadmap
+
+## Credits
