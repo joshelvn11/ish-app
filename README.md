@@ -24,9 +24,15 @@ as a personal task manager or for any product development related process.
 
 ### Backend
 
-The backend is built using Django leveraging the Django Rest Framework to build the API functionality. The backend is fairly bare-bones
-approach using mostly all the built-in default views for handling all CRUD functionality. Authentication is handled via JWT and this is
-the only modification to the backend through custom permission classes.
+The backend of the application is built using Django. To handle the API functionality, Django Rest Framework (DRF) is leveraged, which is a powerful and flexible toolkit for building Web APIs.
+
+The backend architecture follows a minimalist and efficient approach, primarily utilizing the built-in default views provided by DRF to manage all CRUD (Create, Read, Update, Delete) operations. This ensures that the codebase remains clean and maintainable while still providing all the necessary functionality for interacting with the application's data.
+
+Authentication is a critical aspect of any application, and for this, I have implemented JSON Web Token (JWT) authentication. JWT is a compact, URL-safe means of representing claims to be transferred between two parties. It is widely used for securely transmitting information between parties as a JSON object. In the application, JWT handles user authentication and session management, ensuring that only authorized users can access and modify data.
+
+To further enhance security, we have customized the permission classes in DRF. These custom permission classes allow the definition fine-grained access control policies, ensuring that users can only perform actions that they are authorized to do. This adds an additional layer of security and ensures that our application adheres to the principle of least privilege.
+
+Overall, the backend is designed to be robust, secure, and efficient, providing a solid foundation for the application's functionality while maintaining simplicity and ease of maintenance.
 
 ### Front End
 
@@ -62,6 +68,18 @@ Overall, the Backlog page is designed to be highly adaptable, catering to the un
 
 ## Features & Functions
 
+## Projects
+
+Projects are the foundational entities within the application, serving as the root parent for all other data. Each project is defined by two primary attributes: a name and a title. These attributes are essential for identifying and managing projects within the system. All other data, such as tasks, epics, and sprints, are associated with a specific project, ensuring a clear and organized structure.
+
+Permissions and privileges are tightly integrated with projects. When performing any CRUD (Create, Read, Update, Delete) operations, the system checks whether the user has the necessary edit privileges for the related project. This ensures that only authorized users can modify project-related data, maintaining the integrity and security of the information.
+
+Users have the flexibility to create and manage an unlimited number of projects. The project context switcher, located in the header of the site, allows users to easily switch between their projects. This switcher is dynamically populated with a list of all projects associated with the user. When a project is selected, the application clears the current data and loads the data specific to the selected project, providing a seamless transition.
+
+Creating a new project is straightforward. Users can initiate the creation process by selecting the option to create a new project from the project context switcher. This action triggers a form dialog that prompts the user to enter the necessary fields to define the new project. Once the project is successfully created, the user is automatically switched to the new project, allowing them to start working on it immediately.
+
+Overall, the project management functionality is designed to be intuitive and user-friendly, enabling users to efficiently manage multiple projects and ensure that their data is organized and secure.
+
 ## Items
 
 Items are the fundamental building blocks of the application. They represent tasks and are categorized into four types: User Stories, Tasks, Bugs, and Documentation. Each item type shares a set of common attributes, including titles, descriptions, due dates, sprints, priorities, statuses, and subtasks.
@@ -95,6 +113,22 @@ Items within the project can be assigned to any sprint, clearly indicating when 
 The application provides robust filtering options, allowing users to filter items by sprint. This functionality enables users to easily identify what tasks they should be working on currently, what has been completed in previous sprints, and what is planned for future iterations. By offering this level of visibility, the sprint system helps users stay organized and focused, ultimately contributing to the successful completion of the project.
 
 ### Filters
+
+Filters are a fundamental feature of the application, providing users with the ability to refine and customize their view of task data based on a wide range of attributes. These attributes include, but are not limited to, item type (e.g., User Stories, Tasks, Bugs, Documentation), status (e.g., To Do, In Progress, Done), sprint, priority (e.g., Optional, Beneficial, Essential, Critical), and more. This extensive filtering capability ensures that users can focus on the most relevant tasks at any given time, enhancing their productivity and task management efficiency.
+
+When a filter is applied, the application automatically processes the filter criteria and updates the item data displayed in each item table. This dynamic filtering mechanism ensures that the item tables are always up-to-date, reflecting the current filter settings without requiring a manual refresh. The filtered data is then re-rendered in the item table components, providing users with an immediate and accurate view of their tasks.
+
+Additionally, any changes made to the filter settings are instantly saved to the database. This means that the filtering options are preserved and can be reloaded on any subsequent page refresh or user session. This persistence of filter settings ensures a seamless user experience, allowing users to pick up right where they left off without having to reapply their filters.
+
+Filters are conveniently accessible through a dropdown menu located on the backlog filter page. This design choice makes the filters compact and easily accessible, allowing users to quickly adjust their filter settings as needed. The dropdown menu provides a clean and organized interface for managing filter options, ensuring that users can efficiently navigate and apply the filters that best suit their needs.
+
+Overall, the robust filtering system in the application empowers users to tailor their task views to their specific requirements, making it easier to manage and prioritize their work effectively.
+
+### Theme Switcher
+
+The application provides users with the ability to toggle between light and dark modes, enhancing accessibility and catering to different lighting conditions and user preferences. This feature is particularly useful for reducing eye strain in low-light environments and for users who prefer a darker interface. The theme switcher is conveniently located in the profile widget dropdown, which can be found at the far right of the application's header.
+
+Implementing a theme switcher with Tailwind CSS is straightforward due to its built-in support for both light and dark themes. Tailwind CSS includes default styles for both themes, making it easy to switch between them. To activate or deactivate dark mode, you simply need to add or remove the `dark` class from the document's class list. This approach leverages Tailwind's utility-first design, allowing for rapid and flexible styling without the need for extensive custom CSS.
 
 ### Sorting
 
