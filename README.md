@@ -2,23 +2,13 @@
 
 ## Introduction
 
-ish is a minimal, productivity focused project management application generally designed for SCRUM and Agile software development,
-although its uses can vary much more broadily as the SCRUM based are optional and adaptable and it can just be used as general
-project and task management application. This is where the name ish is derived from as it is somewhat for every project management
-paradigm e.g SCRUMish - it's for SCRUM to some extent.
+ish is a minimalistic, productivity-focused project management application primarily designed for SCRUM and Agile software development. However, its versatility allows it to be used for a wide range of project and task management needs. The name "ish" reflects its adaptable nature, as it can be tailored to various project management paradigms, such as being "SCRUMish" – suitable for SCRUM to some extent.
 
-I deciced to build ish as I personally couldn't find what I was looking with project management applications for use with my personal
-projects. All the solutions I could find were either to complex, with two many features that were required to be used and obviously intented
-for larger commercial organisations, or they were either too broad where I could make the functionality what I wanted but it felt it bit
-hacked together and missing some essential features needed for SCRUM projects.
+The motivation behind creating ish stemmed from my personal experience with existing project management tools. I found that most available solutions were either too complex, with an overwhelming number of mandatory features intended for large commercial organizations, or too generic, lacking essential features for SCRUM projects and feeling somewhat cobbled together.
 
-I wanted to create something that lay in the middle of these two sided, something that was simple and adaptable and still had the essentials
-features while not being to complex and verbose for the solo developer.
+My goal was to develop a tool that strikes a balance between these extremes – something simple, adaptable, and equipped with essential features without being overly complex and verbose, especially for solo developers.
 
-The target audience for this application is therefore primarily solo developers working on their side projects and small teams who need
-the essentials while not being bogged down in the admin and complexity of commercial applications. While this is the intended audience
-anyone is able to use the application and adapt it as far as they can for their personal process and workflow - it works just as well
-as a personal task manager or for any product development related process.
+The primary target audience for ish includes solo developers working on personal projects and small teams that require essential features without the administrative burden and complexity of commercial applications. Nevertheless, the application is designed to be flexible enough for anyone to use and adapt to their personal processes and workflows. It functions equally well as a personal task manager or for any product development-related process.
 
 ## Architecture
 
@@ -124,13 +114,21 @@ Filters are conveniently accessible through a dropdown menu located on the backl
 
 Overall, the robust filtering system in the application empowers users to tailor their task views to their specific requirements, making it easier to manage and prioritize their work effectively.
 
+### Sorting
+
+### Login & Registration
+
+The login and registration functionality is designed to provide users with a seamless and secure way to access their accounts or create new ones. These features are implemented as user-friendly forms that are simple to navigate and use. Users can easily switch between the login and registration forms, and any validation errors are immediately displayed, providing instant feedback to help users correct any issues.
+
+When a new user signs up, an account is created, and they are immediately redirected to the login page to access their new account with the credentials they just created. The login process involves the server generating access and refresh tokens, which the client can use for authentication in all subsequent requests. This token-based authentication ensures that user sessions are secure and that the user's identity is verified for each interaction with the server.
+
+The design of the login and registration forms prioritizes ease of use and security, ensuring that users can quickly and safely access their accounts without unnecessary complexity. This approach helps to enhance the overall user experience and encourages user engagement with the application.
+
 ### Theme Switcher
 
 The application provides users with the ability to toggle between light and dark modes, enhancing accessibility and catering to different lighting conditions and user preferences. This feature is particularly useful for reducing eye strain in low-light environments and for users who prefer a darker interface. The theme switcher is conveniently located in the profile widget dropdown, which can be found at the far right of the application's header.
 
 Implementing a theme switcher with Tailwind CSS is straightforward due to its built-in support for both light and dark themes. Tailwind CSS includes default styles for both themes, making it easy to switch between them. To activate or deactivate dark mode, you simply need to add or remove the `dark` class from the document's class list. This approach leverages Tailwind's utility-first design, allowing for rapid and flexible styling without the need for extensive custom CSS.
-
-### Sorting
 
 ### Column Modification
 
@@ -165,6 +163,82 @@ Although the application relies heavily on the default styles provided by ShadCN
 ### Schema
 
 ## Deployment
+
+Currently both front end and backend are deployed as Docker containers running on Coolify, a self-hosted Vercel like platform for a seamless and easy to use CI/CD process.
+
+Here are the deployment steps
+
+### Setting Up Coolify
+
+Setting up Coolify on a compatible Linux instance is a straightforward process that can be accomplished by running their installation script from the terminal. Detailed instructions and the installation script can be found on the Coolify website: https://coolify.io/self-hosted.
+
+1. **Prepare Your Linux Instance**:
+   Ensure that your Linux instance meets the compatibility requirements specified by Coolify. This typically involves having a recent version of a Linux distribution and ensuring that your system is up-to-date.
+
+2. **Run the Installation Script**:
+   Open your terminal and execute the installation script provided by Coolify. This script will handle the download and installation of all necessary components. You can find the script and detailed instructions on the Coolify website.
+
+   ```sh
+   curl -fsSL https://get.coolify.io | bash
+   ```
+
+3. **Access Coolify Dashboard**:
+   Once the installation is complete, Coolify will be accessible on port 8000 of your server. Open your web browser and navigate to `http://your-server-ip:8000`. You will be prompted to log in or create an administrator account. Follow the on-screen instructions to set up your admin credentials.
+
+4. **Create a Project and Environment**:
+   After logging in, you will be directed to the Coolify dashboard. Here, you can create a new project and set up an environment for your application. This involves specifying the necessary resources such as the front-end, back-end, and database.
+
+   - **Create a Project**: Click on the "Create Project" button and provide a name and description for your project.
+   - **Set Up Environment**: Within your project, create an environment (e.g., development, staging, production). This is where we will deploy the necessary resources in the next steps.
+
+5. **Deploy Your Application**:
+   With your project and environment set up, you can now deploy your application.
+
+By following these steps, you can leverage Coolify to streamline the deployment and management of your applications, ensuring a seamless and efficient CI/CD process.
+
+### Deploying the Database
+
+Coolify supports multiple resource types, including PostgreSQL, which we will use as our database.
+
+1. **Add New Resource**:
+   Click the "Add Resource" button and select PostgreSQL from the Databases section.
+
+2. **Configure Installation**:
+   Most configuration settings can be left as defaults. However, if you plan to use this database for development purposes and need to connect to it from your local machine or if you are deploying the front-end on another server, you may want to make it publicly available. To do this, select the "Make it publicly available" checkbox and optionally change the public port.
+
+   Making the database publicly available is often necessary to push database migrations from your development environment to the production database.
+
+3. **Start The Database**:
+   Once the configuration is complete, click the "Start" button to start the database. Copy the database URL as it will be needed in the next steps.
+
+4. **Apply Migrations**:
+   In your development environment, apply all migrations to the database. Copy the database URL and set it as your database URL in your environment file. Once the database is connected, run `python3 manage.py migrate` to apply the migrations to the new database.
+
+### Deploy the Back-End
+
+Coolify uses Nixpacks to automatically build and deploy Docker images. This approach works well for the back-end without requiring customization.
+
+1. **Add New Resource**:
+   Click the "Add Resource" button and select "Public Git Repository" from the options. Copy and paste the GitHub repository link, including the branch, into the Git repo link field. Leave the build pack option as the default Nixpacks, which will detect all configurations and create the Docker image automatically without needing a Dockerfile. The default port can remain at 3000.
+
+2. **Configure Installation**:
+   Most configuration settings are optional. You may want to customize fields such as the name, description, and domain. Focus on the essential configuration by setting the environment variables. Add three environment variables: "DATABASE_URL" (the URL created when deploying the database), "JWT_SECRET_KEY" (a strong random secret key for JWT token generation), and "SECRET_KEY" (used by Django).
+
+3. **Deploy The Backend**:
+   Once the configuration is complete, click the "Deploy" button to deploy the application. Copy the public URL for this service as it will be needed when deploying the front end.
+
+### Deploy The Front-End
+
+The front-end deployment process is similar to the back-end deployment, with one exception: we will build the Docker image from our own Dockerfile because Nixpacks misses some key dependencies. The Dockerfile is located in the project's root directory if you wish to customize it.
+
+1. **Add New Resource**:
+   This step is similar to deploying the back-end. Set the deployment port to 8080 and choose Dockerfile as the build pack option so Coolify will use our custom configuration to create the Docker image.
+
+2. **Configure Installation**:
+   This step is almost identical to configuring the back-end installation. Add one environment variable: "VITE_API_URL" (the backend URL copied when deploying the backend).
+
+3. **Deploy The Frontend**:
+   Once the configuration is complete, click the "Deploy" button. After deployment, navigate to the public URL for the front-end. If everything is working correctly, you should be able to sign up for an account and log in.
 
 ## Testing
 
