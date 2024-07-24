@@ -25,9 +25,26 @@ import {
 import { Switch } from "@/components/ui/switch";
 import { ListFilter, Check, IterationCcw, Settings } from "lucide-react";
 
+/**
+ * ItemFilter Component
+ *
+ * This component provides a user interface for filtering and sorting items within a project.
+ * It includes dropdown menus for sorting by different criteria, filtering by item type, status,
+ * priority, and sprint, and toggling the visibility of empty epics.
+ *
+ * @component
+ * @param {Object} props - The properties passed to the component.
+ * @param {Object} props.filterOptions - The current filter options.
+ * @param {Function} props.setFilterOptions - Function to update the filter options.
+ */
 function ItemFilter(props) {
   const { sprintData } = useContext(ProjectContext);
 
+  /**
+   * Sets the sorting criteria.
+   *
+   * @param {string} value - The sorting criteria.
+   */
   const setSortBy = (value) => {
     props.setFilterOptions((prevState) => ({
       ...prevState,
@@ -35,6 +52,11 @@ function ItemFilter(props) {
     }));
   };
 
+  /**
+   * Sets the sorting order.
+   *
+   * @param {string} value - The sorting order.
+   */
   const setSortOrder = (value) => {
     props.setFilterOptions((prevState) => ({
       ...prevState,
@@ -42,6 +64,11 @@ function ItemFilter(props) {
     }));
   };
 
+  /**
+   * Toggles the filter for a specific item type.
+   *
+   * @param {string} itemType - The item type to filter.
+   */
   const setFilterType = (itemType) => {
     props.setFilterOptions((prevState) => ({
       ...prevState,
@@ -52,6 +79,11 @@ function ItemFilter(props) {
     }));
   };
 
+  /**
+   * Toggles the filter for a specific status.
+   *
+   * @param {string} status - The status to filter.
+   */
   const setFilterStatus = (status) => {
     props.setFilterOptions((prevState) => ({
       ...prevState,
@@ -62,6 +94,11 @@ function ItemFilter(props) {
     }));
   };
 
+  /**
+   * Toggles the filter for a specific priority.
+   *
+   * @param {string} priority - The priority to filter.
+   */
   const setFilterPriority = (priority) => {
     props.setFilterOptions((prevState) => ({
       ...prevState,
@@ -72,8 +109,12 @@ function ItemFilter(props) {
     }));
   };
 
+  /**
+   * Sets the filter for a specific sprint.
+   *
+   * @param {string} sprint - The sprint to filter.
+   */
   const setFilterSprint = (sprint) => {
-    // Set sprint value to "" if it is equal to "NONE"
     sprint = sprint === "NONE" ? "" : sprint;
     props.setFilterOptions((prevState) => ({
       ...prevState,
@@ -81,6 +122,11 @@ function ItemFilter(props) {
     }));
   };
 
+  /**
+   * Toggles the visibility of empty epics.
+   *
+   * @param {boolean} value - The current state of the toggle.
+   */
   const toggleHideEmptyEpics = (value) => {
     props.setFilterOptions((prevState) => ({
       ...prevState,
@@ -88,6 +134,12 @@ function ItemFilter(props) {
     }));
   };
 
+  /**
+   * Formats a date string into a readable format.
+   *
+   * @param {string} dateString - The date string to format.
+   * @returns {string} - The formatted date string.
+   */
   const formatDate = (dateString) => {
     const date = new Date(dateString);
 
@@ -98,6 +150,11 @@ function ItemFilter(props) {
     return `${day} ${month} ${year}`;
   };
 
+  /**
+   * Prevents the dropdown menu from closing when interacting with certain elements.
+   *
+   * @param {Event} e - The event object.
+   */
   const preventMenuClose = (e) => {
     e.preventDefault();
     e.stopPropagation();
