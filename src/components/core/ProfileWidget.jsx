@@ -17,13 +17,28 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Switch } from "@/components/ui/switch";
 
+/**
+ * ProfileWidget Component
+ *
+ * This component renders a profile widget that includes user information and a dropdown menu
+ * with various options such as viewing the profile, billing, settings, and logging out. It also
+ * includes a dark mode toggle switch.
+ *
+ * The component uses the AuthContext to access the user's profile information and handle logout functionality.
+ * It also manages the dark mode state using local storage and updates the theme accordingly.
+ */
 export default function ProfileWidget() {
+  // Extract profile and logoutUser from AuthContext
   const { profile, logoutUser } = useContext(AuthContext);
+  // State variable to store the dark mode state, initialized based on local storage
   const [darkmode, setDarkmode] = useState(
     localStorage.theme == "dark" ? true : false
-  ); // Convert theme in local storage to boolean
+  );
 
-  // Update theme based on darkmode state
+  /**
+   * useEffect hook to update the theme based on the dark mode state.
+   * It adds or removes the "dark" class from the document's root element and updates local storage.
+   */
   useEffect(() => {
     if (darkmode) {
       document.documentElement.classList.add("dark");
@@ -34,6 +49,10 @@ export default function ProfileWidget() {
     }
   }, [darkmode]);
 
+  /**
+   * Prevents the dropdown menu from closing when interacting with certain elements.
+   * This function stops the default event and propagation.
+   */
   const preventMenuClose = (e) => {
     e.preventDefault();
     e.stopPropagation();

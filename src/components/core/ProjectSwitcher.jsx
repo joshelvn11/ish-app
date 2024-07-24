@@ -19,11 +19,31 @@ import {
 import { PlusIcon } from "@radix-ui/react-icons";
 import ProjectForm from "@/components/project-management/forms/ProjectForm";
 
+/**
+ * ProjectSwitcher Component
+ *
+ * This component provides a dropdown menu for selecting a project from a list of projects.
+ * It also includes functionality to open a dialog for creating a new project.
+ *
+ * @component
+ */
 function ProjectSwitcher() {
+  // Extracting projects, loadProject function, and currentProject from ProjectContext
   const { projects, loadProject, currentProject } = useContext(ProjectContext);
+
+  // State to manage the selected project
   const [selectedProject, setSelectedProject] = useState(null);
+
+  // State to manage the visibility of the dialog for creating a new project
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
+  /**
+   * Updates the project context based on the selected value.
+   * If the value is 0, it opens the dialog for creating a new project.
+   * Otherwise, it loads the selected project.
+   *
+   * @param {number} value - The ID of the selected project or 0 for creating a new project.
+   */
   const updateProjectContext = (value) => {
     if (value === 0) {
       // Value for creating project
@@ -33,13 +53,17 @@ function ProjectSwitcher() {
     }
   };
 
-  // Callback function to close dialog
+  /**
+   * Callback function to close the dialog.
+   */
   const closeDialog = () => {
     setIsDialogOpen(false);
   };
 
+  /**
+   * useEffect hook to set the selected project when the current project in the projecc context changes
+   */
   useEffect(() => {
-    // Set the selected project every time the current project in the project context changes
     setSelectedProject(currentProject);
   }, [currentProject]);
 
