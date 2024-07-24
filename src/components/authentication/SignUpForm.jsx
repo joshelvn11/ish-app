@@ -15,13 +15,25 @@ import { Input } from "@/components/ui/input";
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
+/**
+ * SignUpForm Component
+ *
+ * This component renders a sign-up form that allows users to create a new account.
+ * It utilizes various UI components such as Card, Input, Button, and Alert to create
+ * a structured and user-friendly interface.
+ *
+ * The component uses the AuthContext to handle user registration and displays appropriate
+ * error messages based on the sign-up attempt.
+ */
 const SignUpForm = () => {
+  // State variables to store the input values for the sign-up form
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
 
+  // Destructure signUpUser and signUpErrors from AuthContext
   let { signUpUser, signUpErrors } = useContext(AuthContext);
 
   return (
@@ -31,6 +43,7 @@ const SignUpForm = () => {
         <CardDescription>Create a new ish account</CardDescription>
       </CardHeader>
       <CardContent>
+        {/* Display an error alert if signUpErrors is true */}
         {signUpErrors && (
           <Alert variant="destructive" className="mb-6">
             <ExclamationTriangleIcon className="w-4 h-4" />
@@ -45,6 +58,7 @@ const SignUpForm = () => {
             </AlertDescription>
           </Alert>
         )}
+        {/* Form to handle user sign-up */}
         <form onSubmit={signUpUser}>
           <div className="space-y-4">
             <div className="space-y-2">

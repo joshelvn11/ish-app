@@ -15,10 +15,23 @@ import { Input } from "@/components/ui/input";
 import { ExclamationTriangleIcon, RocketIcon } from "@radix-ui/react-icons";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
+/**
+ * LoginForm Component
+ *
+ * This component renders a login form that allows users to enter their username and password
+ * to log in to their account. It utilizes various UI components such as Card, Input, Button,
+ * and Alert to create a structured and user-friendly interface.
+ *
+ * The component uses the AuthContext to handle user authentication and displays appropriate
+ * error or success messages based on the login attempt.
+ *
+ */
 const LoginForm = () => {
+  // State variables to store the username and password input values
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  // Destructure loginUser, loginError, and loginMessage from AuthContext
   let { loginUser, loginError, loginMessage } = useContext(AuthContext);
 
   return (
@@ -30,6 +43,7 @@ const LoginForm = () => {
         </CardDescription>
       </CardHeader>
       <CardContent>
+        {/* Display an error alert if loginError is true */}
         {loginError && (
           <Alert variant="destructive" className="mb-6">
             <ExclamationTriangleIcon className="w-4 h-4" />
@@ -37,6 +51,7 @@ const LoginForm = () => {
             <AlertDescription>Incorrect login credentials</AlertDescription>
           </Alert>
         )}
+        {/* Display a message alert if loginMessage is present */}
         {loginMessage && (
           <Alert className="mb-5">
             <RocketIcon className="w-4 h-4" />
@@ -46,6 +61,7 @@ const LoginForm = () => {
             </AlertDescription>
           </Alert>
         )}
+        {/* Form to handle user login */}
         <form onSubmit={loginUser}>
           <div className="space-y-4">
             <div className="space-y-2">
