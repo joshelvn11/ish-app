@@ -242,6 +242,341 @@ The front-end deployment process is similar to the back-end deployment, with one
 
 ## Testing
 
+### Validator Testing
+
+#### W3C HTML Validator
+
+#### Jigsaw CSS Validator
+
+#### PEP8 Validator
+
+### Manual Unit Testing
+
+#### Test Case: Sign Up (Valid)
+
+1. **Objective**: Verify that users can successfully sign up with valid data.
+2. **Steps**:
+   1. Enter all valid data into the sign-up form (unique username, correct and unique email, password that meets requirements).
+   2. Click the sign-up button.
+   3. Observe the results.
+3. **Expected Results**:
+   1. The user is redirected to the login screen.
+   2. The login component displays a message alerting the user to the successful sign-up and prompts them to log in with their new credentials.
+
+#### Test Case: Sign Up (Invalid)
+
+1. **Objective**: Verify that error notifications are shown when invalid data is entered during sign-up.
+2. **Steps**:
+   1. Enter one item of invalid data into the sign-up form while keeping the rest of the data valid.
+   2. Click the sign-up button.
+   3. Observe the results.
+   4. Repeat the process, changing the item that is invalid each time.
+3. **Expected Results**:
+   1. An error message is displayed in the sign-up form.
+   2. The error message correlates to the invalid data entered, showing the corresponding error message.
+
+#### Test Case: Login (Valid)
+
+1. **Objective**: Verify that users can successfully log into their account with valid data.
+2. **Steps**:
+   1. Enter correct login details for an account.
+   2. Click the login button.
+   3. Observe the results.
+3. **Expected Results**:
+   1. The user is redirected to the dashboard page.
+   2. They are logged into the correct account (account details match in the profile widget).
+   3. Access tokens are saved to local storage.
+
+#### Test Case: Login (Invalid)
+
+1. **Objective**: Verify that error notifications are shown when invalid login credentials are used.
+2. **Steps**:
+   1. Enter incorrect login credentials (non-existing account or existing account with incorrect password).
+   2. Click the login button.
+   3. Observe the results.
+3. **Expected Results**:
+   1. An error message is displayed in the login form, alerting the user that the login credentials are incorrect.
+
+#### Test Case: Logout
+
+1. **Objective**: Verify that users are able to log out successfully.
+2. **Steps**:
+   1. Under the profile widget drop-down menu, click the logout button.
+   2. Observe the results.
+3. **Expected Results**:
+   1. The user is logged out of the account and is redirected to the login screen.
+   2. Attempting to access any page other than the login screen results in a redirection to the login screen.
+   3. Access tokens are removed from local storage.
+
+#### Test Case: Create Project
+
+1. **Objective**: Verify that new projects are created successfully.
+2. **Steps**:
+   1. Click the create new project button in the project context switcher.
+   2. Enter a title and description into the modal.
+   3. Click the create button.
+   4. Observe the results.
+   5. Repeat the process with invalid data.
+3. **Expected Results**:
+   1. A modal window with the project creation form is shown.
+   2. With valid data, the modal window closes, the project context switches to the new project, and the project context switcher is updated with the new project as an option.
+   3. With invalid data, an error message is shown, the project is not created, and the window remains open.
+
+#### Test Case: Switch Project
+
+1. **Objective**: Verify that users are able to switch projects successfully.
+2. **Steps**:
+   1. Create two projects with some unique item data each.
+   2. Have the backlog page open.
+   3. Select one project from the context switcher.
+   4. Observe the results.
+   5. Switch to another project and observe the results.
+3. **Expected Results**:
+   1. The correct item data for the current project is shown on the backlog page.
+   2. When the project is switched, all item data is cleared, and all item data from the newly selected project is loaded and displayed.
+   3. The correct project title is displayed in the project context switcher.
+
+#### Test Case: Create Epic
+
+1. **Objective**: Verify that users are able to create epics successfully.
+2. **Steps**:
+   1. Have the backlog page open.
+   2. Under the create drop-down menu, click the epic button.
+   3. Fill out the form in the modal window with valid data.
+   4. Click the create button.
+   5. Repeat the process with invalid data.
+3. **Expected Results**:
+   1. A modal window opens with the create epic form.
+   2. With valid data, the create button text changes to update, and the backlog page is re-rendered with the newly created epic displayed as a card.
+   3. With invalid data, an error message is shown with a description of why the data is invalid.
+   4. The new epic should reflect in the database.
+
+#### Test Case: Delete Epic
+
+1. **Objective**: Verify that users are able to delete epics successfully.
+2. **Steps**:
+   1. Have the backlog page open.
+   2. Click the delete button on any epic.
+   3. Confirm the choice in the confirmation dialog.
+   4. Observe the results.
+   5. Repeat the process but cancelling the action in the confirmation dialog.
+3. **Expected Results**:
+   1. When the delete button is clicked a confirmation dialog is shown.
+   2. When the action is confirmed the dialog closes and the epic and all its children items are removed from the backlog page.
+   3. The epic and all its children items are removed from the database.
+   4. When the action is cancelled the confirmation dialog is closed and nothing else happens.
+
+#### Test Case: Create Sprint
+
+1. **Objective**: Verify that users are able to create sprints successfully.
+2. **Steps**:
+   1. Have the backlog page open.
+   2. Under the create drop-down menu, click the sprint button.
+   3. Fill out the form in the modal window with valid data.
+   4. Click the create button.
+   5. Repeat the process with invalid data.
+3. **Expected Results**:
+   1. A modal window opens with the create sprint form.
+   2. With valid data, the modal window closes, the user is alerted with a toast to the success, and the sprint appears in the sprint filter drop-down.
+   3. With invalid data, an error message is shown with a description of why the data is invalid.
+   4. The new sprint should reflect in the database.
+
+#### Test Case: Create Item
+
+1. **Objective**: Verify that users are able to create items successfully.
+2. **Steps**:
+   1. Have the backlog page open.
+   2. Under the create drop-down menu, click one of the create item buttons.
+   3. Fill out the form in the modal window with valid data.
+   4. Click the create button.
+   5. Repeat the above process with invalid data.
+   6. Repeat the above process for each item type (user story, task, documentation, bug).
+3. **Expected Results**:
+   1. A modal window opens with a form corresponding to the item type clicked.
+   2. With valid data, the modal window closes, the user is alerted with a toast to the success, and the new item is rendered into the correct epic with correct data displayed in each column.
+   3. With invalid data, an error message is shown with a description of why the data is invalid.
+   4. The new item should reflect in the database.
+
+#### Test Case: Delete Item
+
+1. **Objective**: Verify that users are able to delete items successfully.
+2. **Steps**:
+   1. Have the backlog page open.
+   2. Click the delete button on any item.
+   3. Confirm the choice in the confirmation dialog.
+   4. Observe the results.
+   5. Repeat the process but cancelling the action in the confirmation dialog.
+3. **Expected Results**:
+   1. When the delete button is clicked a confirmation dialog is shown.
+   2. When the action is confirmed the dialog closes and the item is removed from its corresponding item table.
+   3. The item is removed from the database.
+   4. When the action is cancelled the confirmation dialog is closed and nothing else happens.
+
+#### Test Case: Update Item Epic
+
+1. **Objective**: Verify that users are able to update item epics successfully.
+2. **Steps**:
+   1. Have the backlog page open.
+   2. Click the view item button on any item.
+   3. Select a different epic from the epic drop-down.
+   4. Close the modal.
+   5. Observe the results.
+3. **Expected Results**:
+   1. A modal window opens with the current epic loaded into the select epic field.
+   2. When the epic is changed, the user is alerted to the successful change, and the new epic is set as the current epic in the epic select drop-down.
+   3. When the modal is closed, the item should have been removed from the original epic and now be listed under the new epic.
+   4. The updated item epic should reflect in the database.
+
+#### Test Case: Update Item Attribute (Priority, Status, Due Date, Sprint)
+
+1. **Objective**: Verify that users are able to update item attributes successfully.
+2. **Steps**:
+   1. Have the backlog page open.
+   2. Click the view item button on any item.
+   3. Select an alternate value for an attribute.
+   4. Close the modal.
+   5. Observe the results.
+   6. Repeat the above process for each attribute.
+3. **Expected Results**:
+   1. A modal window opens with the current attribute value loaded into the relevant attribute field.
+   2. When the attribute value is changed, the user is alerted to the successful change, and the new value is set as the current attribute value in the attribute select drop-down.
+   3. When the modal is closed, the item row should have been re-rendered showing the newly selected attribute value in the relevant column for the item.
+   4. The new item attribute value should reflect in the database.
+
+#### Test Case: Update Item Description & User Story
+
+1. **Objective**: Verify that users are able to update item descriptions and user stories successfully.
+2. **Steps**:
+   1. Have the backlog page open.
+   2. Click the view item button on any item.
+   3. Click the edit button for the description.
+   4. Enter a new description.
+   5. Click the save button.
+   6. Observe the results.
+   7. Repeat the above process for the user story.
+3. **Expected Results**:
+   1. A modal window opens with the current attribute value loaded into the relevant attribute field.
+   2. When the attribute value is changed, the user is alerted to the successful change, and the new value is set as the current attribute value in the attribute select drop-down.
+   3. When the modal is closed, the item row should have been re-rendered showing the newly selected attribute value in the relevant column for the item.
+   4. The updated item description and user story should reflect in the database.
+
+#### Test Case: Add Acceptance Criteria & Subtask
+
+1. **Objective**: Verify that users are able to add acceptance criteria and subtasks successfully.
+2. **Steps**:
+   1. Click the view item button on any item.
+   2. Click acceptance criteria add button
+   3. Enter new acceptance criteria into the field.
+   4. Click the save button.
+   5. Observe the results.
+   6. Repeat the above process for substasks.
+3. **Expected Results**:
+   1. A modal window opens with the current acceptance criteria loaded as fields under the acceptance criteria.
+   2. When the add button is clicked a new text field is created at the bottom of the list.
+   3. When the save button is clicked the field is re-rendered into a text field with an open checkbox and the save button is removed.
+   4. The updated acceptance criteria is reflected in the item in the deatabase.
+
+#### Test Case: Edit Acceptance Criteria & Subtask
+
+1. **Objective**: Verify that users are able to edit acceptance criteria and subtasks successfully.
+2. **Steps**:
+   1. Click the view item button on any item (with acceptance criteria or subtasks).
+   2. Click the edit button on any acceptance criteria
+   3. Enter updated acceptance criteria into the fieldd
+   4. Click the save button.
+   5. Observe the results.
+   6. Repeat the above process for substasks.
+3. **Expected Results**:
+   1. A modal window opens with the current acceptance criteria loaded as fields under the acceptance criteria and the fields are read-only by default.
+   2. When the edit button on any acceptance critera is clicked the field becomes editable and save button replaces the edit and delete buttons.
+   3. When the the save button is clicked the field again becomes read-only the save button is replaced with edit and delete buttons.
+   4. The updated acceptance criteria is reflected in the item in the database.
+
+#### Test Case: Edit Acceptance Criteria & Subtask Done Status
+
+1. **Objective**: Verify that users are able to update the done status for acceptance criteria and subtasks successfully.
+2. **Steps**:
+   1. Click the view item button on any item (with acceptance criteria or subtasks).
+   2. Click check box next to any acceptance criteria / subtask.
+   3. Observe the results.
+   4. Repeat the above process for substasks.
+3. **Expected Results**:
+   1. A modal window opens with the current acceptance criteria loaded with the checkbox checked status corresponding the the acceptance criteria done property in the database.
+   2. If the checkbox is unchecked and the checkbox is clicked the checkbox then becomes checked and thetext in the corresponding textfield is set to gray and strike-through.
+   3. If the chechbox is checked and the checbbox is clicked it becomes unchecked and the text in the corresponding text field returns to its original styling.
+   4. After both above actions the updated acceptance criteria is reflected in the item in the database.
+
+#### Test Case: Delete Acceptance Criteria & Subtask
+
+1. **Objective**: Verify that users are able to delete acceptance criteria and substasks successfully.
+2. **Steps**:
+   1. Click the view item button on any item (with acceptance criteria or subtasks).
+   2. Click the delete button on any acceptance criteria.
+   3. Observe the results.
+   4. Repeat the above process for substasks.
+3. **Expected Results**:
+   1. A modal window opens with the current acceptance criteria is loaded.
+   2. When the delete button is clicked on any acceptance criteria that acceptance criteria item is removed from the list.
+   3. The updated acceptance criteria is reflected in the database.
+
+#### Test Case: Apply Attribute Filters
+
+1. **Objective**: Verify that users are able to apply attribute filters successfully.
+2. **Steps**:
+   1. Click the filters menu and hover over an attribute filter sub-menu.
+   2. Observe the results.
+   3. Select or deselect any attribute.
+   4. Observe the results.
+   5. Repeat for every attribute and value.
+3. **Expected Results**:
+   1. When the attribute filter sub-menu is hovered over the attribute values for the attribute are shown and checked/unchecked in correspondance to their state in the filter options properties in the database.
+   2. When a checked attribute value is unchecked all instances of items with that attribute value are removed from item tables in the backlog page.
+   3. When an unchecked attribute value is checked all instances of items with that attribute value are added to items tables in the backlog page.
+   4. After both actions the filter options are updated in the database with the correct corresponding data to the action that was performed on the attribute.
+
+#### Test Case: Apply Sort By
+
+1. **Objective**: Verify that users are able to sort by available attributes.
+2. **Steps**:
+   1. Click the filters menu and hover over the sort by sub-menu.
+   2. Observe the results.
+   3. Select or deselect any available attribute.
+   4. Observe the results.
+   5. Repeat for every attribute available attribute.
+   6. Hover over the sort order sub-menu and change the sort order.
+   7. Observe the results.
+   8. Repeat the process for every sort by and sort order combination.
+3. **Expected Results**:
+   1. When the sort by sub-menu is hovered over the available attributes are shown and checked/unchecked in correspondance to their state in the filter options properties in the database.
+   2. When an attribute is checked all items tables are re-rendered having the items sorted in ascending/descending order is accordance with the currently selected sort order value.
+   3. When the sort order is changed all item tables are re-rendered having the items sorted by in ascending/descending according to what value is selected and in accordance with what attribute is selected in the sort by value.
+   4. After both actions the filter options are updated in the database with the correct corresponding data to the action that was performed on the attribute.
+
+#### Test Case: Apply Sprint Filter
+
+1. **Objective**: Verify that users are able to apply the sprint filter successfully.
+2. **Steps**:
+   1. Click the sprint filter drop-down
+   2. Observe the results.
+   3. Select any sprint from the drop-down
+   4. Observe the results.
+3. **Expected Results**:
+   1. When the sprint filter is clicked the sprint drop-down is shown and populated with an item for each print in the project.
+   2. Clicking any sprint causes all item tables to be re-rendered with any items not in the selected sprint removed.
+   3. After selecting a sprint the filter options are updated in the database according to the selected sprint.
+
+#### Test Case: Hide Empty Epics
+
+1. **Objective**: Verify that users are able to hide and show empty epics successfully.
+2. **Steps**:
+   1. Click the options drop-down
+   2. Click the hide empty epics toggle
+   3. Observe the results.
+3. **Expected Results**:
+   1. When the hide empty epics toggle is toggle to on all epic cards without any children are hidden from the backlog page.
+   2. When the hide empty epics toggle is toggle to off all epic cards regardless of whether they contain children are shown
+   3. After toggling the filter options are updated in the database according to new toggle status.
+
 ## Future Ideas & Roadmap
 
 ## Credits
