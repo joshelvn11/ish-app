@@ -58,7 +58,19 @@ Overall, the Backlog page is designed to be highly adaptable, catering to the un
 
 ## Features & Functions
 
-## Projects
+### Login & Registration
+
+![Login & Registration](https://s3.eu-west-1.wasabisys.com/ish.pm/docs/img/Login-Signup.gif)
+
+The login and registration functionality is designed to provide users with a seamless and secure way to access their accounts or create new ones. These features are implemented as user-friendly forms that are simple to navigate and use. Users can easily switch between the login and registration forms, and any validation errors are immediately displayed, providing instant feedback to help users correct any issues.
+
+When a new user signs up, an account is created, and they are immediately redirected to the login page to access their new account with the credentials they just created. The login process involves the server generating access and refresh tokens, which the client can use for authentication in all subsequent requests. This token-based authentication ensures that user sessions are secure and that the user's identity is verified for each interaction with the server.
+
+The design of the login and registration forms prioritizes ease of use and security, ensuring that users can quickly and safely access their accounts without unnecessary complexity. This approach helps to enhance the overall user experience and encourages user engagement with the application.
+
+### Projects
+
+![Project Creation](https://s3.eu-west-1.wasabisys.com/ish.pm/docs/img/Project.gif)
 
 Projects are the foundational entities within the application, serving as the root parent for all other data. Each project is defined by two primary attributes: a name and a title. These attributes are essential for identifying and managing projects within the system. All other data, such as tasks, epics, and sprints, are associated with a specific project, ensuring a clear and organized structure.
 
@@ -70,7 +82,7 @@ Creating a new project is straightforward. Users can initiate the creation proce
 
 Overall, the project management functionality is designed to be intuitive and user-friendly, enabling users to efficiently manage multiple projects and ensure that their data is organized and secure.
 
-## Items
+### Items
 
 Items are the fundamental building blocks of the application. They represent tasks and are categorized into four types: User Stories, Tasks, Bugs, and Documentation. Each item type shares a set of common attributes, including titles, descriptions, due dates, sprints, priorities, statuses, and subtasks.
 
@@ -116,13 +128,13 @@ Overall, the robust filtering system in the application empowers users to tailor
 
 ### Sorting
 
-### Login & Registration
+All items in the application have multiple attributes, and some of these attributes can be sorted in either ascending or descending order. Currently, the attributes that support sorting are status and priority. This sorting functionality enables users to organize their items based on these attributes, making it easier to manage and prioritize tasks.
 
-The login and registration functionality is designed to provide users with a seamless and secure way to access their accounts or create new ones. These features are implemented as user-friendly forms that are simple to navigate and use. Users can easily switch between the login and registration forms, and any validation errors are immediately displayed, providing instant feedback to help users correct any issues.
+Sorting items by status allows users to quickly see which tasks are in different stages of completion, such as "To Do," "In Progress," or "Done." This helps users to focus on tasks that need immediate attention and track the progress of their work.
 
-When a new user signs up, an account is created, and they are immediately redirected to the login page to access their new account with the credentials they just created. The login process involves the server generating access and refresh tokens, which the client can use for authentication in all subsequent requests. This token-based authentication ensures that user sessions are secure and that the user's identity is verified for each interaction with the server.
+Sorting by priority, on the other hand, helps users to identify the most critical tasks that need to be addressed first. By arranging items in order of priority, users can ensure that they are working on the most important tasks and meeting deadlines effectively.
 
-The design of the login and registration forms prioritizes ease of use and security, ensuring that users can quickly and safely access their accounts without unnecessary complexity. This approach helps to enhance the overall user experience and encourages user engagement with the application.
+Overall, the sorting feature enhances the user experience by providing a more structured, logical, and organized view of their tasks. It allows users to customize their view according to their needs, making task management more efficient and intuitive.
 
 ### Theme Switcher
 
