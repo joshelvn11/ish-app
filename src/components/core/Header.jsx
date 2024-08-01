@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import AuthContext from "@/context/AuthContext";
 import ProfileWidget from "./ProfileWidget";
 import { Button } from "@/components/ui/button";
-import { CloudDownload, MenuIcon } from "lucide-react";
+import { MenuIcon } from "lucide-react";
 import UiContext from "@/context/UiContext";
 import ProjectSwitcher from "./ProjectSwitcher";
 

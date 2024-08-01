@@ -300,10 +300,6 @@ The front-end deployment process is similar to the back-end deployment, with one
 
 ### Validator Testing
 
-#### W3C HTML Validator
-
-#### Jigsaw CSS Validator
-
 ### Lighthouse Testing
 
 ### Manual Unit Testing

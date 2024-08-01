@@ -2,11 +2,6 @@ import React, { useState } from "react";
 import ProjectContext from "@/context/ProjectContext";
 import {
   Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
 } from "@/components/ui/card";
 import { CaretSortIcon } from "@radix-ui/react-icons";
 import { Button } from "@/components/ui/button";

@@ -1,15 +1,14 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
+import PropTypes from "prop-types";
 import ProjectContext from "@/context/ProjectContext";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuPortal,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuSub,
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
@@ -37,6 +36,20 @@ import { ListFilter, Check, IterationCcw, Settings } from "lucide-react";
  * @param {Object} props.filterOptions - The current filter options.
  * @param {Function} props.setFilterOptions - Function to update the filter options.
  */
+
+ItemFilter.propTypes = {
+  filterOptions: PropTypes.shape({
+    sortBy: PropTypes.string,
+    sortOrder: PropTypes.string,
+    filterType: PropTypes.object,
+    filterStatus: PropTypes.object,
+    filterPriority: PropTypes.object,
+    filterSprint: PropTypes.string,
+    hideEmptyEpics: PropTypes.bool,
+  }).isRequired,
+  setFilterOptions: PropTypes.func.isRequired,
+};
+
 function ItemFilter(props) {
   const { sprintData } = useContext(ProjectContext);
 
@@ -127,7 +140,7 @@ function ItemFilter(props) {
    *
    * @param {boolean} value - The current state of the toggle.
    */
-  const toggleHideEmptyEpics = (value) => {
+  const toggleHideEmptyEpics = () => {
     props.setFilterOptions((prevState) => ({
       ...prevState,
       hideEmptyEpics: !props.filterOptions.hideEmptyEpics,

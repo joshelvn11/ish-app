@@ -1,13 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import ProjectContext from "@/context/ProjectContext";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { CaretSortIcon } from "@radix-ui/react-icons";
 import { Button } from "@/components/ui/button";
 import {
@@ -21,7 +14,6 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
   DialogFooter,
 } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
@@ -29,6 +21,16 @@ import ItemTable from "./ItemTable";
 import { EnterFullScreenIcon, TrashIcon } from "@radix-ui/react-icons";
 import EpicForm from "./forms/EpicForm";
 import { useContext } from "react";
+import PropTypes from "prop-types";
+
+EpicCard.propTypes = {
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string,
+  priority: PropTypes.string,
+  status: PropTypes.string,
+  epicId: PropTypes.string.isRequired,
+  filterOptions: PropTypes.object,
+};
 
 function EpicCard(props) {
   const { deleteEpic } = useContext(ProjectContext);

@@ -1,15 +1,43 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import ProjectContext from "@/context/ProjectContext";
 import {
   Table,
   TableBody,
-  TableCaption,
-  TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
 import ItemTableRow from "@/components/project-management/ItemTableRow";
+
+ItemTable.propTypes = {
+  groupId: PropTypes.string.isRequired,
+  filterOptions: PropTypes.shape({
+    sortBy: PropTypes.string,
+    sortOrder: PropTypes.string,
+    filterSprint: PropTypes.string,
+    filterType: PropTypes.shape({
+      USER_STORY: PropTypes.bool,
+      TASK: PropTypes.bool,
+      DOCUMENTATION: PropTypes.bool,
+      BUG: PropTypes.bool,
+    }),
+    filterStatus: PropTypes.shape({
+      TO_DO: PropTypes.bool,
+      IN_PROGRESS: PropTypes.bool,
+      REVIEW: PropTypes.bool,
+      DONE: PropTypes.bool,
+    }),
+    filterPriority: PropTypes.shape({
+      OPTIONAL: PropTypes.bool,
+      BENEFICIAL: PropTypes.bool,
+      ESSENTIAL: PropTypes.bool,
+      CRITICAL: PropTypes.bool,
+    }),
+    hideEmptyEpics: PropTypes.bool,
+  }).isRequired,
+  hideParent: PropTypes.func.isRequired,
+};
 
 function ItemTable(props) {
   // Get context properties

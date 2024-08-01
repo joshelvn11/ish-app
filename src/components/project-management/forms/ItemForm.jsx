@@ -1,4 +1,5 @@
-import React, { useState, useContext, useEffect, useRef } from "react";
+import { useState, useContext, useRef } from "react";
+import PropTypes from "prop-types";
 import ProjectContext from "@/context/ProjectContext";
 import AuthContext from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
@@ -25,7 +26,50 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useToast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
-import { Pencil } from "lucide-react";
+
+/**
+ * ItemForm Component
+ *
+ * This component provides a form for creating and updating items (user stories) within a project.
+ * It includes fields for title, epic, description, user story, acceptance criteria, subtasks, due date,
+ * priority, status, and sprint. It handles form validation and submission to the backend API.
+ *
+ * @component
+ * @param {Object} props - The properties passed to the component.
+ * @param {boolean} props.create - Indicates whether the form is in create mode.
+ * @param {number} props.id - The ID of the item being updated (if in update mode).
+ * @param {string} props.name - The initial name of the item.
+ * @param {string} props.epic - The initial epic of the item.
+ * @param {string} props.description - The initial description of the item.
+ * @param {string} props.userStory - The initial user story of the item.
+ * @param {Array} props.acceptanceCriteria - The initial acceptance criteria of the item.
+ * @param {Array} props.subtasks - The initial subtasks of the item.
+ * @param {Date} props.duedate - The initial due date of the item.
+ * @param {string} props.priority - The initial priority of the item.
+ * @param {string} props.status - The initial status of the item.
+ * @param {string} props.sprint - The initial sprint of the item.
+ * @param {Function} props.fetchItemData - Function to fetch the item data.
+ * @param {Function} props.closeDialog - Function to close the dialog.
+ * @param {string} props.itemType - The type of the item.
+ */
+
+ItemForm.propTypes = {
+  create: PropTypes.bool.isRequired,
+  id: PropTypes.number,
+  name: PropTypes.string,
+  epic: PropTypes.string,
+  description: PropTypes.string,
+  userStory: PropTypes.string,
+  acceptanceCriteria: PropTypes.array,
+  subtasks: PropTypes.array,
+  duedate: PropTypes.instanceOf(Date),
+  priority: PropTypes.string,
+  status: PropTypes.string,
+  sprint: PropTypes.string,
+  fetchItemData: PropTypes.func,
+  closeDialog: PropTypes.func,
+  itemType: PropTypes.string,
+};
 
 function ItemForm(props) {
   const { currentProject, getItemData, epicData, sprintData } =
@@ -34,7 +78,7 @@ function ItemForm(props) {
   const { toast } = useToast();
 
   let [create, setCreate] = useState(props.create);
-  let [validationErrors, setValidationErrors] = useState([]);
+  let [validationErrors] = useState([]);
   let [userStoryId, setUserStoryId] = useState(props.id);
 
   // Form data state
@@ -63,6 +107,12 @@ function ItemForm(props) {
   let [status, setStatus] = useState(props.status ?? "");
   let [sprint, setSprint] = useState(props.sprint ?? "");
 
+  /**
+   * Formats a date object into a string in the format YYYY-MM-DD.
+   *
+   * @param {Date} date - The date object to format.
+   * @returns {string} - The formatted date string.
+   */
   const formatDate = (date) => {
     if (date) {
       const offset = date.getTimezoneOffset();
@@ -72,6 +122,9 @@ function ItemForm(props) {
     return date;
   };
 
+  /**
+   * Saves the description of the item.
+   */
   const saveDescription = async () => {
     if (!create) {
       // Only attempt update if not in create mode
@@ -89,7 +142,6 @@ function ItemForm(props) {
           }),
         }
       );
-      let data = await response.json();
       if (response.status === 200) {
         toast({ description: "Description updated" });
         props.fetchItemData();
@@ -102,6 +154,9 @@ function ItemForm(props) {
     }
   };
 
+  /**
+   * Updates the user story of the item.
+   */
   const updateUserStory = async () => {
     if (!create) {
       // Only attempt update if not in create mode
@@ -132,6 +187,11 @@ function ItemForm(props) {
     }
   };
 
+  /**
+   * Updates the epic of the item.
+   *
+   * @param {string} value - The new epic value.
+   */
   const updateEpic = async (value) => {
     if (!create) {
       // Only attempt update if not in create mode
@@ -149,7 +209,6 @@ function ItemForm(props) {
           }),
         }
       );
-      let data = await response.json();
       if (response.status === 200) {
         toast({ description: "Epic updated" });
         setEpic(value);
@@ -165,6 +224,11 @@ function ItemForm(props) {
     }
   };
 
+  /**
+   * Updates the priority of the item.
+   *
+   * @param {string} value - The new priority value.
+   */
   const updatePriority = async (value) => {
     if (!create) {
       // Only attempt update if not in create mode
@@ -198,6 +262,11 @@ function ItemForm(props) {
     }
   };
 
+  /**
+   * Updates the due date of the item.
+   *
+   * @param {Date} value - The new due date value.
+   */
   const updateDueDate = async (value) => {
     if (!create) {
       // Only attempt update if not in create mode
@@ -231,6 +300,11 @@ function ItemForm(props) {
     }
   };
 
+  /**
+   * Updates the status of the item.
+   *
+   * @param {string} value - The new status value.
+   */
   const updateStatus = async (value) => {
     if (!create) {
       // Only attempt update if not in create mode
@@ -264,6 +338,11 @@ function ItemForm(props) {
     }
   };
 
+  /**
+   * Updates the sprint of the item.
+   *
+   * @param {string} value - The new sprint value.
+   */
   const updateSprint = async (value) => {
     if (!create) {
       // Only attempt update if not in create mode
@@ -289,7 +368,7 @@ function ItemForm(props) {
       } else {
         toast({
           variant: "destructive",
-          description: `Problem updating spint: ${JSON.stringify(data)}`,
+          description: `Problem updating sprint: ${JSON.stringify(data)}`,
         });
       }
     } else {
@@ -297,17 +376,20 @@ function ItemForm(props) {
     }
   };
 
+  /**
+   * Saves a new acceptance criteria item.
+   */
   const saveNewAcceptanceCriteria = async () => {
     // Create a new acceptance criteria ID
     const generateRandomId = () => {
       // Generate random id
       let newId = Math.floor(100000 + Math.random() * 900000);
-      // Check if the new id is unqiue
+      // Check if the new id is unique
       if (acceptanceCriteria.some((item) => item.id === newId)) {
-        // If not recrusively call the function
+        // If not recursively call the function
         generateRandomId();
       } else {
-        // If it is unqiue return the id
+        // If it is unique return the id
         return newId;
       }
     };
@@ -359,17 +441,20 @@ function ItemForm(props) {
     }
   };
 
+  /**
+   * Saves a new subtask item.
+   */
   const saveNewSubtask = async () => {
     // Create a new subtask ID
     const generateRandomId = () => {
       // Generate random id
       let newId = Math.floor(100000 + Math.random() * 900000);
-      // Check if the new id is unqiue
+      // Check if the new id is unique
       if (subtasks.some((item) => item.id === newId)) {
-        // If not recrusively call the function
+        // If not recursively call the function
         generateRandomId();
       } else {
-        // If it is unqiue return the id
+        // If it is unique return the id
         return newId;
       }
     };
@@ -419,6 +504,11 @@ function ItemForm(props) {
     }
   };
 
+  /**
+   * Updates the done status of an acceptance criteria item.
+   *
+   * @param {number} id - The ID of the acceptance criteria item.
+   */
   const updateAcceptanceCriteriaDone = async (id) => {
     const updatedAcceptanceCriteria = acceptanceCriteria.map((item) =>
       item.id === id ? { ...item, ["done"]: !item.done } : item
@@ -455,6 +545,9 @@ function ItemForm(props) {
     }
   };
 
+  /**
+   * Updates an acceptance criteria item.
+   */
   const updateAcceptanceCriteriaItem = async () => {
     const inputValue = acceptanceCriteriaInputRef.current.value;
 
@@ -499,6 +592,11 @@ function ItemForm(props) {
     setAcceptanceCriteria(updatedAcceptanceCriteria);
   };
 
+  /**
+   * Deletes an acceptance criteria item.
+   *
+   * @param {number} id - The ID of the acceptance criteria item.
+   */
   const deleteAcceptanceCriteriaItem = async (id) => {
     const updatedAcceptanceCriteria = acceptanceCriteria.filter(
       (item) => item.id !== id
@@ -537,6 +635,9 @@ function ItemForm(props) {
     setAcceptanceCriteria(updatedAcceptanceCriteria);
   };
 
+  /**
+   * Updates a subtask item.
+   */
   const updateSubtaskItem = async () => {
     const inputValue = subtaskInputRef.current.value;
 
@@ -577,6 +678,11 @@ function ItemForm(props) {
     setSubtasks(updatedSubtasks);
   };
 
+  /**
+   * Deletes a subtask item.
+   *
+   * @param {number} id - The ID of the subtask item.
+   */
   const deleteSubtaskItem = async (id) => {
     const updatedSubtasks = subtasks.filter((item) => item.id !== id);
 
@@ -612,6 +718,11 @@ function ItemForm(props) {
     setSubtasks(updatedSubtasks);
   };
 
+  /**
+   * Updates the done status of a subtask item.
+   *
+   * @param {number} id - The ID of the subtask item.
+   */
   const updateSubtaskDone = async (id) => {
     const updatedSubtasks = subtasks.map((item) =>
       item.id === id ? { ...item, ["done"]: !item.done } : item
@@ -646,6 +757,11 @@ function ItemForm(props) {
     }
   };
 
+  /**
+   * Creates a new item (user story).
+   *
+   * @param {string} name - The name of the item.
+   */
   const createItem = async (name) => {
     // Make API request
     const apiUrl = import.meta.env.VITE_API_URL;

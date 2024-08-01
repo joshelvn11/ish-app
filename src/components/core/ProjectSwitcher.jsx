@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ProjectContext from "@/context/ProjectContext";
 import {
   Select,
@@ -13,8 +13,6 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
-  DialogFooter,
 } from "@/components/ui/dialog";
 import { PlusIcon } from "@radix-ui/react-icons";
 import ProjectForm from "@/components/project-management/forms/ProjectForm";

@@ -1,4 +1,5 @@
-import React, { useState, useContext } from "react";
+import { useState, useContext } from "react";
+import PropTypes from "prop-types";
 import ProjectContext from "@/context/ProjectContext";
 import AuthContext from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
@@ -13,14 +14,35 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  ExclamationTriangleIcon,
-  RocketIcon,
-  CaretSortIcon,
-  CheckIcon,
-} from "@radix-ui/react-icons";
+import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useToast } from "@/components/ui/use-toast";
+
+/**
+ * EpicForm Component
+ *
+ * This component provides a form for creating and updating epics within a project.
+ * It includes fields for title, description, priority, and status, and handles form validation
+ * and submission to the backend API.
+ *
+ * @component
+ * @param {Object} props - The properties passed to the component.
+ * @param {boolean} props.create - Indicates whether the form is in create mode.
+ * @param {number} props.epicId - The ID of the epic being updated (if in update mode).
+ * @param {string} props.title - The initial title of the epic.
+ * @param {string} props.description - The initial description of the epic.
+ * @param {string} props.priority - The initial priority of the epic.
+ * @param {string} props.status - The initial status of the epic.
+ */
+
+EpicForm.propTypes = {
+  create: PropTypes.bool.isRequired,
+  epicId: PropTypes.number,
+  title: PropTypes.string,
+  description: PropTypes.string,
+  priority: PropTypes.string,
+  status: PropTypes.string,
+};
 
 function EpicForm(props) {
   const { currentProject, getEpicData } = useContext(ProjectContext);
@@ -37,6 +59,11 @@ function EpicForm(props) {
   let [priority, setPriority] = useState(props.priority);
   let [status, setStatus] = useState(props.status);
 
+  /**
+   * Validates the form data.
+   *
+   * @returns {boolean} - Returns true if the data is valid, otherwise false.
+   */
   const validateData = () => {
     let valid = true;
     setValidationErrors([]);
@@ -54,14 +81,19 @@ function EpicForm(props) {
     return valid;
   };
 
+  /**
+   * Handles the form submission for creating or updating an epic.
+   *
+   * @param {Event} e - The event object.
+   */
   const updateEpic = async (e) => {
     e.preventDefault();
     if (!validateData()) {
       return;
     }
 
+    const apiUrl = import.meta.env.VITE_API_URL;
     if (create) {
-      const apiUrl = import.meta.env.VITE_API_URL;
       let response = await fetch(
         `${apiUrl}/projects/${currentProject.id}/epics/`,
         {
@@ -82,7 +114,7 @@ function EpicForm(props) {
       let data = await response.json();
       if (response.status === 201) {
         toast({ description: "Epic created successfully!" });
-        // Set the new epic id to the id returned in the respinse
+        // Set the new epic id to the id returned in the response
         setEpicId(data.id);
         // Refresh epic data
         getEpicData();
@@ -93,7 +125,6 @@ function EpicForm(props) {
         toast({ variant: "destructive", description: "Error creating epic" });
       }
     } else {
-      const apiUrl = import.meta.env.VITE_API_URL;
       let response = await fetch(
         `${apiUrl}/projects/${currentProject.id}/epics/${epicId}/`,
         {

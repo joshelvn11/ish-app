@@ -1,30 +1,14 @@
-import React, { useState, useContext } from "react";
+import { useState, useContext } from "react";
+import PropTypes from "prop-types";
 import ProjectContext from "@/context/ProjectContext";
 import AuthContext from "@/context/AuthContext";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { TableCell, TableRow } from "@/components/ui/table";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
-  DialogFooter,
 } from "@/components/ui/dialog";
 import {
   AlertDialog,
@@ -42,7 +26,21 @@ import { EnterFullScreenIcon, TrashIcon } from "@radix-ui/react-icons";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/components/ui/use-toast";
 import ItemForm from "@/components/project-management/forms/ItemForm";
-import { useEffect } from "react";
+
+ItemTableRow.propTypes = {
+  id: PropTypes.number.isRequired,
+  type: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  epic: PropTypes.string,
+  description: PropTypes.string,
+  status: PropTypes.string.isRequired,
+  priority: PropTypes.string.isRequired,
+  sprint: PropTypes.number,
+  duedate: PropTypes.string,
+  userStory: PropTypes.string,
+  acceptanceCriteria: PropTypes.string,
+  subtasks: PropTypes.arrayOf(PropTypes.object),
+};
 
 function ItemTableRow(props) {
   // Get context data
@@ -55,8 +53,8 @@ function ItemTableRow(props) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   // Get initial state values from props
-  let [id, setId] = useState(props.id);
-  let [type, setType] = useState(props.type);
+  let [id] = useState(props.id);
+  let [type] = useState(props.type);
   let [name, setName] = useState(props.name);
   let [epic, setEpic] = useState(props.epic);
   let [description, setDescription] = useState(props.description);
@@ -139,7 +137,7 @@ function ItemTableRow(props) {
     } else {
       toast({
         variant: "destructive",
-        description: `Problem deleting item: ${JSON.stringify(data)}`,
+        description: `Problem deleting item`,
       });
     }
   };
