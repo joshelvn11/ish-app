@@ -705,3 +705,19 @@ Pages were passed through Chrome's lighthouse test to test performance accessibi
 ## Future Ideas & Roadmap
 
 ## Credits
+
+### JWT Authentication
+
+- Django React JWT Authentication tutorial by seanwarren on GitHub - https://github.com/seankwarren/Django-React-jwt-authentication
+- Login & Regitser User tutorial by Emre Cevik on Medium - https://medium.com/django-rest/django-rest-framework-login-and-register-user-fd91cf6029d5
+- JWT Authetication with React by Cosden Solutions on YouTube - https://www.youtube.com/watch?v=AcYF18oGn6Y
+- Django & React JWT Authenticaion by ScalableScripts on YouTube - https://www.youtube.com/watch?v=PUzgZrS_piQ,
+
+### Icons
+
+- Lucide Icons - https://lucide.dev/icons/
+
+### Other
+
+- Dockerizing a React application by Dhruv Patel on Medium - https://thedkpatel.medium.com/dockerizing-react-application-built-with-vite-a-simple-guide-4c41eb09defa
+- UseContext Tutorial by Cosden Solutions on YouTube - https://www.youtube.com/watch?v=HYKDUF8X3qI
