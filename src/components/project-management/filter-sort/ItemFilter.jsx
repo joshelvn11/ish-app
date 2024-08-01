@@ -27,14 +27,18 @@ import { ListFilter, Check, IterationCcw, Settings } from "lucide-react";
 /**
  * ItemFilter Component
  *
- * This component provides a user interface for filtering and sorting items within a project.
- * It includes dropdown menus for sorting by different criteria, filtering by item type, status,
- * priority, and sprint, and toggling the visibility of empty epics.
+ * This component provides a comprehensive interface for filtering and sorting project items.
+ * It offers various options including sorting criteria, item type filters, status filters,
+ * priority filters, sprint selection, and additional display options.
+ *
+ * The component utilizes dropdown menus and select inputs to present these options in an
+ * organized and user-friendly manner. It interacts with the parent component through
+ * props to update filter and sort settings.
  *
  * @component
  * @param {Object} props - The properties passed to the component.
- * @param {Object} props.filterOptions - The current filter options.
- * @param {Function} props.setFilterOptions - Function to update the filter options.
+ * @param {Object} props.filterOptions - The current state of all filter and sort options.
+ * @param {Function} props.setFilterOptions - Function to update the filter and sort options.
  */
 
 ItemFilter.propTypes = {
@@ -51,12 +55,13 @@ ItemFilter.propTypes = {
 };
 
 function ItemFilter(props) {
+  // Access sprint data from the ProjectContext
   const { sprintData } = useContext(ProjectContext);
 
   /**
-   * Sets the sorting criteria.
+   * Updates the sorting criteria in the filter options.
    *
-   * @param {string} value - The sorting criteria.
+   * @param {string} value - The new sorting criteria.
    */
   const setSortBy = (value) => {
     props.setFilterOptions((prevState) => ({
@@ -66,9 +71,9 @@ function ItemFilter(props) {
   };
 
   /**
-   * Sets the sorting order.
+   * Updates the sorting order in the filter options.
    *
-   * @param {string} value - The sorting order.
+   * @param {string} value - The new sorting order ('ASC' or 'DESC').
    */
   const setSortOrder = (value) => {
     props.setFilterOptions((prevState) => ({
@@ -80,7 +85,7 @@ function ItemFilter(props) {
   /**
    * Toggles the filter for a specific item type.
    *
-   * @param {string} itemType - The item type to filter.
+   * @param {string} itemType - The item type to toggle in the filter.
    */
   const setFilterType = (itemType) => {
     props.setFilterOptions((prevState) => ({
@@ -95,7 +100,7 @@ function ItemFilter(props) {
   /**
    * Toggles the filter for a specific status.
    *
-   * @param {string} status - The status to filter.
+   * @param {string} status - The status to toggle in the filter.
    */
   const setFilterStatus = (status) => {
     props.setFilterOptions((prevState) => ({
@@ -110,7 +115,7 @@ function ItemFilter(props) {
   /**
    * Toggles the filter for a specific priority.
    *
-   * @param {string} priority - The priority to filter.
+   * @param {string} priority - The priority to toggle in the filter.
    */
   const setFilterPriority = (priority) => {
     props.setFilterOptions((prevState) => ({
@@ -125,7 +130,7 @@ function ItemFilter(props) {
   /**
    * Sets the filter for a specific sprint.
    *
-   * @param {string} sprint - The sprint to filter.
+   * @param {string} sprint - The sprint ID to filter by. Use 'NONE' to clear the filter.
    */
   const setFilterSprint = (sprint) => {
     sprint = sprint === "NONE" ? "" : sprint;
@@ -136,9 +141,7 @@ function ItemFilter(props) {
   };
 
   /**
-   * Toggles the visibility of empty epics.
-   *
-   * @param {boolean} value - The current state of the toggle.
+   * Toggles the visibility of empty epics in the filter options.
    */
   const toggleHideEmptyEpics = () => {
     props.setFilterOptions((prevState) => ({
@@ -148,10 +151,10 @@ function ItemFilter(props) {
   };
 
   /**
-   * Formats a date string into a readable format.
+   * Formats a date string into a more readable format.
    *
    * @param {string} dateString - The date string to format.
-   * @returns {string} - The formatted date string.
+   * @returns {string} The formatted date string (e.g., "15 March 2024").
    */
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -165,6 +168,7 @@ function ItemFilter(props) {
 
   /**
    * Prevents the dropdown menu from closing when interacting with certain elements.
+   * This is useful for elements like switches that should not close the menu on interaction.
    *
    * @param {Event} e - The event object.
    */

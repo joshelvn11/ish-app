@@ -1,4 +1,5 @@
-import React, { useState, useContext } from "react";
+import { useState, useContext } from "react";
+import PropTypes from "prop-types";
 import ProjectContext from "@/context/ProjectContext";
 import AuthContext from "@/context/AuthContext";
 import { Label } from "@/components/ui/label";
@@ -9,15 +10,36 @@ import { useToast } from "@/components/ui/use-toast";
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
+/**
+ * ProjectForm Component
+ *
+ * This component provides a form for creating a new project. It includes fields for the project title and description,
+ * and handles form validation and submission to the backend API.
+ *
+ * @component
+ * @param {Object} props - The properties passed to the component.
+ * @param {Function} props.closeDialog - Function to close the dialog after project creation.
+ */
+
+ProjectForm.propTypes = {
+  closeDialog: PropTypes.func.isRequired,
+};
+
 function ProjectForm(props) {
   const { loadProject, getProjects } = useContext(ProjectContext);
   const { authTokens } = useContext(AuthContext);
   const { toast } = useToast();
 
+  // State variables for form fields and validation errors
   let [name, setName] = useState("");
   let [description, setDescription] = useState("");
   let [validationErrors, setValidationErrors] = useState([]);
 
+  /**
+   * Validates the form data.
+   *
+   * @returns {boolean} - Returns true if the data is valid, otherwise false.
+   */
   const validateData = () => {
     let valid = true;
     setValidationErrors([]);
@@ -35,6 +57,10 @@ function ProjectForm(props) {
     return valid;
   };
 
+  /**
+   * Handles the form submission for creating a new project.
+   * Validates the data and sends a POST request to the backend API.
+   */
   const createProject = async () => {
     if (!validateData()) {
       return;

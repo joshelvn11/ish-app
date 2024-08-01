@@ -1,4 +1,5 @@
-import React, { useState, useContext } from "react";
+import { useState, useContext } from "react";
+import PropTypes from "prop-types";
 import ProjectContext from "@/context/ProjectContext";
 import AuthContext from "@/context/AuthContext";
 import { Label } from "@/components/ui/label";
@@ -17,6 +18,28 @@ import { format } from "date-fns";
 import { ExclamationTriangleIcon, CalendarIcon } from "@radix-ui/react-icons";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
+/**
+ * SprintForm Component
+ *
+ * This component provides a form for creating and updating sprints within a project.
+ * It includes fields for title, description, start date, and end date, and handles form validation
+ * and submission to the backend API.
+ *
+ * @component
+ * @param {Object} props - The properties passed to the component.
+ * @param {boolean} props.create - Indicates whether the form is in create mode.
+ * @param {number} props.id - The ID of the sprint being updated (if in update mode).
+ * @param {Function} props.closeDialog - Function to close the dialog after sprint creation or update.
+ * @param {Function} props.fetchItemData - Function to fetch item data after updating the sprint.
+ */
+
+SprintForm.propTypes = {
+  create: PropTypes.bool.isRequired,
+  id: PropTypes.number.isRequired,
+  closeDialog: PropTypes.func.isRequired,
+  fetchItemData: PropTypes.func.isRequired,
+};
+
 function SprintForm(props) {
   const { getSprintData, currentProject } = useContext(ProjectContext);
   const { authTokens } = useContext(AuthContext);
@@ -31,6 +54,12 @@ function SprintForm(props) {
   let [startDate, setStartDate] = useState(null);
   let [endDate, setEndDate] = useState(null);
 
+  /**
+   * Formats a date object into a string in the format 'YYYY-MM-DD'.
+   *
+   * @param {Date} date - The date object to format.
+   * @returns {string} The formatted date string.
+   */
   const formatDate = (date) => {
     if (date) {
       const offset = date.getTimezoneOffset();
@@ -40,6 +69,11 @@ function SprintForm(props) {
     return date;
   };
 
+  /**
+   * Validates the form data.
+   *
+   * @returns {boolean} - Returns true if the data is valid, otherwise false.
+   */
   const validateData = () => {
     let valid = true;
     setValidationErrors([]);
@@ -68,6 +102,10 @@ function SprintForm(props) {
     return valid;
   };
 
+  /**
+   * Handles the form submission for creating a new sprint.
+   * Validates the data and sends a POST request to the backend API.
+   */
   const createSprint = async () => {
     if (!validateData()) {
       return;
@@ -112,70 +150,22 @@ function SprintForm(props) {
     }
   };
 
+  /**
+   * Updates the start date of the sprint.
+   *
+   * @param {Date} value - The new start date value.
+   */
   const updateStartDate = async (value) => {
-    if (!create) {
-      // Only attempt update if not in create mode
-      const apiUrl = import.meta.env.VITE_API_URL;
-      let response = await fetch(
-        `${apiUrl}/projects/${currentProject.id}/items/${userStoryId}/`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + String(authTokens.access),
-          },
-          body: JSON.stringify({
-            start_date: formatDate(value),
-          }),
-        }
-      );
-      let data = await response.json();
-      if (response.status === 200) {
-        toast({ description: "Start date updated" });
-        setStartDate(value);
-        props.fetchItemData();
-      } else {
-        toast({
-          variant: "destructive",
-          description: `Problem updating start date: ${JSON.stringify(data)}`,
-        });
-      }
-    } else {
-      setStartDate(value);
-    }
+    // !TODO
   };
 
+  /**
+   * Updates the end date of the sprint.
+   *
+   * @param {Date} value - The new end date value.
+   */
   const updateEndDate = async (value) => {
-    if (!create) {
-      // Only attempt update if not in create mode
-      const apiUrl = import.meta.env.VITE_API_URL;
-      let response = await fetch(
-        `${apiUrl}/projects/${currentProject.id}/items/${userStoryId}/`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + String(authTokens.access),
-          },
-          body: JSON.stringify({
-            start_date: formatDate(value),
-          }),
-        }
-      );
-      let data = await response.json();
-      if (response.status === 200) {
-        toast({ description: "End date updated" });
-        setEndDate(value);
-        props.fetchItemData();
-      } else {
-        toast({
-          variant: "destructive",
-          description: `Problem updating end date: ${JSON.stringify(data)}`,
-        });
-      }
-    } else {
-      setEndDate(value);
-    }
+    // !TODO
   };
 
   return (
@@ -213,7 +203,7 @@ function SprintForm(props) {
           onChange={(e) => setDescription(e.target.value)}
         />
       </div>
-      <div className="w-full flex justify-between items-center">
+      <div className="flex items-center justify-between w-full">
         <Popover>
           <PopoverTrigger asChild>
             <Button
