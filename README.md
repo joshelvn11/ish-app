@@ -10,7 +10,7 @@ My goal was to develop a tool that strikes a balance between these extremes – 
 
 The primary target audience for ish includes solo developers working on personal projects and small teams that require essential features without the administrative burden and complexity of commercial applications. Nevertheless, the application is designed to be flexible enough for anyone to use and adapt to their personal processes and workflows. It functions equally well as a personal task manager or for any product development-related process.
 
-## Architecture
+## Application Architecture
 
 ### Backend
 
@@ -35,6 +35,40 @@ Shadcn is a UI component library for React that provides a set of pre-designed, 
 Vite is used as the build tool and development server. Vite is a modern build tool that offers a fast and optimized development experience.
 
 By combining React, Tailwind CSS, Shadcn, and Vite, we achieve an extremely fast, modular, and efficient front-end development process. This combination not only enhances the performance and responsiveness of the application but also makes it pleasant for both users and developers.
+
+## Component Architecture
+
+ish is built using React, a component based UI library. Here is brief breakdown of the component architure focusing on reusable components.
+
+### Epic Card
+
+Epic cards are used to show epics in the project and show their child items. The backlog page receives all epics from the project context, which is received directly from the server. The backlog page then iterates through the epic data passing it the props it needs to display the basic information associated with it such as the title, status and prirority.
+
+Each epic card will then render its own item table passing its own id as prop so the item table knows what items to render based on its parent id.
+
+### Item Table
+
+Item tables are how items are displayed and organised. They can be rendered anywhere and conifigured to display any segment items based on a grouping id they are provided as well as the filtration options.
+
+Currently item tables are just rendered in epics cards, the epic passing its id as a prop, the item table will then read all the item data from the project context and then rendered item rows where the epic id matches the one that was provided.
+
+The item table is also responsible for applying filters and sorting. It reads the filter options from the project context and then filters and sorts its item data to match these specifications and then rendered and item table row for each item in the item data passing it all its essential data as props (id, status, priority, etc).
+
+### Item Table Row
+
+The item table row component is a table row used to render indivdual items and handle asscociated CRUD functionality. The item data is received from the item table as props and the rendered as columns in the table.
+
+Each item table row also renders a hidden Item Form component which is modal dialog used to edit and update item information. In this instance it passes the item's data as props which are used to render the content for the form fields.
+
+The item table row also contains a delete button to delete the item matching its own id.
+
+### Item Form
+
+The item form component is used to create and update item information. It handles all data validation and API communication for item create and update functionality. It can be used and rendered in two states or modes, create and update, which is managed use a state variable.
+
+When in create mode it will render with a create button that will then handle the create API call using the data in the form. Once the item has been created successfully it will revert to update mode and hide the create button. It is called like this from the create button dropdown in the backlog page.
+
+When called in update mode it will not render the create button and will populate all its fields from its received props. When in update mode it will also execute PATCH calls to the API when any field in it is updated. It is rendered like this from the item table row.
 
 ## Layout & Structure
 
@@ -270,7 +304,7 @@ The front-end deployment process is similar to the back-end deployment, with one
 
 #### Jigsaw CSS Validator
 
-#### PEP8 Validator
+### Lighthouse Testing
 
 ### Manual Unit Testing
 
