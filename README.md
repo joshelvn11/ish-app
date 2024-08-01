@@ -300,7 +300,23 @@ The front-end deployment process is similar to the back-end deployment, with one
 
 ### Validator Testing
 
+All Javascript code was validated using eslint and passed with no errors.
+
 ### Lighthouse Testing
+
+Pages were passed through Chrome's lighthouse test to test performance accessibility, below are the results for the login, sign up and backlog pages which are the three main working pages at this point.
+
+#### Login Page
+
+![Login Page Lighthouse Results](https://s3.eu-west-1.wasabisys.com/ish.pm/docs/img/Lighthouse-Login.png)
+
+#### Sign Up Page
+
+![Signup Page Lighthouse Results](https://s3.eu-west-1.wasabisys.com/ish.pm/docs/img/Lighthouse-Signup.png)
+
+#### Backlog Page
+
+![Backlog Lighthouse Results](https://s3.eu-west-1.wasabisys.com/ish.pm/docs/img/Lighthouse-Backlog.png)
 
 ### Manual Unit Testing
 
