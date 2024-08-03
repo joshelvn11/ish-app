@@ -716,6 +716,7 @@ Pages were passed through Chrome's lighthouse test to test performance accessibi
 ### Icons
 
 - Lucide Icons - https://lucide.dev/icons/
+- RadixUI Icons - https://www.radix-ui.com/icons
 
 ### Other
 

@@ -179,6 +179,7 @@ function ItemFilter(props) {
 
   return (
     <div className="flex gap-2">
+      {/* Dropdown menu for filters */}
       <DropdownMenu>
         <DropdownMenuTrigger>
           <Button variant="outline">
@@ -188,10 +189,12 @@ function ItemFilter(props) {
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuLabel>Sorting</DropdownMenuLabel>
+          {/* Submenu for sorting options */}
           <DropdownMenuSub>
             <DropdownMenuSubTrigger>Sort by</DropdownMenuSubTrigger>
             <DropdownMenuPortal>
               <DropdownMenuSubContent>
+                {/* Option to sort by none */}
                 <DropdownMenuItem
                   className="flex justify-between w-full"
                   onClick={(e) => {
@@ -204,6 +207,7 @@ function ItemFilter(props) {
                     <Check className="size-4" />
                   )}
                 </DropdownMenuItem>
+                {/* Option to sort by status */}
                 <DropdownMenuItem
                   className="flex justify-between w-full"
                   onClick={(e) => {
@@ -216,6 +220,7 @@ function ItemFilter(props) {
                     <Check className="size-4" />
                   )}
                 </DropdownMenuItem>
+                {/* Option to sort by priority */}
                 <DropdownMenuItem
                   className="flex justify-between w-full"
                   onClick={(e) => {
@@ -231,10 +236,12 @@ function ItemFilter(props) {
               </DropdownMenuSubContent>
             </DropdownMenuPortal>
           </DropdownMenuSub>
+          {/* Submenu for sort order options */}
           <DropdownMenuSub>
             <DropdownMenuSubTrigger>Sort order</DropdownMenuSubTrigger>
             <DropdownMenuPortal>
               <DropdownMenuSubContent>
+                {/* Option to sort in ascending order */}
                 <DropdownMenuItem
                   className="flex justify-between w-full"
                   onClick={(e) => {
@@ -247,6 +254,7 @@ function ItemFilter(props) {
                     <Check className="size-4" />
                   )}
                 </DropdownMenuItem>
+                {/* Option to sort in ascending order */}
                 <DropdownMenuItem
                   className="flex justify-between w-full"
                   onClick={(e) => {
@@ -259,6 +267,7 @@ function ItemFilter(props) {
                     <Check className="size-4" />
                   )}
                 </DropdownMenuItem>
+                {/* Option to sort in descending order */}
                 <DropdownMenuItem
                   className="flex justify-between w-full"
                   onClick={(e) => {
@@ -276,10 +285,12 @@ function ItemFilter(props) {
           </DropdownMenuSub>
           <DropdownMenuSeparator />
           <DropdownMenuLabel>Filters</DropdownMenuLabel>
+          {/* Submenu for type filter options */}
           <DropdownMenuSub>
             <DropdownMenuSubTrigger>Type</DropdownMenuSubTrigger>
             <DropdownMenuPortal>
               <DropdownMenuSubContent>
+                {/* Option to filter by user story */}
                 <DropdownMenuItem
                   className="flex justify-between w-full"
                   onClick={(e) => {
@@ -292,6 +303,7 @@ function ItemFilter(props) {
                     <Check className="size-4" />
                   )}
                 </DropdownMenuItem>
+                {/* Option to filter by task */}
                 <DropdownMenuItem
                   className="flex justify-between w-full"
                   onClick={(e) => {
@@ -304,6 +316,7 @@ function ItemFilter(props) {
                     <Check className="size-4" />
                   )}
                 </DropdownMenuItem>
+                {/* Option to filter by documentation */}
                 <DropdownMenuItem
                   className="flex justify-between w-full"
                   onClick={(e) => {
@@ -316,6 +329,7 @@ function ItemFilter(props) {
                     <Check className="size-4" />
                   )}
                 </DropdownMenuItem>
+                {/* Option to filter by bug */}
                 <DropdownMenuItem
                   className="flex justify-between w-full"
                   onClick={(e) => {
@@ -331,10 +345,12 @@ function ItemFilter(props) {
               </DropdownMenuSubContent>
             </DropdownMenuPortal>
           </DropdownMenuSub>
+          {/* Submenu for status filter options */}
           <DropdownMenuSub>
             <DropdownMenuSubTrigger>Status</DropdownMenuSubTrigger>
             <DropdownMenuPortal>
               <DropdownMenuSubContent>
+                {/* Option to filter by to do status */}
                 <DropdownMenuItem
                   className="flex justify-between w-full"
                   onClick={(e) => {
@@ -347,6 +363,7 @@ function ItemFilter(props) {
                     <Check className="size-4" />
                   )}
                 </DropdownMenuItem>
+                {/* Option to filter by in progress status */}
                 <DropdownMenuItem
                   className="flex justify-between w-full"
                   onClick={(e) => {
@@ -359,6 +376,7 @@ function ItemFilter(props) {
                     <Check className="size-4" />
                   )}
                 </DropdownMenuItem>
+                {/* Option to filter by review status */}
                 <DropdownMenuItem
                   className="flex justify-between w-full"
                   onClick={(e) => {
@@ -371,6 +389,7 @@ function ItemFilter(props) {
                     <Check className="size-4" />
                   )}
                 </DropdownMenuItem>
+                {/* Option to filter by done status */}
                 <DropdownMenuItem
                   className="flex justify-between w-full"
                   onClick={(e) => {
@@ -386,10 +405,12 @@ function ItemFilter(props) {
               </DropdownMenuSubContent>
             </DropdownMenuPortal>
           </DropdownMenuSub>
+          {/* Submenu for priority filter options */}
           <DropdownMenuSub>
             <DropdownMenuSubTrigger>Priority</DropdownMenuSubTrigger>
             <DropdownMenuPortal>
               <DropdownMenuSubContent>
+                {/* Option to filter by optional priority */}
                 <DropdownMenuItem
                   className="flex justify-between w-full"
                   onClick={(e) => {
@@ -402,6 +423,7 @@ function ItemFilter(props) {
                     <Check className="size-4" />
                   )}
                 </DropdownMenuItem>
+                {/* Option to filter by beneficial priority */}
                 <DropdownMenuItem
                   className="flex justify-between w-full"
                   onClick={(e) => {
@@ -414,6 +436,7 @@ function ItemFilter(props) {
                     <Check className="size-4" />
                   )}
                 </DropdownMenuItem>
+                {/* Option to filter by essential priority */}
                 <DropdownMenuItem
                   className="flex justify-between w-full"
                   onClick={(e) => {
@@ -426,6 +449,7 @@ function ItemFilter(props) {
                     <Check className="size-4" />
                   )}
                 </DropdownMenuItem>
+                {/* Option to filter by critical priority */}
                 <DropdownMenuItem
                   className="flex justify-between w-full"
                   onClick={(e) => {
@@ -443,6 +467,7 @@ function ItemFilter(props) {
           </DropdownMenuSub>
         </DropdownMenuContent>
       </DropdownMenu>
+      {/* Select component for sprint filter */}
       <Select
         value={props.filterOptions.filterSprint}
         onValueChange={(value) => {
@@ -469,6 +494,7 @@ function ItemFilter(props) {
             ))}
         </SelectContent>
       </Select>
+      {/* Dropdown menu for additional options */}
       <DropdownMenu>
         <DropdownMenuTrigger>
           <Button variant="outline">
@@ -477,6 +503,7 @@ function ItemFilter(props) {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-[220px]">
+          {/* Option to toggle visibility of empty epics */}
           <DropdownMenuItem
             className="flex justify-between"
             onClick={preventMenuClose}

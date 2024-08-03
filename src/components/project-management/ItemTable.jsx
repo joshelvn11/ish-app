@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/table";
 import ItemTableRow from "@/components/project-management/ItemTableRow";
 
+// Define prop types for the ItemTable component
 ItemTable.propTypes = {
   groupId: PropTypes.string.isRequired,
   filterOptions: PropTypes.shape({
@@ -39,6 +40,17 @@ ItemTable.propTypes = {
   hideParent: PropTypes.func.isRequired,
 };
 
+/**
+ * ItemTable component
+ *
+ * This component renders a table of items filtered and sorted based on the provided filter options.
+ * It uses the ProjectContext to get the current project, epic data, and item data.
+ *
+ * @param {Object} props - The properties passed to the component
+ * @param {string} props.groupId - The ID of the group (epic) to filter items by
+ * @param {Object} props.filterOptions - The options to filter and sort the items
+ * @param {Function} props.hideParent - Function to hide the parent component if no items are found
+ */
 function ItemTable(props) {
   // Get context properties
   const { currentProject, epicData, itemData, backlogFilterOptions } =
@@ -49,7 +61,7 @@ function ItemTable(props) {
 
   // Use effect hook to collate and filter item data
   useEffect(() => {
-    // Only run filterting when all required data is loaded
+    // Only run filtering when all required data is loaded
     if (currentProject && epicData && itemData) {
       let filteredItems;
 
@@ -80,7 +92,7 @@ function ItemTable(props) {
         });
       }
 
-      // Filter status
+      // Filter by sprint
       if (props.filterOptions.filterSprint != "") {
         filteredItems = filteredItems.filter(
           (item) => item.sprint === props.filterOptions.filterSprint
@@ -149,6 +161,7 @@ function ItemTable(props) {
         );
       }
 
+      // Update the filtered data state
       setFilteredData(filteredItems);
 
       // If no items set parent to hidden

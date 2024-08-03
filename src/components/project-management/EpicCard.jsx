@@ -23,6 +23,7 @@ import EpicForm from "./forms/EpicForm";
 import { useContext } from "react";
 import PropTypes from "prop-types";
 
+// Define prop types for the EpicCard component
 EpicCard.propTypes = {
   title: PropTypes.string.isRequired,
   description: PropTypes.string,
@@ -33,15 +34,21 @@ EpicCard.propTypes = {
 };
 
 function EpicCard(props) {
+  // Get the deleteEpic function from the ProjectContext
   const { deleteEpic } = useContext(ProjectContext);
 
+  // State to manage the visibility of the card
   const [isHidden, setIsHidden] = useState(false);
+  // State to manage the collapsible section
   const [isOpen, setIsOpen] = useState(true);
+  // State to manage the detail dialog visibility
   const [isDetailDialogOpen, setIsDetailDialogOpen] = useState(false);
+  // State to manage the delete dialog visibility
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
   return (
     <>
+      {/* Card component to display the epic */}
       <Card className={`w-full ${isHidden ? "hidden" : ""}`}>
         <Collapsible
           open={isOpen}
@@ -51,18 +58,21 @@ function EpicCard(props) {
           <div className="flex items-center justify-between space-x-4">
             <h3 className="font-semibold">{props.title}</h3>
             <div className="flex items-center h-full">
+              {/* Button to open the detail dialog */}
               <Button
                 variant="ghost"
                 onClick={() => setIsDetailDialogOpen(true)}
               >
                 <EnterFullScreenIcon className="w-5 h-5" />
               </Button>
+              {/* Button to open the delete dialog */}
               <Button
                 variant="ghost"
                 onClick={() => setIsDeleteDialogOpen(true)}
               >
                 <TrashIcon className="w-5 h-5" />
               </Button>
+              {/* Collapsible trigger button */}
               <CollapsibleTrigger asChild>
                 <Button variant="ghost" size="sm">
                   <CaretSortIcon className="w-4 h-4" />
@@ -71,6 +81,7 @@ function EpicCard(props) {
               </CollapsibleTrigger>
             </div>
           </div>
+          {/* Display priority and status badges if available */}
           {(props.status || props.priority) && (
             <div id="badge-wrapper" className="flex gap-2 pb-2">
               {props.priority && (
@@ -95,7 +106,9 @@ function EpicCard(props) {
               )}
             </div>
           )}
+          {/* Display the description of the epic */}
           <p className="pb-3 text-sm">{props.description}</p>
+          {/* Collapsible content to display the item table */}
           <CollapsibleContent className="space-y-2">
             <ItemTable
               groupId={props.epicId}
@@ -105,6 +118,7 @@ function EpicCard(props) {
           </CollapsibleContent>
         </Collapsible>
       </Card>
+      {/* Dialog for updating the epic details */}
       <Dialog
         id="epicDetailDialog"
         open={isDetailDialogOpen}
@@ -127,6 +141,7 @@ function EpicCard(props) {
           />
         </DialogContent>
       </Dialog>
+      {/* Dialog for confirming the deletion of the epic */}
       <Dialog
         id="epic-delete-dialog"
         open={isDeleteDialogOpen}

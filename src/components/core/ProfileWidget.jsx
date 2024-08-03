@@ -54,10 +54,13 @@ export default function ProfileWidget() {
 
   return (
     <DropdownMenu>
+      {/* Trigger for the dropdown menu, using a div as a child */}
       <DropdownMenuTrigger asChild>
         <div className="bg-gray-500 rounded-full size-9"></div>
       </DropdownMenuTrigger>
+      {/* Content of the dropdown menu */}
       <DropdownMenuContent className="w-56">
+        {/* Label displaying the user's name and email */}
         <DropdownMenuLabel>
           <div>
             <div>
@@ -67,12 +70,14 @@ export default function ProfileWidget() {
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
+        {/* Group of menu items */}
         <DropdownMenuGroup>
           <DropdownMenuItem>Profile</DropdownMenuItem>
           <DropdownMenuItem>Billing</DropdownMenuItem>
           <DropdownMenuItem>Settings</DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
+        {/* Menu item for dark mode toggle */}
         <DropdownMenuItem
           className="flex justify-between"
           onClick={preventMenuClose}
@@ -81,6 +86,7 @@ export default function ProfileWidget() {
           <Switch checked={darkmode} onCheckedChange={setDarkmode}></Switch>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
+        {/* Menu item for logging out */}
         <DropdownMenuItem onClick={logoutUser}>Log out</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

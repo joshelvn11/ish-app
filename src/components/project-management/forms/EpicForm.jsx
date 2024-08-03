@@ -157,6 +157,7 @@ function EpicForm(props) {
   return (
     <div className="space-y-4">
       <div className="space-y-2">
+        {/* Display validation errors if any */}
         {validationErrors.length > 0 && (
           <Alert variant="destructive" className="mb-6">
             <ExclamationTriangleIcon className="w-4 h-4" />
@@ -170,9 +171,11 @@ function EpicForm(props) {
             </AlertDescription>
           </Alert>
         )}
+        {/* Form to create or update an epic */}
         <form onSubmit={updateEpic}>
           <div className="space-y-4">
             <div className="space-y-2">
+              {/* Input field for the epic title */}
               <Label htmlFor="name">Title</Label>
               <Input
                 id="name"
@@ -184,6 +187,7 @@ function EpicForm(props) {
               />
             </div>
             <div className="space-y-2">
+              {/* Textarea for the epic description */}
               <Label htmlFor="description">Description</Label>
               <Textarea
                 id="description"
@@ -193,6 +197,7 @@ function EpicForm(props) {
               />
             </div>
             <div className="space-y-2">
+              {/* Select dropdown for the epic priority */}
               <Label htmlFor="priority">Priority</Label>
               <Select
                 value={priority}
@@ -218,6 +223,7 @@ function EpicForm(props) {
               </Select>
             </div>
             <div className="space-y-2">
+              {/* Select dropdown for the epic status */}
               <Label htmlFor="status">Status</Label>
               <Select
                 value={status}
@@ -242,6 +248,7 @@ function EpicForm(props) {
                 </SelectContent>
               </Select>
             </div>
+            {/* Submit button to create or update the epic */}
             <Button type="submit" className="w-full">
               {create ? "Create" : "Update"}
             </Button>

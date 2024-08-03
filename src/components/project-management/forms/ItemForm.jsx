@@ -814,6 +814,7 @@ function ItemForm(props) {
       className="max-h-[75vh] space-y-4 overflow-y-scroll px-2"
     >
       <div className="space-y-2">
+        {/* Display validation errors if any */}
         {validationErrors.length > 0 && (
           <Alert variant="destructive" className="mb-6">
             <ExclamationTriangleIcon className="w-4 h-4" />
@@ -829,6 +830,7 @@ function ItemForm(props) {
         )}
         <div className="space-y-4">
           <div className="space-y-2">
+            {/* Input field for the item title */}
             <Label className="text-md" htmlFor="name">
               Title
             </Label>
@@ -842,6 +844,7 @@ function ItemForm(props) {
             />
           </div>
           <div className="flex flex-wrap gap-2">
+            {/* Select dropdown for the epic */}
             <Select
               value={epic ?? ""}
               onValueChange={updateEpic}
@@ -859,6 +862,7 @@ function ItemForm(props) {
                   ))}
               </SelectContent>
             </Select>
+            {/* Select dropdown for the priority */}
             <Select value={priority} onValueChange={updatePriority}>
               <SelectTrigger style={{ width: "calc(50% - 4px)" }}>
                 <SelectValue placeholder="Select priority..." />
@@ -878,6 +882,7 @@ function ItemForm(props) {
                 </SelectItem>
               </SelectContent>
             </Select>
+            {/* Select dropdown for the status */}
             <Select value={status} onValueChange={updateStatus}>
               <SelectTrigger style={{ width: "calc(50% - 4px)" }}>
                 <SelectValue placeholder="Select status..." />
@@ -897,6 +902,7 @@ function ItemForm(props) {
                 </SelectItem>
               </SelectContent>
             </Select>
+            {/* Popover for selecting due date */}
             <Popover>
               <PopoverTrigger asChild>
                 <Button
@@ -926,6 +932,7 @@ function ItemForm(props) {
                 />
               </PopoverContent>
             </Popover>
+            {/* Select dropdown for the sprint */}
             <Select
               value={sprint ?? ""}
               onValueChange={updateSprint}
@@ -946,6 +953,7 @@ function ItemForm(props) {
           </div>
           <div className="space-y-2">
             <div className="flex items-center justify-between w-full">
+              {/* Label and button for the description */}
               <Label className="text-md" htmlFor="description">
                 Description
               </Label>
@@ -959,6 +967,7 @@ function ItemForm(props) {
                 {editingDescription ? "Save" : "Edit"}
               </Button>
             </div>
+            {/* Textarea for the description */}
             <Textarea
               id="description"
               type="text"
@@ -969,6 +978,7 @@ function ItemForm(props) {
           </div>
           <div className="space-y-2">
             <div className="flex items-center justify-between w-full">
+              {/* Label and button for the user story */}
               <Label className="text-md" htmlFor="userstory">
                 User Story
               </Label>
@@ -982,6 +992,7 @@ function ItemForm(props) {
                 {editingUserStory ? "Save" : "Edit"}
               </Button>
             </div>
+            {/* Textarea for the user story */}
             <Textarea
               id="userstory"
               type="text"
@@ -992,6 +1003,7 @@ function ItemForm(props) {
           </div>
           <div className="space-y-2">
             <div className="flex items-center justify-between w-full">
+              {/* Label and button for the acceptance criteria */}
               <Label className="text-md" htmlFor="acceptance-criteria">
                 Acceptance Criteria
               </Label>
@@ -1004,6 +1016,7 @@ function ItemForm(props) {
                 Add
               </Button>
             </div>
+            {/* List of acceptance criteria */}
             {acceptanceCriteria &&
               acceptanceCriteria.map((item) => (
                 <div
@@ -1067,6 +1080,7 @@ function ItemForm(props) {
                   </div>
                 </div>
               ))}
+            {/* Input for creating new acceptance criteria */}
             {creatingAcceptanceCriteria && (
               <div className="relative">
                 <Input
@@ -1086,6 +1100,7 @@ function ItemForm(props) {
           </div>
           <div id="subtasks-wrapper" className="space-y-2">
             <div className="flex items-center justify-between w-full">
+              {/* Label and button for the subtasks */}
               <Label className="text-md" htmlFor="subtasks">
                 Subtasks
               </Label>
@@ -1098,6 +1113,7 @@ function ItemForm(props) {
                 Add
               </Button>
             </div>
+            {/* List of subtasks */}
             {subtasks &&
               subtasks.map((item) => (
                 <div
@@ -1157,6 +1173,7 @@ function ItemForm(props) {
                   </div>
                 </div>
               ))}
+            {/* Input for creating new subtasks */}
             {creatingSubtasks && (
               <div className="relative">
                 <Input
@@ -1174,6 +1191,7 @@ function ItemForm(props) {
               </div>
             )}
           </div>
+          {/* Button to create the item, only shown in create mode */}
           {create && ( // Only show the create button when in create mode
             <Button onClick={() => createItem(name)} className="w-full">
               Create

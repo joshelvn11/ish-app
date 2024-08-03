@@ -27,6 +27,27 @@ import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/components/ui/use-toast";
 import ItemForm from "@/components/project-management/forms/ItemForm";
 
+/**
+ * ItemTableRow Component
+ *
+ * This component represents a row in the item table. It displays various details about an item such as type, name, status, priority, sprint, and due date.
+ * It also provides functionalities to edit and delete the item.
+ *
+ * @component
+ * @param {Object} props - The properties passed to the component.
+ * @param {number} props.id - The ID of the item.
+ * @param {string} props.type - The type of the item.
+ * @param {string} props.name - The name of the item.
+ * @param {string} [props.epic] - The epic associated with the item.
+ * @param {string} [props.description] - The description of the item.
+ * @param {string} props.status - The status of the item.
+ * @param {string} props.priority - The priority of the item.
+ * @param {number} [props.sprint] - The sprint associated with the item.
+ * @param {string} [props.duedate] - The due date of the item.
+ * @param {string} [props.userStory] - The user story associated with the item.
+ * @param {string} [props.acceptanceCriteria] - The acceptance criteria of the item.
+ * @param {Array} [props.subtasks] - The subtasks associated with the item.
+ */
 ItemTableRow.propTypes = {
   id: PropTypes.number.isRequired,
   type: PropTypes.string.isRequired,
@@ -68,7 +89,10 @@ function ItemTableRow(props) {
   );
   let [subtasks, setSubtasks] = useState(props.subtasks);
 
-  // Callback function to update data
+  /**
+   * Fetches the item data from the backend API and updates the state.
+   * Displays a toast notification based on the success or failure of the fetch operation.
+   */
   const fetchItemData = async () => {
     const apiUrl = import.meta.env.VITE_API_URL;
     let response = await fetch(
@@ -102,11 +126,19 @@ function ItemTableRow(props) {
     }
   };
 
-  // Callback function to close dialog
+  /**
+   * Closes the dialog for editing item details.
+   */
   const closeDialog = () => {
     setIsDialogOpen(false);
   };
 
+  /**
+   * Formats a date string into a more readable format.
+   *
+   * @param {string} dateString - The date string to format.
+   * @returns {string} - The formatted date string.
+   */
   const formatDate = (dateString) => {
     const date = new Date(dateString);
 
@@ -117,6 +149,10 @@ function ItemTableRow(props) {
     return `${day} ${month} ${year}`;
   };
 
+  /**
+   * Deletes the item by sending a DELETE request to the backend API.
+   * Displays a toast notification based on the success or failure of the delete operation.
+   */
   const deleteItem = async () => {
     const apiUrl = import.meta.env.VITE_API_URL;
     let response = await fetch(
@@ -145,10 +181,13 @@ function ItemTableRow(props) {
   return (
     <>
       <TableRow>
+        {/* Display item type */}
         <TableCell className="min-w-[150px]">
           <Badge>{type}</Badge>
         </TableCell>
+        {/* Display item name */}
         <TableCell className="font-medium min-w-[200px]">{name}</TableCell>
+        {/* Display item status with dynamic background color */}
         <TableCell className="min-w-[120px]">
           <Badge
             className={
@@ -158,6 +197,7 @@ function ItemTableRow(props) {
             {status}
           </Badge>
         </TableCell>
+        {/* Display item priority with dynamic background color */}
         <TableCell className="min-w-[120px]">
           <Badge
             className={
@@ -167,14 +207,17 @@ function ItemTableRow(props) {
             {priority}
           </Badge>
         </TableCell>
+        {/* Display sprint name if available */}
         <TableCell className="min-w-[120px]">
           {sprint &&
             sprintData &&
             sprintData.find((item) => item.id == sprint).name}
         </TableCell>
+        {/* Display formatted due date if available */}
         <TableCell className="min-w-[120px]">
           {duedate && formatDate(duedate)}
         </TableCell>
+        {/* Display action buttons for editing and deleting item */}
         <TableCell className="text-right min-w-[120px]">
           <Button
             variant="ghost"
@@ -184,6 +227,7 @@ function ItemTableRow(props) {
           >
             <EnterFullScreenIcon className="w-5 h-5" />
           </Button>
+          {/* Alert dialog for confirming item deletion */}
           <AlertDialog>
             <AlertDialogTrigger>
               <Button variant="ghost">
@@ -211,6 +255,7 @@ function ItemTableRow(props) {
           </AlertDialog>
         </TableCell>
       </TableRow>
+      {/* Dialog for editing item details */}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent>
           <DialogHeader>
@@ -219,7 +264,7 @@ function ItemTableRow(props) {
             </DialogTitle>
             <DialogDescription></DialogDescription>
           </DialogHeader>
-
+          {/* Item form for editing item details */}
           <ItemForm
             create={false}
             id={id}

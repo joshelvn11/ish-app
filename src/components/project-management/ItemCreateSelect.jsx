@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Select,
   SelectContent,
@@ -12,11 +12,7 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
-  DialogFooter,
 } from "@/components/ui/dialog";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { PlusIcon } from "@radix-ui/react-icons";
 import EpicForm from "@/components/project-management/forms/EpicForm";
 import SprintForm from "@/components/project-management/forms/SprintForm";
@@ -37,6 +33,7 @@ function ItemCreateSelect() {
 
   return (
     <div>
+      {/* Select component for choosing the type of item to create */}
       <Select value={""} onValueChange={handleValueChange}>
         <SelectTrigger className="w-[120px] sm:w-[150px]" icon={PlusIcon}>
           <SelectValue placeholder="Create" />
@@ -63,6 +60,7 @@ function ItemCreateSelect() {
         </SelectContent>
       </Select>
 
+      {/* Dialog component to display the form for creating the selected item */}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent>
           <DialogHeader>
@@ -78,6 +76,7 @@ function ItemCreateSelect() {
             </DialogTitle>
             <DialogDescription></DialogDescription>
           </DialogHeader>
+          {/* Render the appropriate form based on the selected item type */}
           {itemType === "EPIC" && (
             <EpicForm create={true} closeDialog={closeDialog} />
           )}

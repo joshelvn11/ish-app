@@ -97,12 +97,14 @@ function ProjectForm(props) {
 
   return (
     <div className="space-y-4">
+      {/* Display validation errors if there are any */}
       {validationErrors.length > 0 && (
         <Alert variant="destructive" className="mb-6">
           <ExclamationTriangleIcon className="w-4 h-4" />
           <AlertTitle>Errors</AlertTitle>
           <AlertDescription>
             <ul>
+              {/* Map through the validation errors and display each one */}
               {validationErrors.map((error, index) => (
                 <li key={index}>{error}</li>
               ))}
@@ -110,6 +112,7 @@ function ProjectForm(props) {
           </AlertDescription>
         </Alert>
       )}
+      {/* Project title */}
       <div className="space-y-2">
         <Label htmlFor="name">Title</Label>
         <Input
@@ -121,6 +124,7 @@ function ProjectForm(props) {
           required
         />
       </div>
+      {/* Project description */}
       <div className="space-y-2">
         <Label htmlFor="description">Description</Label>
         <Textarea
@@ -130,6 +134,7 @@ function ProjectForm(props) {
           onChange={(e) => setDescription(e.target.value)}
         />
       </div>
+      {/* Submit create button */}
       <Button
         onClick={() => {
           createProject();

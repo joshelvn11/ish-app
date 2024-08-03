@@ -67,19 +67,24 @@ function ProjectSwitcher() {
 
   return (
     <>
+      {/* Dropdown for selecting a project */}
       <Select
         value={selectedProject ? selectedProject.id : ""}
         onValueChange={updateProjectContext}
       >
+        {/* Trigger for the dropdown */}
         <SelectTrigger className="w-[120px] sm:w-[180px]">
           <SelectValue placeholder="Project" />
         </SelectTrigger>
+        {/* Content of the dropdown */}
         <SelectContent>
+          {/* List of projects */}
           {projects.map((project) => (
             <SelectItem key={project.id} value={project.id}>
               {project.name}
             </SelectItem>
           ))}
+          {/* Option to create a new project */}
           <SelectItem key={0} value={0}>
             <div className="flex items-center h-full gap-1">
               <PlusIcon />
@@ -88,6 +93,7 @@ function ProjectSwitcher() {
           </SelectItem>
         </SelectContent>
       </Select>
+      {/* Dialog for creating a new project */}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent>
           <DialogHeader>
@@ -96,6 +102,7 @@ function ProjectSwitcher() {
             </DialogTitle>
             <DialogDescription></DialogDescription>
           </DialogHeader>
+          {/* Form for creating a new project */}
           <ProjectForm closeDialog={closeDialog} />
         </DialogContent>
       </Dialog>
