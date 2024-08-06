@@ -210,6 +210,28 @@ The ShadCN UI library is used to provide a set of pre-designed components that f
 
 Although the application relies heavily on the default styles provided by ShadCN, there is room for customization. Tailwind CSS allows for easy modification of styles through its configuration file, enabling adjusting colors, spacing, typography, and other design elements to match the application's branding and requirements. This flexibility ensures that the design can evolve over time while maintaining its core principles of simplicity, minimalism, and functionality.
 
+### Wireframe
+
+The application wireframe was initially created in Figma, focusing on a low-fidelity design to outline the essential elements and layout of the application. This low-fidelity wireframe served as a blueprint, providing a clear visual representation of the application's structure and user interface components. It allowed me to quickly iterate on the design, ensuring that all crucial elements were appropriately placed and functional.
+
+Once the foundational layout was established through the low-fidelity wireframe, the high-fidelity design was implemented using ShadCN's default styling. ShadCN's pre-designed components and styles were leveraged to achieve a polished and professional look, adhering to best practices for accessibility and usability. During the development phase, minor styling adjustments were made as necessary to align with the specific needs and branding of the application.
+
+This approach of combining Figma for initial wireframing and ShadCN for high-fidelity design ensured a streamlined and efficient design process. It allowed me to focus on functionality and user experience while maintaining a visually appealing and cohesive interface.
+
+![Backlog Wireframe](https://s3.eu-west-1.wasabisys.com/ish.pm/docs/img/design/Backlog.png)
+
+![Login Wireframe](https://s3.eu-west-1.wasabisys.com/ish.pm/docs/img/design/Login.png)
+
+![Sign Up Wireframe](https://s3.eu-west-1.wasabisys.com/ish.pm/docs/img/design/Sign%20Up.png)
+
+### Colors
+
+The application is designed to be mostly free of color to minimize distractions and make the colors that are used more prominent and meaningful. This approach ensures that when color is used, it stands out and effectively draws the user's attention to important elements.
+
+The colors that are used in the application serve specific purposes, primarily to visually indicate and categorize status and priority. By assigning distinct colors to different statuses and priorities, users can quickly and easily recognize the significance of each item at a glance. This color-coding system helps users to prioritize tasks and manage their workflow more efficiently, as they can immediately identify high-priority items and their current status without needing to read detailed descriptions.
+
+![Design Colors](https://s3.eu-west-1.wasabisys.com/ish.pm/docs/img/design/Colors.png)
+
 ## Database
 
 ### Schema

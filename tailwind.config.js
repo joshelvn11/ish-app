@@ -56,7 +56,7 @@ module.exports = {
           DEFAULT: "#DB2026",
         },
         inprogress: {
-          DEFAULT: "#DB8F03",
+          DEFAULT: "#FF9B05",
         },
         review: {
           DEFAULT: "#2656B7",
@@ -71,7 +71,7 @@ module.exports = {
           DEFAULT: "#2656B7",
         },
         essential: {
-          DEFAULT: "#FFAF05",
+          DEFAULT: "#FF9B05",
         },
         critical: {
           DEFAULT: "#DB2026",
