@@ -1,4 +1,5 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 
@@ -27,29 +28,42 @@ export const AuthProvider = ({ children }) => {
 
   let loginUser = async (e) => {
     e.preventDefault();
-    const apiUrl = import.meta.env.VITE_API_URL;
-    const response = await fetch(`${apiUrl}/token/`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username: e.target.username.value,
-        password: e.target.password.value,
-      }),
-    });
 
-    let data = await response.json();
+    try {
+      const apiUrl = import.meta.env.VITE_API_URL;
+      const response = await fetch(`${apiUrl}/token/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: e.target.username.value,
+          password: e.target.password.value,
+        }),
+      });
 
-    if (response.status == 200) {
-      localStorage.setItem("authTokens", JSON.stringify(data));
-      setAuthTokens(data);
-      setUser(jwtDecode(data.access));
-      navigate("/");
-      setLoginError(null);
-      setLoginMessage(null);
-    } else if (response.status == 401) {
-      setLoginError(data.detail);
+      let data = await response.json();
+
+      if (response.status == 200) {
+        localStorage.setItem("authTokens", JSON.stringify(data));
+        setAuthTokens(data);
+        setUser(jwtDecode(data.access));
+        navigate("/");
+        setLoginError(null);
+        setLoginMessage(null);
+      } else if (response.status == 401) {
+        setLoginError(data.detail);
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      if (
+        error instanceof TypeError &&
+        error.message.includes("Failed to fetch")
+      ) {
+        setLoginError("Network error. Please check your internet connection.");
+      } else {
+        setLoginError("An unexpected error occurred. Please try again later.");
+      }
     }
   };
 
@@ -166,4 +180,8 @@ export const AuthProvider = ({ children }) => {
   return (
     <AuthContext.Provider value={contextData}>{children}</AuthContext.Provider>
   );
+};
+
+AuthProvider.propTypes = {
+  children: PropTypes.node.isRequired,
 };
