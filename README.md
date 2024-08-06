@@ -1,5 +1,7 @@
 # ish Project Manager
 
+![Devices Mockup](https://s3.eu-west-1.wasabisys.com/ish.pm/docs/img/Devices-Mockup.png)
+
 ## Introduction
 
 ish is a minimalistic, productivity-focused project management application primarily designed for SCRUM and Agile software development. However, its versatility allows it to be used for a wide range of project and task management needs. The name "ish" reflects its adaptable nature, as it can be tailored to various project management paradigms, such as being "SCRUMish" – suitable for SCRUM to some extent.
