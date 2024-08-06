@@ -33,6 +33,20 @@ EpicCard.propTypes = {
   filterOptions: PropTypes.object,
 };
 
+/**
+ * EpicCard component represents a card that displays information about an epic.
+ * It includes functionality to view, update, and delete the epic.
+ *
+ * @param {Object} props - The properties passed to the component.
+ * @param {string} props.title - The title of the epic.
+ * @param {string} [props.description] - The description of the epic.
+ * @param {string} [props.priority] - The priority of the epic.
+ * @param {string} [props.status] - The status of the epic.
+ * @param {string} props.epicId - The unique identifier of the epic.
+ * @param {Object} [props.filterOptions] - The filter options for the item table.
+ *
+ * @returns {JSX.Element} The rendered EpicCard component.
+ */
 function EpicCard(props) {
   // Get the deleteEpic function from the ProjectContext
   const { deleteEpic } = useContext(ProjectContext);
