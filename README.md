@@ -744,25 +744,6 @@ Pages were passed through Chrome's lighthouse test to test performance accessibi
 
 Functionality to allow multiple users to collaborate on a project with assignee functionality. This feature would enable team-based project management, allowing users to invite colleagues, assign tasks to specific team members, and track individual contributions. It would include role-based access control, real-time collaboration tools, and a notification system to keep all team members informed of project updates and changes. This enhancement would significantly expand the application's utility for larger teams and more complex projects, while maintaining its core simplicity and efficiency.
 
-## Credits
-
-### JWT Authentication
-
-- Django React JWT Authentication tutorial by seanwarren on GitHub - https://github.com/seankwarren/Django-React-jwt-authentication
-- Login & Regitser User tutorial by Emre Cevik on Medium - https://medium.com/django-rest/django-rest-framework-login-and-register-user-fd91cf6029d5
-- JWT Authetication with React by Cosden Solutions on YouTube - https://www.youtube.com/watch?v=AcYF18oGn6Y
-- Django & React JWT Authenticaion by ScalableScripts on YouTube - https://www.youtube.com/watch?v=PUzgZrS_piQ,
-
-### Icons
-
-- Lucide Icons - https://lucide.dev/icons/
-- RadixUI Icons - https://www.radix-ui.com/icons
-
-### Other
-
-- Dockerizing a React application by Dhruv Patel on Medium - https://thedkpatel.medium.com/dockerizing-react-application-built-with-vite-a-simple-guide-4c41eb09defa
-- UseContext Tutorial by Cosden Solutions on YouTube - https://www.youtube.com/watch?v=HYKDUF8X3qI
-
 ## Project Planning
 
 Below are the project epics and related user stories.
@@ -779,11 +760,11 @@ Set up critical backend API infrastructure needed for most basic functionality
 
 **Acceptance Criteria**:
 
-1. All models are accurately implemented according to the ERM specifications.
-2. Full CRUD (Create, Read, Update, Delete) views are developed and functional for each model.
-3. RESTful API endpoints are established and properly mapped for each view.
-4. All models are accessible and manageable through the Django admin interface.
-5. Authentication and authorization mechanisms are implemented to secure data access.
+- All models are accurately implemented according to the ERM specifications.
+- Full CRUD (Create, Read, Update, Delete) views are developed and functional for each model.
+- RESTful API endpoints are established and properly mapped for each view.
+- All models are accessible and manageable through the Django admin interface.
+- Authentication and authorization mechanisms are implemented to secure data access.
 
 **Relation to Project Goal**: This user story is crucial for realizing the project's vision of a streamlined, efficient project management tool. By establishing a solid backend foundation with comprehensive data handling capabilities, it enables the development of a responsive and feature-rich front-end. This infrastructure supports the core functionalities of task and project management, ensuring that ish can offer a minimalistic yet powerful user experience. The robust backend also facilitates future scalability and feature additions, aligning with the adaptable nature of the application.
 
@@ -795,13 +776,13 @@ Set up critical backend API infrastructure needed for most basic functionality
 
 **Acceptance Criteria**:
 
-1. All required models (entities) are identified and clearly defined.
-2. Each model includes a complete list of fields with their respective data types and constraints.
-3. Relationships between models are explicitly defined, including relationships (one-to-one, one-to-many, many-to-many).
-4. Primary keys and foreign keys are clearly identified for each model.
-5. Any indexes or unique constraints are specified where necessary.
-6. The ERM is visually represented in a diagram for easy comprehension.
-7. The ERM documentation includes explanations for any complex relationships or business rules.
+- All required models (entities) are identified and clearly defined.
+- Each model includes a complete list of fields with their respective data types and constraints.
+- Relationships between models are explicitly defined, including relationships (one-to-one, one-to-many, many-to-many).
+- Primary keys and foreign keys are clearly identified for each model.
+- Any indexes or unique constraints are specified where necessary.
+- The ERM is visually represented in a diagram for easy comprehension.
+- The ERM documentation includes explanations for any complex relationships or business rules.
 
 **Relation to Project Goal**: This user story directly supports the project's aim of creating a minimalistic yet effective project management tool. By designing a clear and efficient database structure, it ensures that ish can handle project data effectively, which is crucial for its core functionality as a versatile task and project management application.
 
@@ -865,7 +846,7 @@ Create basic login an registration functionality.
 
 ### [EPIC] UI Framework
 
-Develope the core components of the UI to create a framework for building the more functional components of the application.
+Develop the core components of the UI to create a framework for building the more functional components of the application.
 
 #### [USER STORY] Application Design / Wireframe
 
@@ -879,19 +860,6 @@ Develope the core components of the UI to create a framework for building the mo
 - The design shows the content and placement of all core components.
 
 **Relation to Project Goal**: By creating a comprehensive design and wireframe, we ensure that the development process aligns closely with the intended user experience supporting the goal of creating a well design, easy to use interaface.
-
-#### [USER STORY] Application Design / Wireframe
-
-**Description**: Create a comprehensive mockup application design and wireframe that outlines the visual structure, layout, and user interface elements of the ish project management tool.
-
-**User Story**: As a developer, I want to have access to a detailed application design and wireframe so that I can understand the intended user experience, layout, and functionality, enabling me to develop the application accurately and efficiently.
-
-**Acceptance Criteria**:
-
-- A wireframe design mockup is available to view in Figma.
-- The design shows the content and placement of all core components.
-
-**Relation to Project Goal**: By creating a comprehensive design and wireframe, we ensure that the development process aligns closely with the intended user experience supporting the goal of creating a well designed, easy to use interaface.
 
 #### [USER STORY] Navigation Bar
 
@@ -1064,7 +1032,7 @@ Implementing an intuitive epic card view directly supports the project's goal of
 - On successful deletion, a success notification is shown, and the confirmation dialog is automatically closed.
 - If the deletion fails, a specific error message is displayed, explaining the reason for the failure
 - After successful deletion, the epic data is immediately refreshed, and the deleted epic is removed from all relevant views
-- The system ensures that all child items (stories, tasks) associated with the deleted epic are deleted..
+- The system ensures that all child items (stories, tasks) associated with the deleted epic are deleted.
 
 **Relation to Project Goal**: Implementing a robust epic deletion feature directly supports the project's goal of enhancing productivity and streamlining workflow management. By allowing users to remove obsolete or unnecessary epics, this functionality helps maintain a clean and focused project structure. This contributes to improved organization, reduced clutter, and enhanced visibility of active and relevant work items. Ultimately, this feature empowers teams to keep their project management system up-to-date and aligned with current objectives, facilitating better decision-making and productivity.
 
@@ -1465,3 +1433,26 @@ CRUD functionality for items in item tables.
   - An error notification is shown to the user.
 
 **Relation to Project Goals**: This feature supports the project's goal of providing a streamlined and efficient project management tool. By allowing users to easily mark subtasks as done or not done, it enhances task tracking and organization. This functionality aligns with ish's aim of offering a minimalistic yet powerful tool, improving overall productivity by enabling users to visually track the completion status of their tasks.
+
+## Credits
+
+### JWT Authentication
+
+- Django React JWT Authentication tutorial by seanwarren on GitHub - https://github.com/seankwarren/Django-React-jwt-authentication
+- Login & Regitser User tutorial by Emre Cevik on Medium - https://medium.com/django-rest/django-rest-framework-login-and-register-user-fd91cf6029d5
+- JWT Authetication with React by Cosden Solutions on YouTube - https://www.youtube.com/watch?v=AcYF18oGn6Y
+- Django & React JWT Authenticaion by ScalableScripts on YouTube - https://www.youtube.com/watch?v=PUzgZrS_piQ,
+
+### Icons
+
+- Lucide Icons - https://lucide.dev/icons/
+- RadixUI Icons - https://www.radix-ui.com/icons
+
+### Other
+
+- Dockerizing a React application by Dhruv Patel on Medium - https://thedkpatel.medium.com/dockerizing-react-application-built-with-vite-a-simple-guide-4c41eb09defa
+- UseContext Tutorial by Cosden Solutions on YouTube - https://www.youtube.com/watch?v=HYKDUF8X3qI
+
+### The Biggest Credit
+
+The biggest credit goes to my beautiful and amazing partner Marianna who kept me well fed, motivated and encouraged me along my path while developing this project, I would not have been able to do this without her support and love.
