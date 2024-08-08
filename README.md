@@ -12,6 +12,18 @@ My goal was to develop a tool that strikes a balance between these extremes – 
 
 The primary target audience for ish includes solo developers working on personal projects and small teams that require essential features without the administrative burden and complexity of commercial applications. Nevertheless, the application is designed to be flexible enough for anyone to use and adapt to their personal processes and workflows. It functions equally well as a personal task manager or for any product development-related process.
 
+### Goals
+
+The primary goal of ish is to provide a streamlined, efficient project management tool that bridges the gap between overly complex commercial solutions and overly simplistic task managers. It aims to offer essential SCRUM and Agile development features while maintaining a minimalistic and user-friendly interface. The project seeks to cater to solo developers and small teams who need a flexible, adaptable tool that can be tailored to various project management paradigms without unnecessary complexity. By focusing on core functionality and user experience, ish strives to enhance productivity and simplify project management processes. Additionally, the application is designed to be versatile enough to serve as a personal task manager or support any product development-related workflow, making it accessible to a wide range of users while staying true to its core principle of simplicity and efficiency.
+
+### Convention over Configuration
+
+ish embraces the "Convention over Configuration" paradigm, which is a software design paradigm that aims to decrease the number of decisions developers need to make without losing flexibility. In ish, this principle is applied through a set of sensible defaults and pre-defined structures that align with common project management practices, particularly those used in Agile and SCRUM methodologies. For instance, the application comes with pre-configured item types (epics, user stories, tasks), standard workflow statuses, and default priority levels. This approach allows users to start using the tool immediately without extensive setup, while still providing the flexibility to customize these elements if needed. By adhering to this paradigm, ish reduces the initial complexity for users, especially solo developers or small teams, allowing them to focus on their project work rather than spending time on extensive configuration. This balance between out-of-the-box usability and customization options embodies the core philosophy of ish: providing a streamlined, efficient project management experience that can be easily adapted to various workflows.
+
+### Flexible Framework for Agile and Scrum Methodologies
+
+ish is designed to provide a flexible framework that supports Agile and Scrum methodologies without being overly prescriptive or rigid. While the application offers structures and features that align with these methodologies, such as epics, user stories, and sprints, it does not enforce a strict adherence to any particular process. This approach allows users to adopt as much or as little of the Agile and Scrum practices as they see fit for their projects. The customizable nature of ish enables teams to tailor the tool to their specific workflows, whether they're following a by-the-book Scrum process or a more hybrid Agile approach. For instance, users can utilize the sprint planning features for time-boxed iterations, or they can opt for a more fluid workflow. By providing a balance between structure and flexibility, ish empowers users to implement Agile and Scrum principles in a way that best suits their unique project requirements and team dynamics.
+
 ## Application Architecture
 
 ### Backend
@@ -728,6 +740,10 @@ Pages were passed through Chrome's lighthouse test to test performance accessibi
 
 ## Future Ideas & Roadmap
 
+### Multiple Project Users
+
+Functionality to allow multiple users to collaborate on a project with assignee functionality. This feature would enable team-based project management, allowing users to invite colleagues, assign tasks to specific team members, and track individual contributions. It would include role-based access control, real-time collaboration tools, and a notification system to keep all team members informed of project updates and changes. This enhancement would significantly expand the application's utility for larger teams and more complex projects, while maintaining its core simplicity and efficiency.
+
 ## Credits
 
 ### JWT Authentication
@@ -746,3 +762,706 @@ Pages were passed through Chrome's lighthouse test to test performance accessibi
 
 - Dockerizing a React application by Dhruv Patel on Medium - https://thedkpatel.medium.com/dockerizing-react-application-built-with-vite-a-simple-guide-4c41eb09defa
 - UseContext Tutorial by Cosden Solutions on YouTube - https://www.youtube.com/watch?v=HYKDUF8X3qI
+
+## Project Planning
+
+Below are the project epics and related user stories.
+
+### [EPIC] Critical Backend
+
+Set up critical backend API infrastructure needed for most basic functionality
+
+#### [USER STORY] Basic API Set Up - Models, Views & URLs
+
+**Description**: Implement core backend functionality to enable front-end development and data management.
+
+**User Story**: As a developer, I need to establish a robust backend infrastructure with comprehensive CRUD functionality for all data models, enabling seamless front-end development and efficient data operations.
+
+**Acceptance Criteria**:
+
+1. All models are accurately implemented according to the ERM specifications.
+2. Full CRUD (Create, Read, Update, Delete) views are developed and functional for each model.
+3. RESTful API endpoints are established and properly mapped for each view.
+4. All models are accessible and manageable through the Django admin interface.
+5. Authentication and authorization mechanisms are implemented to secure data access.
+
+**Relation to Project Goal**: This user story is crucial for realizing the project's vision of a streamlined, efficient project management tool. By establishing a solid backend foundation with comprehensive data handling capabilities, it enables the development of a responsive and feature-rich front-end. This infrastructure supports the core functionalities of task and project management, ensuring that ish can offer a minimalistic yet powerful user experience. The robust backend also facilitates future scalability and feature additions, aligning with the adaptable nature of the application.
+
+#### [USER STORY] Design ERM
+
+**Description**: Design a comprehensive database entity-relationship model (ERM) to serve as the foundation for backend development.
+
+**User Story**: As a developer, I need a clear and detailed entity-relationship model of the database, including all tables, fields, and their relationships, to efficiently implement the backend models and ensure data integrity.
+
+**Acceptance Criteria**:
+
+1. All required models (entities) are identified and clearly defined.
+2. Each model includes a complete list of fields with their respective data types and constraints.
+3. Relationships between models are explicitly defined, including relationships (one-to-one, one-to-many, many-to-many).
+4. Primary keys and foreign keys are clearly identified for each model.
+5. Any indexes or unique constraints are specified where necessary.
+6. The ERM is visually represented in a diagram for easy comprehension.
+7. The ERM documentation includes explanations for any complex relationships or business rules.
+
+**Relation to Project Goal**: This user story directly supports the project's aim of creating a minimalistic yet effective project management tool. By designing a clear and efficient database structure, it ensures that ish can handle project data effectively, which is crucial for its core functionality as a versatile task and project management application.
+
+### [EPIC] Login & Register
+
+Create basic login an registration functionality.
+
+#### [USER STORY] User Authentication
+
+**Description**: Implement a secure and user-friendly login system that allows users to authenticate and access their personalized data within the application.
+
+**User Story**: As a registered user, I want to securely log into the application so that I can access my projects, tasks, and personalized settings.
+
+**Acceptance Criteria**:
+
+- A clean and intuitive login form is accessible via a dedicated login URL.
+- The login form includes fields for username/email and password, with appropriate input validation.
+- Clicking the login button authenticates the user if the credentials are correct.
+- Appropriate error messages are displayed for incorrect credentials or other login failures
+- Successful login redirects the user to their personalized dashboard.
+- The login page is responsive and works well on both desktop and mobile devices.
+- There is link to allow users to access the sign up page from the login form
+
+**Relation to Project Goal**: This user story is crucial for realizing ish's vision as a personalized project management tool. By implementing a secure and efficient login system, we ensure that users can access their individual projects and tasks, maintaining data privacy and enabling a tailored experience. This aligns with our goal of creating a minimalistic yet powerful tool that adapts to each user's workflow.
+
+#### [USER STORY] User Registration
+
+**Description**: Implement a secure and user-friendly registration system that allows new users to create an account and join the application.
+
+**User Story**: As a new user, I want to easily sign up for an account so that I can start using the application to manage my projects and tasks.
+
+**Acceptance Criteria**:
+
+- A clean and intuitive registration form is accessible via a dedicated sign-up URL.
+- The registration form includes fields necessary to register an account.
+- The password field enforces strong password requirements.
+- Clicking the sign-up button creates a new user account if all input is valid and the username/email is not already in use.
+- Appropriate error messages are displayed for invalid input, existing usernames/emails, or other registration failures.
+- Successful registration redirects the user to a welcome page or directly to their new, empty dashboard.
+- The registration page is responsive and works well on both desktop and mobile devices.
+- There is a link to allow users to access the login page from the registration form.
+
+**Relation to Project Goal**: This user story is essential for growing the user base of ish and allowing new users to easily join the platform. By providing a straightforward and secure registration process, we ensure that users can quickly get started with managing their projects and tasks. This aligns with the goal of creating an accessible and user-friendly tool that caters to individual workflows from the very beginning of the user journey.
+
+#### [USER STORY] User Log Out
+
+**Description**: Implement a secure and user-friendly log out functionality that allows users to safely end their session and protect their account.
+
+**User Story**: As an authenticated user, I want to be able to log out of my account easily and securely from any page in the application, so that I can protect my account information and ensure my privacy, especially when using shared or public devices.
+
+**Acceptance Criteria**:
+
+- A clearly visible log out button or link is accessible from any page within the application, from within the profile widget dropdown.
+- Clicking the log out button immediately ends the user's session.
+- All access tokens and session data are removed from the local storage of the user's device.
+- After logging out, the user is redirected to the login page or a public landing page.
+- The application prevents access to authenticated areas after logout without re-authentication.
+- If the user attempts to use a back button or cached page after logout, they should still be redirected to the login page.
+
+**Relation to Project Goal**: This user story supports the project's commitment to security and user privacy. By providing a robust and easily accessible logout feature, ish ensures that users can maintain control over their account access, which is crucial for a personal productivity tool. This aligns with the goal of creating a trustworthy and user-centric application that respects user privacy and security, enhancing the overall user experience.
+
+### [EPIC] UI Framework
+
+Develope the core components of the UI to create a framework for building the more functional components of the application.
+
+#### [USER STORY] Application Design / Wireframe
+
+**Description**: Create a comprehensive mockup application design and wireframe that outlines the visual structure, layout, and user interface elements of the ish project management tool.
+
+**User Story**: As a developer, I want to have access to a detailed application design and wireframe so that I can understand the intended user experience, layout, and functionality, enabling me to develop the application accurately and efficiently.
+
+**Acceptance Criteria**:
+
+- A wireframe design mockup is available to view in Figma.
+- The design shows the content and placement of all core components.
+
+**Relation to Project Goal**: By creating a comprehensive design and wireframe, we ensure that the development process aligns closely with the intended user experience supporting the goal of creating a well design, easy to use interaface.
+
+#### [USER STORY] Application Design / Wireframe
+
+**Description**: Create a comprehensive mockup application design and wireframe that outlines the visual structure, layout, and user interface elements of the ish project management tool.
+
+**User Story**: As a developer, I want to have access to a detailed application design and wireframe so that I can understand the intended user experience, layout, and functionality, enabling me to develop the application accurately and efficiently.
+
+**Acceptance Criteria**:
+
+- A wireframe design mockup is available to view in Figma.
+- The design shows the content and placement of all core components.
+
+**Relation to Project Goal**: By creating a comprehensive design and wireframe, we ensure that the development process aligns closely with the intended user experience supporting the goal of creating a well designed, easy to use interaface.
+
+#### [USER STORY] Navigation Bar
+
+**Description**: Implement a responsive and user-friendly navigation sidebar that provides easy access to all available pages within the application.
+
+**User Story**: As a user, I want to have access to a navigation component with links to all available pages so that I can easily navigate through different sections of the application, regardless of the device I'm using.
+
+**Acceptance Criteria**:
+
+- A sidebar navigation menu is implemented and visible on all pages of the application.
+- The sidebar contains clearly labeled links to all available pages and sections of the application.
+- The navigation menu is responsive and adapts to different screen sizes:
+  - On desktop, it appears as a full sidebar.
+  - On mobile devices, it is collapsible and can be toggled with a menu icon.
+- The current page or section is visually highlighted in the navigation menu.
+- The navigation menu is accessible and can be used with keyboard navigation.
+- Hover and focus states are implemented for better user interaction.
+- The sidebar includes a logo or brand name at the top for consistent branding.
+
+**Relation to Project Goal**: Implementing an effective navigation system is crucial for enhancing user experience and productivity. By providing a clear, accessible, and responsive navigation bar, we ensure that users can efficiently move between different sections of the application. This aligns with the goal of creating an intuitive and user-friendly interface that supports individual workflows and improves overall productivity.
+
+#### [USER STORY] Profile & Settings Dropdown Menu
+
+**Description**: Implement a globally accessible dropdown menu that displays the user's basic information (name and email) and provides quick access to important global links and functions.
+
+**User Story**: As a user, I want to have access to a profile and settings dropdown menu so that I can quickly view my account information, access critical global functionality, and manage my account settings efficiently.
+
+**Acceptance Criteria**:
+
+- The profile widget is consistently available in the application header across all pages.
+- Clicking the widget reveals a dropdown menu.
+- The dropdown displays the user's name and email address.
+- The menu includes a logout button
+- Clicking outside the dropdown or pressing the ESC key closes the component.
+- Hover and focus states are implemented for better user interaction.
+
+**Relation to Project Goal**: Implementing a comprehensive profile and settings dropdown menu enhances user experience by providing quick access to essential account functions. This feature supports the project's goal of creating an intuitive and efficient interface, allowing users to manage their accounts and access important features without navigating away from their current context. It contributes to a more streamlined and user-friendly application, ultimately improving productivity and user satisfaction.
+
+### [EPIC] Projects
+
+Develop functionality related to viewing, changing and creating projects.
+
+#### [USER STORY] Project Switcher
+
+**Description**: Implement a project switcher dropdown in the primary site header to allow users to easily switch between their projects.
+
+**User Story**: As a user, I want to be able to quickly switch between different projects I'm working on, so that I can efficiently manage and access multiple projects without navigating through multiple pages.
+
+**Acceptance Criteria**:
+
+- A project switcher dropdown component is implemented in the primary site header, visible on all pages.
+- The dropdown is populated with projects owned by or accessible to the current user.
+- Projects in the dropdown are clearly labeled and easily distinguishable.
+- Selecting a project from the dropdown immediately switches the current project context.
+- Upon project selection, all relevant data for the selected project is fetched and displayed.
+- The currently selected project is visually highlighted in the dropdown.
+- The component is responsive and works well on both desktop and mobile devices.
+- Appropriate loading indicators are shown during the project switch process.
+- Error handling is implemented to manage cases where project data cannot be fetched.
+
+**Relation to Project Goal**: Implementing an efficient project switcher aligns with the goal of creating an intuitive and user-friendly interface. By allowing users to seamlessly switch between projects, we enhance productivity and streamline workflow management. This feature supports the overall aim of creating a tool that adapts to individual work styles and improves task organization across multiple projects.
+
+#### [USER STORY] Project Creation
+
+**Description**: Implement a robust and user-friendly functionality for creating new projects within the application.
+
+**User Story**: As a user, I want to be able to create a new project easily and efficiently, so that I can quickly start organizing my work and collaborating with my team.
+
+**Acceptance Criteria**:
+
+- The project select dropdown includes a clearly labeled option to create a new project.
+- This option is easily distinguishable from existing projects.
+- Clicking the "Create New Project" option opens a modal dialog with a comprehensive project creation form.
+- The form includes all necessary fields for project creation, such as project name and description
+- Client-side validation is implemented for all form fields to ensure data integrity.
+- Clear, user-friendly error messages are displayed next to the relevant fields if validation fails.
+- Upon successful client-side validation, a POST request is made to the server to create the project.
+- If server-side errors occur during project creation, clear and specific error messages are displayed to the user.
+- The user is given the option to correct the errors and resubmit the form without losing previously entered data.
+- Upon successful project creation, a confirmation notification is shown to the user.
+- The creation modal is automatically closed.
+- The application immediately switches context to the newly created project.
+- The project switcher dropdown is updated to include the new project, with the new project selected.
+- The form and modal are responsive, providing a consistent experience across desktop and mobile devices.
+
+**Relation to Project Goal**: Implementing an efficient and user-friendly project creation process directly supports the project goal of enhancing productivity and streamlining workflow management. By allowing users to quickly set up new projects with all necessary details, ish enables them to organize their work more effectively from the outset. This feature contributes to the overall intuitive design of the application, reducing the time and effort required to start new projecrs. Furthermore, by immediately switching to the new project context upon creation, we ensure that users can begin their work without delay, thus improving overall efficiency and user satisfaction.
+
+### [EPIC] Backlog
+
+Develop basic backlog page functionality that enables CRUD operations for the relevant data models.
+
+#### [USER STORY] Epic Card View
+
+**Description**: Implement functionality to display epics as interactive cards on the backlog page.
+
+**User Story**: As a user, I want to see epics displayed as visually distinct cards on the backlog page, so that I can quickly understand and manage the high-level structure of my project.
+
+**Acceptance Criteria**:
+
+- On the backlog page, an epic card component is rendered for each epic in the project.
+- Each epic card prominently displays the epic's title, description (truncated if necessary), status, and priority.
+- Epic cards are interactive, allowing users to click or tap to view more details or edit the epic.
+- The cards are responsive and display well on both desktop and mobile devices.
+- A distinct card or section is provided for items (e.g., user stories or tasks) that are not associated with any epic.
+- Skeletons are shown while epics are loading.
+- The page implements efficient loading and rendering to handle projects with a large number of epics.
+
+**Relation to Project Goal**:
+Implementing an intuitive epic card view directly supports the project's goal of enhancing productivity and streamlining workflow management. By providing a clear, visual representation of epics, users can quickly grasp the structure and progress of their projects. This feature contributes to the overall user-friendly interface, allowing for more efficient project navigation and management. The ability to see all epics at a glance, including their key details, enables users to make informed decisions about project priorities and resource allocation, thus improving overall project organization and collaboration.
+
+#### [USER STORY] Epic Creation
+
+**Description**: Implement a robust and user-friendly functionality for creating new epics within the application.
+
+**User Story**: As a user, I want to be able to create a new epic easily and efficiently, so that I can quickly start organizing high-level project objectives and track progress towards major milestones.
+
+**Acceptance Criteria**:
+
+- A clearly labeled "Epic" creation button is prominently displayed in the create dropdown menu.
+- Clicking this button opens a modal dialog with a comprehensive epic creation form.
+- The form includes all necessary fields for epic creation, such as title, description, status, priority, etc.
+- Client-side validation is implemented for all form fields to ensure data integrity.
+- Clear, user-friendly error messages are displayed next to the relevant fields if validation fails.
+- Upon successful client-side validation, a POST request is made to the server to create the epic.
+- If server-side errors occur during epic creation, clear and specific error messages are displayed to the user.
+- The user is given the option to correct the errors and resubmit the form without losing previously entered data.
+- Upon successful epic creation, a confirmation notification is shown to the user.
+- The creation modal is automatically closed after successful creation.
+- The backlog page is immediately updated to include the newly created epic, with the new epic card visible and properly positioned.
+- The form and modal are responsive, providing a consistent experience across desktop and mobile devices.
+
+**Relation to Project Goal**: Implementing an efficient and user-friendly epic creation process directly supports the project's goal of enhancing productivity and streamlining workflow management. By allowing users to quickly set up new epics with all necessary details, ish enables them to organize their work more effectively at a high level. This feature contributes to the overall intuitive design of the application, reducing the time and effort required to start new major project initiatives. Furthermore, by immediately updating the backlog with the new epic, we ensure that users can begin planning and working withour delay, thus improving overall project structure, visibility, and productivity.
+
+#### [USER STORY] Epic Editing
+
+**Description**: Implement functionality to edit and update epic details within the application.
+
+**User Story**: As a user, I want to be able to edit the details of an existing epic, so that I can keep the epic information up-to-date and accurately reflect changes in project scope or priorities.
+
+**Acceptance Criteria**:
+
+- An "Edit" button or icon is clearly visible and accessible on all epic cards.
+- Clicking the edit button opens a modal dialog containing a pre-populated form with the current epic details.
+- The edit form includes all editable fields for the epic, such as title, description, status, priority, etc.
+- All form fields have appropriate client-side validation to ensure data integrity.
+- Clear, user-friendly error messages are displayed if validation fails.
+- When the "Update" button is clicked, all data is pre-validated on the client side before submission.
+- If pre-validation passes, a PATCH request is made to the server to update the epic.
+- Any server-side errors are clearly communicated to the user with specific error messages.
+- The user is given the option to correct errors and resubmit without losing their changes.
+- Upon successful update, a confirmation message is displayed to the user.
+- The edit modal automatically closes after a successful update.
+- The epic card and any related views are immediately refreshed to reflect the updated information.
+- The edit form and modal are responsive, providing a consistent experience across desktop and mobile devices.
+
+**Relation to Project Goal**: Implementing a robust epic editing functionality directly supports the project's goal of enhancing productivity and streamlining workflow management. By allowing users to easily update epic details, ish ensures that project information remains accurate and up-to-date. This feature contributes to the overall flexibility and adaptability of the application, enabling users to respond quickly to changes in project scope or priorities. The ability to maintain current and accurate epic information improves project visibility, facilitates better decision-making, and ultimately enhances team collaboration and productivity.
+
+#### [USER STORY] Epic Deletion
+
+**Description**: Implement functionality to safely and efficiently delete epics from the project management system.
+
+**User Story**: As a userd, I want to be able to delete epics that are no longer relevant or needed, so that I can maintain a clean and organized project structure, ensuring that only active and necessary epics are visible to myself (and team).
+
+**Acceptance Criteria**:
+
+- Each epic card displays a clearly visible and accessible delete button or icon.
+- Clicking the delete button triggers a confirmation dialog to prevent accidental deletions.
+- The confirmation dialog clearly states the consequences of deleting the epic, including any associated tasks or stories.
+- Upon user confirmation, a DELETE request is sent to the server to remove the epic.
+- On successful deletion, a success notification is shown, and the confirmation dialog is automatically closed.
+- If the deletion fails, a specific error message is displayed, explaining the reason for the failure
+- After successful deletion, the epic data is immediately refreshed, and the deleted epic is removed from all relevant views
+- The system ensures that all child items (stories, tasks) associated with the deleted epic are deleted..
+
+**Relation to Project Goal**: Implementing a robust epic deletion feature directly supports the project's goal of enhancing productivity and streamlining workflow management. By allowing users to remove obsolete or unnecessary epics, this functionality helps maintain a clean and focused project structure. This contributes to improved organization, reduced clutter, and enhanced visibility of active and relevant work items. Ultimately, this feature empowers teams to keep their project management system up-to-date and aligned with current objectives, facilitating better decision-making and productivity.
+
+#### [USER STORY] Item Table View
+
+**Description**: Implement a comprehensive table view for items within each epic card, enhancing visibility and interaction capabilities.
+
+**User Story**: As a user, I want to see all items in an epic displayed in a clear, organized table within the epic card, so that I can easily review the work that needs to be done and efficiently interact with individual items.
+
+**Acceptance Criteria**:
+
+- Each epic card contains a well-structured table displaying all associated items.
+- The table includes columns for key item attributes such as ID, title, status, priority and due date.
+- The table view is responsive and adapts well to different screen sizes.
+- The table updates in real-time when items are added, modified, or removed from the epic.
+
+**Relation to Project Goal**: Implementing a detailed and interactive table view for items within epics directly supports the project's goal of enhancing productivity and streamlining workflow management. By providing users with a clear, organized view of all items within an epic, this feature significantly improves project visibility and facilitates quicker decision-making. The ability to easily sort, search, and interact with items enables users to manage their work more efficiently, leading to improved task prioritization and resource allocation. This enhanced overview of epic contents contributes to better project structure, more effective progress tracking, and ultimately, increased productivity.
+
+### [EPIC] Filtration & Sorting
+
+#### [USER STORY] Item Type Filtering in Table View
+
+**Description**: Implement functionality to allow users to filter items in the item table by their type, enhancing the ability to focus on specific categories of work.
+
+**User Story**: As a user, I want to filter items by type in the table view so that I can focus on items with the type that is most relevant to my current needs, improving my productivity and task management.
+
+**Acceptance Criteria**:
+
+- A "Filter" dropdown menu is prominently displayed above in the backlog page toolbar.
+- Within the "Filter" dropdown, there is a submenu specifically for "Item Type".
+- The "Item Type" submenu contains checkboxes for each available item type (e.g., Task, Bug, User Story, etc.).
+- The initial state of the checkboxes reflects the current project filter options.
+- Selecting or deselecting a type checkbox immediately updates the visual state of the checkbox.
+- When a type is deselected, the table view is instantly refreshed, hiding all items of that type.
+- When a type is selected, the table view is instantly refreshed, displaying all items of that type.
+- Multiple types can be selected or deselected simultaneously.
+- The table view updates in real-time as types are selected or deselected.
+- The selected filter options persist across user sessions until manually changed.
+- The filter state is visually indicated when active
+
+**Relation to Project Goal**: Implementing item type filtering in the table view directly supports the project's goal of enhancing productivity and streamlining workflow management. By allowing users to quickly focus on specific types of items, this feature significantly improves task prioritization and information accessibility. Users can more efficiently manage their workload by concentrating on relevant item types, leading to better time management and increased productivity. This granular control over item visibility contributes to a more organized and tailored project view, ultimately supporting more effective decision-making and project progression.
+
+#### [USER STORY] Item Status Filtering in Table View
+
+**Description**: Implement functionality to allow users to filter items in the item table by their status, enhancing the ability to focus on specific stages of work.
+
+**User Story**: As a user, I want to filter items by status in the table view so that I can focus on items with the status that is most relevant to my current needs, improving my productivity and task management.
+
+**Acceptance Criteria**:
+
+- A "Filter" dropdown menu is prominently displayed in the backlog page toolbar.
+- Within the "Filter" dropdown, there is a submenu specifically for "Item Status".
+- The "Item Status" submenu contains checkboxes for each available status (e.g., To Do, In Progress, Review, Done, etc.).
+- The initial state of the checkboxes reflects the current project filter options.
+- Selecting or deselecting a status checkbox immediately updates the visual state of the checkbox.
+- When a status is deselected, the table view is instantly refreshed, hiding all items with that status.
+- When a status is selected, the table view is instantly refreshed, displaying all items with that status.
+- Multiple statuses can be selected or deselected simultaneously.
+- The table view updates in real-time as statuses are selected or deselected.
+- The selected filter options persist across user sessions until manually changed.
+- The filter state is visually indicated when active
+
+**Relation to Project Goal**: Implementing item status filtering in the table view directly supports the project's goal of enhancing productivity and streamlining workflow management. By allowing users to quickly focus on items in specific stages of completion, this feature significantly improves task prioritization and workflow visibility. Users can more efficiently manage their workload by concentrating on items in relevant statuses, leading to better progress tracking and increased productivity. This granular control over item visibility based on status contributes to a more organized and tailored project view, ultimately supporting more effective decision-making, resource allocation, and project progression.
+
+#### [USER STORY] Item Priority Filtering in Table View
+
+**Description**: Implement functionality to allow users to filter items in the item table by their priority, enhancing the ability to focus on tasks of varying importance.
+
+**User Story**: As a user, I want to filter items by priority in the table view so that I can focus on items with the priority level that is most relevant to my current needs, improving my productivity and task management.
+
+**Acceptance Criteria**:
+
+- A "Filter" dropdown menu is prominently displayed in the backlog page toolbar.
+- Within the "Filter" dropdown, there is a submenu specifically for "Item Priority".
+- The "Item Priority" submenu contains checkboxes for each available priority level
+- The initial state of the checkboxes reflects the current project filter options.
+- Selecting or deselecting a priority checkbox immediately updates the visual state of the checkbox.
+- When a priority is deselected, the table view is instantly refreshed, hiding all items with that priority.
+- When a priority is selected, the table view is instantly refreshed, displaying all items with that priority.
+- Multiple priority levels can be selected or deselected simultaneously.
+- The table view updates in real-time as priorities are selected or deselected.
+- The selected filter options persist across user sessions until manually changed.
+- The filter state is visually indicated when active
+
+**Relation to Project Goal**: Implementing item priority filtering in the table view directly supports the project's goal of enhancing productivity and streamlining workflow management. By allowing users to quickly focus on items of specific priority levels, this feature significantly improves task prioritization and resource allocation. Users can more efficiently manage their workload by concentrating on high-priority items when needed or addressing lower-priority tasks during less critical periods. This granular control over item visibility based on priority contributes to a more strategic approach to project management, enabling teams to address the most critical tasks first and manage their time more effectively.
+
+#### [USER STORY] Sprint Filtering in Backlog View
+
+**Description**: Implement functionality to allow users to filter epics and items by sprint in the backlog view, enhancing the ability to focus on specific time-boxed work periods.
+
+**User Story**: As a user, I want to filter epics and items by sprint in the backlog view so that I can focus on the relevant sprint, improving my sprint planning and execution.
+
+**Acceptance Criteria**:
+
+- A "Select Sprint" dropdown is prominently displayed in the backlog view toolbar.
+- The dropdown is populated with all sprints in the project, including both active and completed sprints.
+- Each sprint item in the dropdown displays the sprint name and its date range (e.g., "Sprint 1 (May 1 - May 14)").
+- The initial state of the dropdown shows "All Sprints" or a similar label to indicate no filter is applied.
+- Selecting a sprint from the dropdown immediately updates the filter data.
+- When the filter data is updated, the backlog view is instantly refreshed to show only epics and items associated with the selected sprint.
+- An option to clear the sprint filter and show all items is available.
+- The selected sprint filter persists across user sessions until manually changed.
+
+**Relation to Project Goal**: Implementing sprint filtering in the backlog view directly supports the project's goal of enhancing productivity and streamlining workflow management. By allowing users to focus on epics and items within a specific sprint, this feature significantly improves sprint planning, execution, and review processes. Users can more efficiently manage their workload by concentrating on the current or upcoming sprint, leading to better time management and increased productivity. This targeted view of sprint-specific work contributes to more effective decision-making, resource allocation, and overall project progression, ultimately supporting agile methodologies and improving productivity.
+
+#### [USER STORY] Hide Empty Epics in Backlog View
+
+**Description**: Implement functionality to allow users to hide epics with no associated items in the backlog view, enhancing the organization and visualization of project data.
+
+**User Story**: As a user, I want to be able to hide epics that have no items associated with them in the backlog view, so that I can better organize and visualize my project data, focusing on active and relevant work.
+
+**Acceptance Criteria**:
+
+- A "Hide Empty Epics" toggle switch is prominently displayed in the backlog view toolbar.
+- The initial state of the toggle is "off" (empty epics are visible by default).
+- Clicking the toggle switch immediately updates its visual state (on/off).
+- When the toggle is switched on Epics with no associated items are instantly hidden from the backlog view.
+- The view is refreshed to reflect this change without requiring a page reload.
+- When the toggle is switched offAll epics, including those with no items, are displayed in the backlog view.
+- The state of the toggle persists across user sessions until manually changed.
+
+**Relation to Project Goal**: Implementing the ability to hide empty epics in the backlog view directly supports the project's goal of enhancing productivity and streamlining workflow management. By allowing users to focus on epics that contain active work items, this feature significantly improves the organization and clarity of the project backlog. Users can more efficiently manage their workload by reducing visual clutter and concentrating on relevant, actionable epics. This targeted view contributes to more effective sprint planning, resource allocation, and overall project progression. Additionally, it supports agile methodologies by helping teams maintain a clean and focused backlog, ultimately improving productivity and decision-making processes.
+
+### [EPIC] Item CRUD
+
+CRUD functionality for items in item tables.
+
+#### [USER STORY] Item Detailed View
+
+**Description**: Implement functionality to allow users to open an expanded, detailed view of an item with all its fields for comprehensive viewing and editing.
+
+**User Story**: As a user, I want to view an item in detail on its own dedicated screen so that I can focus on that specific item, examine all its attributes, and easily edit its data when necessary.
+
+**Acceptance Criteria**:
+
+- Each item row in the item table has a clearly visible and accessible "View Details" button or icon.
+- Clicking this button opens a modal dialog showing a comprehensive form with all item data fields.
+- The detailed view includes all relevant item information, such as title, description, status, priority, assigned sprint, related epic, etc.
+- All fields are accurately populated with the current data for the item being viewed.
+- Each field is presented using the appropriate input type (e.g., text fields, dropdowns, date pickers) based on the nature of the data it represents.
+- The detailed view provides options to edit the item's information directly from this screen.
+- The detailed view includes a "Close" or "Back" option to return.
+- The UI is responsive and maintains a consistent, user-friendly design across different device sizes.
+
+**Relation to Project Goal**: Implementing a detailed item view directly supports the project's goal of enhancing productivity and streamlining workflow management. By providing users with a comprehensive, focused view of individual items, this feature significantly improves the ability to review, update, and manage task details efficiently. This granular access to item information enables more informed decision-making, facilitates accurate updates, and supports thorough project tracking. The ability to quickly access and modify item details contributes to maintaining an up-to-date and well-organized project backlog, ultimately supporting agile methodologies and improving overall project management effectiveness.
+
+#### [USER STORY] Item Delete
+
+**Description**: Implement functionality to allow users to delete items from the project backlog efficiently and safely.
+
+**User Story**: As a user, I want to be able to delete items from the backlog that are no longer relevant or needed, so that I can maintain a clean and up-to-date project overview.
+
+**Acceptance Criteria**:
+
+- Each item row in the item table has a clearly visible and accessible delete button or icon.
+- Clicking the delete button prompts a confirmation dialog to prevent accidental deletions.
+- The confirmation dialog clearly states the consequences of deleting the item and asks for user confirmation.
+- Upon confirmation, a DELETE request is sent to the server to remove the item.
+- If the deletion fails, an error notification is displayed to the user with a clear explanation of the issue.
+- On successful deletion, a success message is briefly shown to the user.
+- After successful deletion, the item table is automatically refreshed to reflect the changes without requiring a page reload.
+
+**Relation to Project Goal**: Implementing a robust item deletion feature directly supports the project's goal of streamlining workflow management and enhancing productivity. By allowing users to efficiently remove obsolete or unnecessary items, this feature helps maintain a clean, relevant, and manageable backlog. This contributes to improved focus on active and important tasks, reduces clutter, and supports agile methodologies by ensuring the backlog remains a dynamic and accurate reflection of current project needs. The careful implementation with confirmation dialogs and clear feedback also aligns with the project's aim to provide a user-friendly and error-resistant interface, ultimately leading to more effective project management and increased productivity.
+
+#### [USER STORY] Edit Item Epic
+
+**Description**: Implement functionality to allow users to modify an item's associated epic.
+
+**User Story**: As a user, I want to be able to change an item's associated epic so that I can maintain accurate project organization and adapt to evolving project structures.
+
+**Acceptance Criteria**:
+
+- The item detail form includes a clearly labeled dropdown field for selecting an epic.
+- The epic dropdown is populated with all available epics in the project.
+- When a new epic is selected, a PATCH request is automatically sent to update the item's epic association.
+- Upon successful update a success notification is displayed to the user.
+- The epic field in the form is updated to reflect the new selection.
+- The item is visually moved from its original epic's item table to the new epic's item table in the backlog view.
+- If the update fails an error notification is shown with a clear explanation of the issue.
+- If the update fails the epic field reverts to its original value.
+
+**Relation to Project Goals**: This feature directly supports the project's aim of streamlining workflow management and enhancing productivity. By allowing users to easily reassign items to different epics, it facilitates dynamic project organization, enabling teams to adapt quickly to changing priorities or project structures. This flexibility is crucial for maintaining an up-to-date and relevant backlog, which is essential for effective agile project management. The seamless update process, with its immediate visual feedback, contributes to a more intuitive and efficient user experience, ultimately leading to improved project oversight and productivity.
+
+#### [USER STORY] Edit Item Priority
+
+**Description**: Implement functionality to allow users to modify an item's priority level efficiently within the item view.
+
+**User Story**: As a user, I want to be able to update an item's priority level quickly and easily, so that I can accurately reflect changing project needs and maintain an up-to-date backlog.
+
+**Acceptance Criteria**:
+
+- The item detail view includes a clearly labeled dropdown menu for selecting priority levels.
+- The priority dropdown is populated with all available priority levels (Optional, Beneficial, Essential & Critical).
+- When a new priority is selected, a PATCH request is automatically sent to update the item's priority.
+- Upon successful update, a success notification is displayed to the user.
+- The priority field in the form is immediately updated to reflect the new selection.
+- The item's priority in the backlog view is visually updated without requiring a page reload.
+- If the update fails, an error notification is shown with a clear explanation of the issue.
+- In case of failure, the priority field reverts to its original value.
+
+**Relation to Project Goals**: This feature directly supports the project's aim of streamlining workflow management and enhancing productivity. By allowing users to quickly adjust item priorities, it enables teams to respond dynamically to changing project demands. This flexibility is crucial for maintaining an accurate and relevant backlog, which is essential for effective agile project management. The seamless update process, with its immediate visual feedback, contributes to a more intuitive and efficient user experience, ultimately leading to improved project oversight, better resource allocation, and increased overall productivity.
+
+#### [USER STORY] Edit Item Status
+
+**Description**: Implement functionality to allow users to modify an item's status efficiently within the item detail view.
+
+**User Story**: As a user, I want to be able to update an item's status quickly and easily, so that I can accurately reflect the current progress of tasks and maintain an up-to-date project overview.
+
+**Acceptance Criteria**:
+
+- The item detail view includes a clearly labeled dropdown menu for selecting status options.
+- The status dropdown is populated with all available status options (To Do, In Progress, Review, Done).
+- When a new status is selected, a PATCH request is automatically sent to update the item's status.
+- Upon successful update, a success notification is displayed to the user.
+- The status field in the form is immediately updated to reflect the new selection.
+- The item's status in the backlog view is visually updated without requiring a page reload.
+- If the update fails, an error notification is shown with a clear explanation of the issue.
+- In case of failure, the status field reverts to its original value.
+
+**Relation to Project Goals**: This feature directly supports the project's aim of streamlining workflow management and enhancing productivity. By allowing users to quickly update item statuses, it enables teams to maintain an accurate and real-time view of project progress. This functionality is crucial for effective agile project management, as it facilitates transparency, improves communication, and helps in identifying bottlenecks or delays promptly. The seamless update process, with its immediate visual feedback, contributes to a more intuitive and efficient user experience, ultimately leading to improved project oversight, better task management, and increased overall productivity.
+
+#### [USER STORY] Edit Item Due Date
+
+**Description**: Implement functionality to allow users to modify an item's due date efficiently within the item detail view.
+
+**User Story**: As a user, I want to be able to update an item's due date quickly and easily, so that I can accurately reflect changing deadlines and maintain an up-to-date project timeline.
+
+**Acceptance Criteria**:
+
+- The item detail view includes a clearly labeled date picker component for selecting the due date.
+- The date picker is pre-populated with the item's current due date if one exists.
+- When a new date is selected, the date is correctly formatted according to project standards.
+- Upon date selection, a PATCH request is automatically sent to update the item's due date.
+- Upon successful update, a success notification is displayed to the user.
+- The due date field in the form is immediately updated to reflect the new selection.
+- The item's due date in the backlog view is visually updated without requiring a page reload.
+- If the update fails, an error notification is shown with a clear explanation of the issue.
+- In case of failure, the due date field reverts to its original value.
+
+**Relation to Project Goals**: This feature directly supports the project's aim of streamlining workflow management and enhancing productivity. By allowing users to easily update item due dates, it enables teams to maintain an accurate and up-to-date project timeline. This functionality is crucial for effective project management, as it helps in prioritizing tasks, managing resources, and meeting deadlines. The seamless update process, with its immediate visual feedback, contributes to a more intuitive and efficient user experience, ultimately leading to improved project oversight, better time management, and increased overall productivity.
+
+#### [USER STORY] Edit Item Sprint
+
+**Description**: Implement functionality to allow users to modify an item's assigned sprint efficiently within the item detail view.
+
+**User Story**: As a user, I want to be able to update an item's sprint assignment quickly and easily, so that I can effectively manage the project's timeline and resource allocation across sprints.
+
+**Acceptance Criteria**:
+
+- The item detail view includes a clearly labeled dropdown component for selecting the sprint.
+- The sprint dropdown is populated with all available sprints in the project.
+- The dropdown's default value is set to the item's current sprint if one is assigned.
+- When a new sprint is selected, a PATCH request is automatically sent to update the item's sprint assignment.
+- Upon successful update, a success notification is displayed to the user.
+- The sprint field in the form is immediately updated to reflect the new selection.
+- The item's sprint assignment in the backlog view is visually updated without requiring a page reload.
+- If the update fails, an error notification is shown with a clear explanation of the issue.
+- In case of failure, the sprint field reverts to its original value.
+
+**Relation to Project Goals**: This feature directly supports the project's aim of providing a streamlined and efficient project management tool. By allowing users to easily reassign items to different sprints, it enhances the flexibility of project planning and facilitates agile methodologies. This functionality is crucial for maintaining an up-to-date and accurate project timeline, enabling teams to adapt quickly to changing priorities or resource constraints. The seamless update process, with its immediate visual feedback across different views, contributes to a more intuitive and efficient user experience. This aligns with the project's goal of offering a minimalistic yet powerful tool that enhances productivity and simplifies project management processes.
+
+#### [USER STORY] Edit Item Description
+
+**Description**: Implement functionality to allow users to edit an item's description efficiently within the item detail view.
+
+**User Story**: As a user, I want to be able to edit an item's description easily, so that I can provide and maintain accurate and up-to-date information about the item.
+
+**Acceptance Criteria**:
+
+- The item detail view displays a text area for the item's description.
+- The text area is pre-populated with the current description if one exists.
+- By default, the description field is in read-only mode.
+- An "Edit" button is clearly visible near the description field.
+- Clicking the "Edit" button makes the description field editable and changes the button to "Save".
+- While editing, users can modify the existing text or add new content.
+- Clicking the "Save" button triggers a PATCH request to update the item's description.
+- Upon successful update:
+  - A success notification is displayed to the user.
+  - The description field returns to read-only mode.
+  - The "Save" button changes back to "Edit".
+- If the update fails:
+  - An error notification is shown with a clear explanation.
+  - The description field remains editable.
+  - The user can retry saving or cancel the edit.
+
+**Relation to Project Goals**: This feature directly supports the project's aim of providing a streamlined and efficient project management tool. By allowing users to easily view and update item descriptions, it enhances communication and clarity within the project. This functionality is crucial for maintaining detailed and accurate information about tasks, which is essential for effective collaboration and project execution. The intuitive edit-save process, with its immediate feedback, contributes to a user-friendly experience that aligns with ish's goal of offering a minimalistic yet powerful tool. This feature enhances overall productivity by ensuring that all team members have access to up-to-date and comprehensive item information, facilitating better decision-making and task management.
+
+#### [USER STORY] Edit Item User Story
+
+**Description**: Implement functionality to allow users to edit and update an item's user story efficiently within the item detail view.
+
+**User Story**: As a user, I want to be able to edit an item's user story easily, so that I can provide and maintain accurate and up-to-date information about the user story.
+
+**Acceptance Criteria**:
+
+- The item detail view includes a text field for the user story.
+- The text field is pre-populated with the item's current user story if one exists.
+- By default, the user story field is in read-only mode.
+- An "Edit" button is clearly visible near the user story field.
+- Clicking the "Edit" button makes the user story field editable and changes the button to "Save".
+- While editing, users can modify the existing text or add new content.
+- Clicking the "Save" button triggers a PATCH request to update the item's user story.
+- Upon successful update:
+  - A success notification is displayed to the user.
+  - The user story field returns to read-only mode.
+  - The "Save" button changes back to "Edit".
+- If the update fails:
+  - An error notification is shown with a clear explanation.
+  - The user story field remains editable.
+
+**Relation to Project Goals**: This feature directly supports the project's aim of providing a streamlined and efficient project management tool. By allowing users to easily view and update user stories, it enhances communication and clarity within the project. This functionality is crucial for maintaining detailed and accurate information about tasks, which is essential for effective collaboration and project execution. The intuitive edit-save process, with its immediate feedback, contributes to a user-friendly experience that aligns with ish's goal of offering a minimalistic yet powerful tool. This feature enhances overall productivity by ensuring that all team members have access to up-to-date and comprehensive user story information, facilitating better decision-making and task management.
+
+#### [USER STORY] Add Item Subtasks
+
+**Description**: Implement functionality to allow users to add and view subtasks within an item.
+
+**User Story**: As a user, I want to be able to add and view subtasks for an item, so that I can break down tasks into smaller, manageable parts and track their progress.
+
+**Acceptance Criteria**:
+
+- The item detail view includes a container that lists all existing subtasks, if any.
+- Each subtask is displayed as a checkbox and a read-only text field.
+- The text field is populated with the subtask title.
+- The subtask container has an "Add" button.
+- Clicking the "Add" button generates a new blank subtask item.
+- Focus is automatically set to the new subtask item's text field.
+- The new subtask item's text field includes a "Save" button.
+- Clicking the "Save" button sends a PATCH request to the server with an updated JSON object that includes the new subtask.
+- Upon successful request:
+  - The "Save" button disappears and is replaced by "Edit" and "Delete" buttons.
+  - A success notification is displayed to the user.
+- If the request fails:
+  - An error notification is shown with a clear explanation.
+  - The subtask item remains editable.
+
+**Relation to Project Goals**: This feature supports the project's goal of providing a streamlined and efficient project management tool. By allowing users to add and manage subtasks, it enhances task organization and tracking, which is essential for effective project execution. This functionality aligns with ish's aim of offering a minimalistic yet powerful tool, improving overall productivity by enabling users to break down tasks into smaller, manageable parts and track their progress efficiently.
+
+#### [USER STORY] Edit Item Subtasks
+
+**Description**: Implement functionality to allow users to edit subtasks within an item.
+
+**User Story**: As a user, I want to be able to edit subtasks within an item so that I can update and maintain accurate information about the subtasks.
+
+**Acceptance Criteria**:
+
+- Each subtask item includes an edit button within the text field.
+- The edit button is hidden by default and becomes visible when hovering over the subtask item.
+- The subtask item text field is read-only by default.
+- Clicking the edit button makes the text field editable.
+- When the edit button is clicked, it is replaced with a save button.
+- Clicking the save button sends a PATCH request to the server with the updated subtasks JSON object.
+- Upon successful update:
+  - A success notification is displayed to the user.
+  - The text field becomes read-only again.
+  - The save button is replaced by the edit button.
+- If the update fails:
+  - An error notification is shown to the user with a clear explanation.
+  - The text field remains in its editable state.
+
+**Relation to Project Goals**: This feature directly supports the project's goal of providing a streamlined and efficient project management tool. By allowing users to easily edit subtasks, it enhances task management and ensures that all information remains accurate and up-to-date. This functionality is crucial for maintaining detailed and organized task information, which is essential for effective project execution and collaboration. The intuitive edit-save process, with immediate feedback, aligns with ish's goal of offering a minimalistic yet powerful tool, ultimately improving overall productivity and task management efficiency.
+
+#### [USER STORY] Delete Item Subtasks
+
+**Description**: Implement functionality to allow users to delete subtasks within an item.
+
+**User Story**: As a user, I want to be able to delete subtasks within an item so that I can remove tasks that are no longer needed or relevant.
+
+**Acceptance Criteria**:
+
+- Each subtask item includes a delete button within the text field.
+- The delete button is hidden by default and becomes visible when hovering over the subtask item.
+- Clicking the delete button removes the subtask item from the JSON and makes a PATCH request to the server with the updated JSON object.
+- Upon successful update:
+  - A success notification is shown to the user.
+  - The subtask item is removed from the list.
+- If the update fails:
+  - An error notification is shown to the user with a clear explanation.
+  - The subtask item remains in the list.
+
+**Relation to Project Goals**: This feature supports the project's goal of providing a streamlined and efficient project management tool. By allowing users to delete subtasks, it enhances task management and ensures that only relevant tasks are tracked. This functionality aligns with ish's aim of offering a minimalistic yet powerful tool, improving overall productivity by enabling users to maintain an organized and up-to-date task list.
+
+#### [USER STORY] Toggle Subtask Done Status
+
+**Description**: Implement functionality to toggle the done status of subtasks within an item.
+
+**User Story**: As a user, I want to be able to mark subtasks as done or not done so that I can easily track the progress of my tasks.
+
+**Acceptance Criteria**:
+
+- Each subtask item includes a checkbox.
+- The checked/unchecked state of the checkbox corresponds to the `done` property in the subtask JSON object.
+- When a subtask item is marked as done, the text in the text field is displayed with a strikethrough and greyed out.
+- Clicking the checkbox toggles the `done` property in the subtask JSON object and sends a PATCH request to the server with the updated JSON object.
+- The text of the subtask item updates to reflect the done status (original for not done, strikethrough and greyed out for done) when the checkbox is clicked.
+- Upon successful update:
+  - A success notification is displayed to the user.
+- If the update fails:
+  - An error notification is shown to the user.
+
+**Relation to Project Goals**: This feature supports the project's goal of providing a streamlined and efficient project management tool. By allowing users to easily mark subtasks as done or not done, it enhances task tracking and organization. This functionality aligns with ish's aim of offering a minimalistic yet powerful tool, improving overall productivity by enabling users to visually track the completion status of their tasks.
