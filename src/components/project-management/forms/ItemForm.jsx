@@ -74,7 +74,7 @@ ItemForm.propTypes = {
 function ItemForm(props) {
   const { currentProject, getItemData, epicData, sprintData } =
     useContext(ProjectContext);
-  const { authTokens } = useContext(AuthContext);
+  const { API_URL, authTokens } = useContext(AuthContext);
   const { toast } = useToast();
 
   let [create, setCreate] = useState(props.create);
@@ -127,29 +127,48 @@ function ItemForm(props) {
    */
   const saveDescription = async () => {
     if (!create) {
-      // Only attempt update if not in create mode
-      const apiUrl = import.meta.env.VITE_API_URL;
-      let response = await fetch(
-        `${apiUrl}/projects/${currentProject.id}/items/${userStoryId}/`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + String(authTokens.access),
-          },
-          body: JSON.stringify({
-            description: description,
-          }),
+      try {
+        // Only attempt update if not in create mode
+        let response = await fetch(
+          `${API_URL}/projects/${currentProject.id}/items/${userStoryId}/`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + String(authTokens.access),
+            },
+            body: JSON.stringify({
+              description: description,
+            }),
+          }
+        );
+        if (response.status === 200) {
+          toast({ description: "Description updated" });
+          props.fetchItemData();
+        } else {
+          toast({
+            variant: "destructive",
+            description: "An error occured while updating the description",
+          });
         }
-      );
-      if (response.status === 200) {
-        toast({ description: "Description updated" });
-        props.fetchItemData();
-      } else {
-        toast({
-          variant: "destructive",
-          description: "Problem updating description",
-        });
+      } catch (error) {
+        console.error("Error saving description:", error);
+        if (
+          error instanceof TypeError &&
+          error.message.includes("Failed to fetch")
+        ) {
+          toast({
+            variant: "destructive",
+            description:
+              "Network error. Please check your internet connection.",
+          });
+        } else {
+          toast({
+            variant: "destructive",
+            description:
+              "An unexpected error occurred. Please try again later.",
+          });
+        }
       }
     }
   };
@@ -159,30 +178,54 @@ function ItemForm(props) {
    */
   const updateUserStory = async () => {
     if (!create) {
-      // Only attempt update if not in create mode
-      const apiUrl = import.meta.env.VITE_API_URL;
-      let response = await fetch(
-        `${apiUrl}/projects/${currentProject.id}/items/${userStoryId}/`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + String(authTokens.access),
-          },
-          body: JSON.stringify({
-            user_story: userStory,
-          }),
+      try {
+        // Only attempt update if not in create mode
+        let response = await fetch(
+          `${API_URL}/projects/${currentProject.id}/items/${userStoryId}/`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + String(authTokens.access),
+            },
+            body: JSON.stringify({
+              user_story: userStory,
+            }),
+          }
+        );
+        let data = await response.json();
+        if (response.status === 200) {
+          toast({ description: "User Story updated" });
+          props.fetchItemData();
+        } else {
+          console.log(
+            `An error occured while updating user: ${JSON.stringify(data)}`
+          );
+          toast({
+            variant: "destructive",
+            description: `An error occured while updating user: ${JSON.stringify(
+              data
+            )}`,
+          });
         }
-      );
-      let data = await response.json();
-      if (response.status === 200) {
-        toast({ description: "User Story updated" });
-        props.fetchItemData();
-      } else {
-        toast({
-          variant: "destructive",
-          description: `Problem updating user story: ${JSON.stringify(data)}`,
-        });
+      } catch (error) {
+        console.error("Error saving user story:", error);
+        if (
+          error instanceof TypeError &&
+          error.message.includes("Failed to fetch")
+        ) {
+          toast({
+            variant: "destructive",
+            description:
+              "Network error. Please check your internet connection.",
+          });
+        } else {
+          toast({
+            variant: "destructive",
+            description:
+              "An unexpected error occurred. Please try again later.",
+          });
+        }
       }
     }
   };
@@ -194,30 +237,49 @@ function ItemForm(props) {
    */
   const updateEpic = async (value) => {
     if (!create) {
-      // Only attempt update if not in create mode
-      const apiUrl = import.meta.env.VITE_API_URL;
-      let response = await fetch(
-        `${apiUrl}/projects/${currentProject.id}/items/${userStoryId}/`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + String(authTokens.access),
-          },
-          body: JSON.stringify({
-            epic: value,
-          }),
+      try {
+        // Only attempt update if not in create mode
+        let response = await fetch(
+          `${API_URL}/projects/${currentProject.id}/items/${userStoryId}/`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + String(authTokens.access),
+            },
+            body: JSON.stringify({
+              epic: value,
+            }),
+          }
+        );
+        if (response.status === 200) {
+          toast({ description: "Epic updated" });
+          setEpic(value);
+          getItemData();
+        } else {
+          toast({
+            variant: "destructive",
+            description: "Problem updating epic",
+          });
         }
-      );
-      if (response.status === 200) {
-        toast({ description: "Epic updated" });
-        setEpic(value);
-        getItemData();
-      } else {
-        toast({
-          variant: "destructive",
-          description: "Problem updating epic",
-        });
+      } catch (error) {
+        console.error("Error updating epic:", error);
+        if (
+          error instanceof TypeError &&
+          error.message.includes("Failed to fetch")
+        ) {
+          toast({
+            variant: "destructive",
+            description:
+              "Network error. Please check your internet connection.",
+          });
+        } else {
+          toast({
+            variant: "destructive",
+            description:
+              "An unexpected error occurred. Please try again later.",
+          });
+        }
       }
     } else {
       setEpic(value);
@@ -231,31 +293,55 @@ function ItemForm(props) {
    */
   const updatePriority = async (value) => {
     if (!create) {
-      // Only attempt update if not in create mode
-      const apiUrl = import.meta.env.VITE_API_URL;
-      let response = await fetch(
-        `${apiUrl}/projects/${currentProject.id}/items/${userStoryId}/`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + String(authTokens.access),
-          },
-          body: JSON.stringify({
-            priority: value,
-          }),
+      try {
+        // Only attempt update if not in create mode
+        let response = await fetch(
+          `${API_URL}/projects/${currentProject.id}/items/${userStoryId}/`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + String(authTokens.access),
+            },
+            body: JSON.stringify({
+              priority: value,
+            }),
+          }
+        );
+        let data = await response.json();
+        if (response.status === 200) {
+          toast({ description: "Priority updated" });
+          setPriority(value);
+          props.fetchItemData();
+        } else {
+          console.log(
+            `An error occurred while updating priority: ${JSON.stringify(data)}`
+          );
+          toast({
+            variant: "destructive",
+            description: `An error occurred while updating priority: ${JSON.stringify(
+              data
+            )}`,
+          });
         }
-      );
-      let data = await response.json();
-      if (response.status === 200) {
-        toast({ description: "Priority updated" });
-        setPriority(value);
-        props.fetchItemData();
-      } else {
-        toast({
-          variant: "destructive",
-          description: `Problem updating priority: ${JSON.stringify(data)}`,
-        });
+      } catch (error) {
+        console.error("Error updating priority:", error);
+        if (
+          error instanceof TypeError &&
+          error.message.includes("Failed to fetch")
+        ) {
+          toast({
+            variant: "destructive",
+            description:
+              "Network error. Please check your internet connection.",
+          });
+        } else {
+          toast({
+            variant: "destructive",
+            description:
+              "An unexpected error occurred. Please try again later.",
+          });
+        }
       }
     } else {
       setPriority(value);
@@ -269,31 +355,55 @@ function ItemForm(props) {
    */
   const updateDueDate = async (value) => {
     if (!create) {
-      // Only attempt update if not in create mode
-      const apiUrl = import.meta.env.VITE_API_URL;
-      let response = await fetch(
-        `${apiUrl}/projects/${currentProject.id}/items/${userStoryId}/`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + String(authTokens.access),
-          },
-          body: JSON.stringify({
-            due_date: formatDate(value),
-          }),
+      try {
+        // Only attempt update if not in create mode
+        let response = await fetch(
+          `${API_URL}/projects/${currentProject.id}/items/${userStoryId}/`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + String(authTokens.access),
+            },
+            body: JSON.stringify({
+              due_date: formatDate(value),
+            }),
+          }
+        );
+        let data = await response.json();
+        if (response.status === 200) {
+          toast({ description: "Due date updated" });
+          setDuedate(value);
+          props.fetchItemData();
+        } else {
+          console.log(
+            `An error occurred while updating due date: ${JSON.stringify(data)}`
+          );
+          toast({
+            variant: "destructive",
+            description: `An error occurred while updating due date: ${JSON.stringify(
+              data
+            )}`,
+          });
         }
-      );
-      let data = await response.json();
-      if (response.status === 200) {
-        toast({ description: "Due date updated" });
-        setDuedate(value);
-        props.fetchItemData();
-      } else {
-        toast({
-          variant: "destructive",
-          description: `Problem updating due date: ${JSON.stringify(data)}`,
-        });
+      } catch (error) {
+        console.error("Error updating due date:", error);
+        if (
+          error instanceof TypeError &&
+          error.message.includes("Failed to fetch")
+        ) {
+          toast({
+            variant: "destructive",
+            description:
+              "Network error. Please check your internet connection.",
+          });
+        } else {
+          toast({
+            variant: "destructive",
+            description:
+              "An unexpected error occurred. Please try again later.",
+          });
+        }
       }
     } else {
       setDuedate(value);
@@ -307,31 +417,55 @@ function ItemForm(props) {
    */
   const updateStatus = async (value) => {
     if (!create) {
-      // Only attempt update if not in create mode
-      const apiUrl = import.meta.env.VITE_API_URL;
-      let response = await fetch(
-        `${apiUrl}/projects/${currentProject.id}/items/${userStoryId}/`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + String(authTokens.access),
-          },
-          body: JSON.stringify({
-            status: value,
-          }),
+      try {
+        // Only attempt update if not in create mode
+        let response = await fetch(
+          `${API_URL}/projects/${currentProject.id}/items/${userStoryId}/`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + String(authTokens.access),
+            },
+            body: JSON.stringify({
+              status: value,
+            }),
+          }
+        );
+        let data = await response.json();
+        if (response.status === 200) {
+          toast({ description: "Status updated" });
+          setStatus(value);
+          props.fetchItemData();
+        } else {
+          console.log(
+            `An error occurred while updating status: ${JSON.stringify(data)}`
+          );
+          toast({
+            variant: "destructive",
+            description: `An error occurred while updating status: ${JSON.stringify(
+              data
+            )}`,
+          });
         }
-      );
-      let data = await response.json();
-      if (response.status === 200) {
-        toast({ description: "Status updated" });
-        setStatus(value);
-        props.fetchItemData();
-      } else {
-        toast({
-          variant: "destructive",
-          description: `Problem updating status: ${JSON.stringify(data)}`,
-        });
+      } catch (error) {
+        console.error("Error updating status:", error);
+        if (
+          error instanceof TypeError &&
+          error.message.includes("Failed to fetch")
+        ) {
+          toast({
+            variant: "destructive",
+            description:
+              "Network error. Please check your internet connection.",
+          });
+        } else {
+          toast({
+            variant: "destructive",
+            description:
+              "An unexpected error occurred. Please try again later.",
+          });
+        }
       }
     } else {
       setStatus(value);
@@ -345,31 +479,51 @@ function ItemForm(props) {
    */
   const updateSprint = async (value) => {
     if (!create) {
-      // Only attempt update if not in create mode
-      const apiUrl = import.meta.env.VITE_API_URL;
-      let response = await fetch(
-        `${apiUrl}/projects/${currentProject.id}/items/${userStoryId}/`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + String(authTokens.access),
-          },
-          body: JSON.stringify({
-            sprint: value,
-          }),
+      try {
+        // Only attempt update if not in create mode
+        let response = await fetch(
+          `${API_URL}/projects/${currentProject.id}/items/${userStoryId}/`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + String(authTokens.access),
+            },
+            body: JSON.stringify({
+              sprint: value,
+            }),
+          }
+        );
+        let data = await response.json();
+        if (response.status === 200) {
+          toast({ description: "Sprint updated" });
+          setSprint(value);
+          props.fetchItemData();
+        } else {
+          console.log(`Problem updating sprint: ${JSON.stringify(data)}`);
+          toast({
+            variant: "destructive",
+            description: `Problem updating sprint: ${JSON.stringify(data)}`,
+          });
         }
-      );
-      let data = await response.json();
-      if (response.status === 200) {
-        toast({ description: "Sprint updated" });
-        setSprint(value);
-        props.fetchItemData();
-      } else {
-        toast({
-          variant: "destructive",
-          description: `Problem updating sprint: ${JSON.stringify(data)}`,
-        });
+      } catch (error) {
+        console.error("Error updating sprint:", error);
+        if (
+          error instanceof TypeError &&
+          error.message.includes("Failed to fetch")
+        ) {
+          toast({
+            variant: "destructive",
+            description:
+              "Network error. Please check your internet connection.",
+          });
+        } else {
+          toast({
+            variant: "destructive",
+            description:
+              "An unexpected error occurred. Please try again later.",
+          });
+        }
       }
     } else {
       setSprint(value);
@@ -404,36 +558,63 @@ function ItemForm(props) {
 
     // Attempt to update the value on the server
     if (!create) {
-      // Only attempt update if not in create mode
-      const apiUrl = import.meta.env.VITE_API_URL;
-      let response = await fetch(
-        `${apiUrl}/projects/${currentProject.id}/items/${userStoryId}/`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + String(authTokens.access),
-          },
-          body: JSON.stringify({
-            acceptance_criteria: newAcceptanceCriteriaArray,
-          }),
+      try {
+        // Only attempt update if not in create mode
+        let response = await fetch(
+          `${API_URL}/projects/${currentProject.id}/items/${userStoryId}/`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + String(authTokens.access),
+            },
+            body: JSON.stringify({
+              acceptance_criteria: newAcceptanceCriteriaArray,
+            }),
+          }
+        );
+        let data = await response.json();
+        if (response.status === 200) {
+          toast({ description: "Acceptance criteria updated" });
+          setAcceptanceCriteria([...acceptanceCriteria, object]);
+          // Reset variables
+          setCreatingAcceptanceCriteria(false);
+          setNewAcceptanceCriteria("");
+          props.fetchItemData();
+        } else {
+          console.log(
+            `An error occurred while updating acceptance criteria: ${JSON.stringify(
+              data
+            )}`
+          );
+          toast({
+            variant: "destructive",
+            description: `An error occurred while updating acceptance criteria: ${JSON.stringify(
+              data
+            )}`,
+          });
         }
-      );
-      let data = await response.json();
-      if (response.status === 200) {
-        toast({ description: "Acceptance criteria updated" });
-        setAcceptanceCriteria([...acceptanceCriteria, object]);
-        // Reset variables
-        setCreatingAcceptanceCriteria(false);
-        setNewAcceptanceCriteria("");
-        props.fetchItemData();
-      } else {
-        toast({
-          variant: "destructive",
-          description: `Problem updating acceptance criteria: ${JSON.stringify(
-            data
-          )}`,
-        });
+      } catch (error) {
+        console.error(
+          "An error occurred while updating acceptance criteria:",
+          error
+        );
+        if (
+          error instanceof TypeError &&
+          error.message.includes("Failed to fetch")
+        ) {
+          toast({
+            variant: "destructive",
+            description:
+              "Network error. Please check your internet connection.",
+          });
+        } else {
+          toast({
+            variant: "destructive",
+            description:
+              "An unexpected error occurred. Please try again later.",
+          });
+        }
       }
     } else {
       setAcceptanceCriteria([...acceptanceCriteria, object]);
@@ -469,34 +650,58 @@ function ItemForm(props) {
 
     // Attempt to update the value on the server
     if (!create) {
-      // Only attempt update if not in create mode
-      const apiUrl = import.meta.env.VITE_API_URL;
-      let response = await fetch(
-        `${apiUrl}/projects/${currentProject.id}/items/${userStoryId}/`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + String(authTokens.access),
-          },
-          body: JSON.stringify({
-            subtasks: updatedSubstasksArray,
-          }),
+      try {
+        // Only attempt update if not in create mode
+        let response = await fetch(
+          `${API_URL}/projects/${currentProject.id}/items/${userStoryId}/`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + String(authTokens.access),
+            },
+            body: JSON.stringify({
+              subtasks: updatedSubstasksArray,
+            }),
+          }
+        );
+        let data = await response.json();
+        if (response.status === 200) {
+          toast({ description: "Subtasks updated" });
+          setSubtasks(updatedSubstasksArray);
+          // Reset variables
+          setCreatingSubtasks(false);
+          setNewSubtask("");
+          props.fetchItemData();
+        } else {
+          console.log(
+            `An error occurred while updating subtasks: ${JSON.stringify(data)}`
+          );
+          toast({
+            variant: "destructive",
+            description: `An error occurred while updating subtasks: ${JSON.stringify(
+              data
+            )}`,
+          });
         }
-      );
-      let data = await response.json();
-      if (response.status === 200) {
-        toast({ description: "Subtasks updated" });
-        setSubtasks(updatedSubstasksArray);
-        // Reset variables
-        setCreatingSubtasks(false);
-        setNewSubtask("");
-        props.fetchItemData();
-      } else {
-        toast({
-          variant: "destructive",
-          description: `Problem updating subtasks: ${JSON.stringify(data)}`,
-        });
+      } catch (error) {
+        console.error("An error occurred while updating subtasks:", error);
+        if (
+          error instanceof TypeError &&
+          error.message.includes("Failed to fetch")
+        ) {
+          toast({
+            variant: "destructive",
+            description:
+              "Network error. Please check your internet connection.",
+          });
+        } else {
+          toast({
+            variant: "destructive",
+            description:
+              "An unexpected error occurred. Please try again later.",
+          });
+        }
       }
     } else {
       setSubtasks(updatedSubstasksArray);
@@ -515,32 +720,59 @@ function ItemForm(props) {
     );
     setAcceptanceCriteria(updatedAcceptanceCriteria);
     if (!create) {
-      // Only attempt update if not in create mode
-      const apiUrl = import.meta.env.VITE_API_URL;
-      let response = await fetch(
-        `${apiUrl}/projects/${currentProject.id}/items/${userStoryId}/`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + String(authTokens.access),
-          },
-          body: JSON.stringify({
-            acceptance_criteria: updatedAcceptanceCriteria,
-          }),
+      try {
+        // Only attempt update if not in create mode
+        let response = await fetch(
+          `${API_URL}/projects/${currentProject.id}/items/${userStoryId}/`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + String(authTokens.access),
+            },
+            body: JSON.stringify({
+              acceptance_criteria: updatedAcceptanceCriteria,
+            }),
+          }
+        );
+        let data = await response.json();
+        if (response.status === 200) {
+          toast({ description: "Acceptance criteria status updated" });
+          props.fetchItemData();
+        } else {
+          console.log(
+            `An error occurred while updating acceptance criteria status: ${JSON.stringify(
+              data
+            )}`
+          );
+          toast({
+            variant: "destructive",
+            description: `An error occurred while updating acceptance criteria status: ${JSON.stringify(
+              data
+            )}`,
+          });
         }
-      );
-      let data = await response.json();
-      if (response.status === 200) {
-        toast({ description: "Acceptance criteria updated" });
-        props.fetchItemData();
-      } else {
-        toast({
-          variant: "destructive",
-          description: `Problem updating acceptance criteria: ${JSON.stringify(
-            data
-          )}`,
-        });
+      } catch (error) {
+        console.error(
+          "An error occurred while updating acceptance criteria status:",
+          error
+        );
+        if (
+          error instanceof TypeError &&
+          error.message.includes("Failed to fetch")
+        ) {
+          toast({
+            variant: "destructive",
+            description:
+              "Network error. Please check your internet connection.",
+          });
+        } else {
+          toast({
+            variant: "destructive",
+            description:
+              "An unexpected error occurred. Please try again later.",
+          });
+        }
       }
     }
   };

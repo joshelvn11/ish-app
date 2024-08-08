@@ -8,6 +8,8 @@ const AuthContext = React.createContext();
 export default AuthContext;
 
 export const AuthProvider = ({ children }) => {
+  const API_URL = import.meta.env.VITE_API_URL;
+
   let [user, setUser] = useState(() =>
     localStorage.getItem("authTokens")
       ? jwtDecode(localStorage.getItem("authTokens"))
@@ -30,8 +32,7 @@ export const AuthProvider = ({ children }) => {
     e.preventDefault();
 
     try {
-      const apiUrl = import.meta.env.VITE_API_URL;
-      const response = await fetch(`${apiUrl}/token/`, {
+      const response = await fetch(`${API_URL}/token/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -69,8 +70,7 @@ export const AuthProvider = ({ children }) => {
 
   let signUpUser = async (e) => {
     e.preventDefault();
-    const apiUrl = import.meta.env.VITE_API_URL;
-    const response = await fetch(`${apiUrl}/register/`, {
+    const response = await fetch(`${API_URL}/register/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -108,8 +108,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const updateToken = async () => {
-    const apiUrl = import.meta.env.VITE_API_URL;
-    const response = await fetch(`${apiUrl}/token/refresh/`, {
+    const response = await fetch(`${API_URL}/token/refresh/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -128,8 +127,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const getProfile = async () => {
-    const apiUrl = import.meta.env.VITE_API_URL;
-    let response = await fetch(`${apiUrl}/profile`, {
+    let response = await fetch(`${API_URL}/profile`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -145,6 +143,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   let contextData = {
+    API_URL: API_URL,
     authTokens: authTokens,
     user: user,
     profile: profile,

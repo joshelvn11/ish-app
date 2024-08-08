@@ -117,11 +117,12 @@ function ItemTableRow(props) {
       setUserStory(data.user_story);
       setAcceptanceCriteria(data.acceptance_criteria);
       setSubtasks(data.subtasks);
-      toast({ description: "Item data updated successfully" });
     } else {
       toast({
         variant: "destructive",
-        description: `Problem fetching data: ${JSON.stringify(data)}`,
+        description: `An error occurred while fetching item data: ${JSON.stringify(
+          data
+        )}`,
       });
     }
   };
