@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app  # Mount the project directory to /app inside the container
+      - /app/node_modules  # Avoid overwriting node_modules
+    ports:
+      - "8080:8080"  # Map the Vite development server port
+    environment:
+      - NODE_ENV=development
+    command: npm run dev  # Command to run the Vite development server

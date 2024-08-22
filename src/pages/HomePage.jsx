@@ -6,7 +6,7 @@ const HomePage = () => {
 
   return (
     <div>
-      <p>You are logged in to the homepage!</p>
+      <p>You are logged in!</p>
       <p>
         Name: {profile.first_name} {profile.last_name}
       </p>
