@@ -74,7 +74,7 @@ ItemForm.propTypes = {
 function ItemForm(props) {
   const { currentProject, getItemData, epicData, sprintData } =
     useContext(ProjectContext);
-  const { API_URL, authTokens } = useContext(AuthContext);
+  const { API_URL, authTokens, pb } = useContext(AuthContext);
   const { toast } = useToast();
 
   let [create, setCreate] = useState(props.create);
@@ -995,34 +995,24 @@ function ItemForm(props) {
    * @param {string} name - The name of the item.
    */
   const createItem = async (name) => {
-    // Make API request
-    const apiUrl = import.meta.env.VITE_API_URL;
-    let response = await fetch(
-      `${apiUrl}/projects/${currentProject.id}/items/`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + String(authTokens.access),
-        },
-        body: JSON.stringify({
-          project: currentProject.id,
-          item_type: props.itemType,
-          name: name,
-          epic: epic,
-          sprint: sprint,
-          description: description,
-          user_story: userStory,
-          acceptance_criteria: acceptanceCriteria,
-          subtasks: subtasks,
-          due_date: formatDate(duedate),
-          priority: priority,
-          status: status,
-        }),
-      }
-    );
-    let data = await response.json();
-    if (response.status === 201) {
+
+    const data = {
+      project: currentProject.id,
+      item_type: props.itemType,
+      name: name,
+      epic: epic,
+      sprint: sprint,
+      description: description,
+      user_story: userStory,
+      acceptance_criteria: acceptanceCriteria,
+      subtasks: subtasks,
+      due_date: formatDate(duedate),
+      priority: priority,
+      status: status,
+    };
+
+    try {
+      const record = await pb.collection('issue').create(data);
       toast({ description: "User story created successfully" });
       // Set the user story id to the newly created id
       setUserStoryId(data.id);
@@ -1032,10 +1022,11 @@ function ItemForm(props) {
       setCreate(false);
       // Close the dialog
       props.closeDialog();
-    } else {
+    } catch (error) {
+      console.error("Error creating item:", error);
       toast({
         variant: "destructive",
-        description: `Problem creating user story: ${JSON.stringify(data)}`,
+        description: `Problem creating item: ${error.message}`,
       });
     }
   };

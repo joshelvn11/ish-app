@@ -7,7 +7,7 @@ const ProjectContext = React.createContext();
 export default ProjectContext;
 
 export const ProjectContextProvider = ({ children }) => {
-  const { authTokens } = useContext(AuthContext);
+  const { pb, authTokens } = useContext(AuthContext);
   const { toast } = useToast();
   let [projects, setProjects] = useState([]);
   let [currentProject, setCurrentProject] = useState(null);
@@ -40,19 +40,19 @@ export const ProjectContextProvider = ({ children }) => {
   });
 
   const getProjects = async () => {
-    const apiUrl = import.meta.env.VITE_API_URL;
-    let response = await fetch(`${apiUrl}/projects/`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + String(authTokens.access),
-      },
-    });
-    let data = await response.json();
-    if (response.status === 200) {
-      setProjects(data);
+    try {
+      const response = await pb.collection("project").getFullList({
+        filter: `owner = "${pb.authStore.model.id}"`
+      });
+      setProjects(response);
+    } catch (error) {
+      console.error("Error fetching projects:", error);
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Failed to fetch projects. Please try again later.",
+      });
     }
-    return data;
   };
 
   const loadProject = (id) => {
@@ -66,7 +66,7 @@ export const ProjectContextProvider = ({ children }) => {
         // Load the project from local storage if available
         setCurrentProject(
           projects.find(
-            (obj) => obj.id === Number(localStorage.getItem("currentProjectId"))
+            (obj) => obj.id === localStorage.getItem("currentProjectId")
           )
         );
       } else {
@@ -78,22 +78,18 @@ export const ProjectContextProvider = ({ children }) => {
   };
 
   const getUserProjectSettings = async () => {
-    if (currentProject) {
-      const apiUrl = import.meta.env.VITE_API_URL;
-      let response = await fetch(
-        `${apiUrl}/projects/${currentProject.id}/user-settings/`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + String(authTokens.access),
-          },
-        }
-      );
-      let data = await response.json();
-      if (response.ok) {
-        setBacklogFilterOptions(data.backlog_filter_options);
-      }
+    try {
+      const response = await pb.collection("user_project_settings").getFullList({
+        filter: `owner = "${pb.authStore.model.id}"`
+      });
+      setProjects(response);
+    } catch (error) {
+      console.error("Error fetching user project settings:", error);
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Failed to fetch project settings. Please try again later.",
+      });
     }
   };
 
@@ -122,28 +118,19 @@ export const ProjectContextProvider = ({ children }) => {
     }
   };
 
-  useEffect(() => {
-    updateUserProjectSettings();
-  }, [backlogFilterOptions]);
-
   const getEpicData = async () => {
-    if (currentProject) {
-      // Attempt to get epic data if current project is not falsey
-      const apiUrl = import.meta.env.VITE_API_URL;
-      let response = await fetch(
-        `${apiUrl}/projects/${currentProject.id}/epics/`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + String(authTokens.access),
-          },
-        }
-      );
-      let data = await response.json();
-      if (response.status === 200) {
-        setEpicData(data);
-      }
+    try {
+      const response = await pb.collection("epic").getFullList({
+        filter: `project = "${currentProject.id}"`
+      });
+      setEpicData(response);
+    } catch (error) {
+      console.error("Error fetching epic data:", error);
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Failed to fetch epics. Please try again later.",
+      });
     }
   };
 
@@ -171,45 +158,67 @@ export const ProjectContextProvider = ({ children }) => {
 
   const getSprintData = async () => {
     if (currentProject) {
-      // Attempt to get epic data if current project is not falsey
-      const apiUrl = import.meta.env.VITE_API_URL;
-      let response = await fetch(
-        `${apiUrl}/projects/${currentProject.id}/sprints/`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + String(authTokens.access),
-          },
-        }
-      );
-      let data = await response.json();
-      if (response.status === 200) {
-        setSprintData(data);
+      try {
+        const response = await pb.collection("sprint").getFullList({
+          filter: `project = "${currentProject.id}"`
+        });
+        setSprintData(response);
+      } catch (error) {
+        console.error("Error fetching sprint data:", error);
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: "Failed to fetch sprint data. Please try again later.",
+        });
       }
     }
   };
 
   const getItemData = async () => {
-    if (currentProject) {
-      // Attempt to get epic data if current project is not falsey
-      const apiUrl = import.meta.env.VITE_API_URL;
-      let response = await fetch(
-        `${apiUrl}/projects/${currentProject.id}/items/`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + String(authTokens.access),
-          },
-        }
-      );
-      let data = await response.json();
-      if (response.status === 200) {
-        setItemData(data);
-      }
+    try {
+      const response = await pb.collection("issue").getFullList({
+        filter: `project = "${currentProject.id}"`
+      });
+      setItemData(response);
+      console.log("Issues",response);
+    } catch (error) {
+      console.error("Error fetching issue data:", error);
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Failed to fetch issues. Please try again later.",
+      });
     }
   };
+
+  useEffect(() => {
+    // Load available projects
+    getProjects();
+  }, []);
+
+  useEffect(() => {
+    // Load projects every time the projects state array is updated (i.e when projects are loaded)
+    if (projects.length > 0) {
+      loadProject();
+    }
+  }, [projects]);
+
+  useEffect(() => {
+    if (currentProject) {
+      // Load or reload the project task data whenever the current project changes
+      setEpicData(null);
+      setSprintData(null);
+      setItemData(null);
+      getUserProjectSettings();
+      getEpicData();
+      getSprintData();
+      getItemData();
+    }
+  }, [currentProject]);
+
+  useEffect(() => {
+    updateUserProjectSettings();
+  }, [backlogFilterOptions]);
 
   let contextData = {
     projects: projects,
@@ -227,39 +236,6 @@ export const ProjectContextProvider = ({ children }) => {
     backlogFilterOptions: backlogFilterOptions,
     setBacklogFilterOptions: setBacklogFilterOptions,
   };
-
-  useEffect(() => {
-    if (authTokens) {
-      // Get Projects everytime auth tokens are refreshed
-      // and auth tokens are presents
-      getProjects();
-    } else {
-      // If auth tokens are not present reset all data
-      setProjects([]);
-      setCurrentProject(null);
-      setEpicData(null);
-      setSprintData(null);
-      setItemData(null);
-    }
-  }, [authTokens]);
-
-  useEffect(() => {
-    // Load projects every time the projects state array is updated
-    if (projects.length > 0) {
-      loadProject();
-    }
-  }, [projects]);
-
-  useEffect(() => {
-    // Load or reload the project task data whenever the current project changes
-    setEpicData(null);
-    setSprintData(null);
-    setItemData(null);
-    getUserProjectSettings();
-    getEpicData();
-    getSprintData();
-    getItemData();
-  }, [currentProject]);
 
   return (
     <ProjectContext.Provider value={contextData}>

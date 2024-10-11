@@ -6,7 +6,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 import ItemsToolBar from "@/components/project-management/ItemsToolBar";
 
 function BacklogPage() {
-  const { authTokens } = useContext(AuthContext);
   const {
     currentProject,
     epicData,
@@ -14,6 +13,8 @@ function BacklogPage() {
     backlogFilterOptions,
     setBacklogFilterOptions,
   } = useContext(ProjectContext);
+
+  console.log(epicData);
 
   return (
     <div

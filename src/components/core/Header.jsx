@@ -29,7 +29,7 @@ function Header() {
   };
 
   // Render the header only if the user is authenticated
-  if (user) {
+  if (profile) {
     return (
       <div className="flex justify-center w-full border-b">
         <div className="flex items-center justify-between w-full p-3 md:px-9">

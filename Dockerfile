@@ -6,6 +6,10 @@ COPY package.json .
 
 RUN npm install
 
+RUN npm install -g pnpm
+
+RUN pnpm install
+
 # Bundle app source
 COPY . .
 

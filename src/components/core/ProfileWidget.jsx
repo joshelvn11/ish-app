@@ -64,7 +64,7 @@ export default function ProfileWidget() {
         <DropdownMenuLabel>
           <div>
             <div>
-              {profile.first_name} {profile.last_name}
+              {profile.name}
             </div>
             <div className="font-light text-gray-600">{profile.email}</div>
           </div>

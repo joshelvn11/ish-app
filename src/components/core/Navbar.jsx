@@ -23,7 +23,7 @@ function Navbar() {
   // Extract navbarOpen and setNavbarOpen from UiContext
   const { navbarOpen, setNavbarOpen } = useContext(UiContext);
   // Extract user from AuthContext
-  const { user } = useContext(AuthContext);
+  const { profile } = useContext(AuthContext);
 
   /**
    * useEffect hook to update the path state whenever the location changes.
@@ -35,7 +35,7 @@ function Navbar() {
   }, [location]);
 
   // Render the navbar only if the user is authenticated
-  if (user) {
+  if (profile) {
     return (
       <div
         className={`${

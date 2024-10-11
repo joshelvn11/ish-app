@@ -8,7 +8,7 @@ const HomePage = () => {
     <div>
       <p>You are logged in!</p>
       <p>
-        Name: {profile.first_name} {profile.last_name}
+        Name: {profile.name}
       </p>
       <p>Email: {profile.email}</p>
     </div>
